@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Evaluation - NexusHack Platform</title>
+    <meta name="description" content="Comprehensive project evaluation system for judges. Advanced assessment tools, real-time collaboration, and integrated scoring system.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCdncmFkaWVudDApJi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* ENHANCED CSS VARIABLES - EVALUATION THEME */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --eval-blue: #3b82f6;
+            --eval-green: #10b981;
+            --eval-purple: #8b5cf6;
+            --eval-orange: #f97316;
+            --eval-pink: #ec4899;
+            
+            /* Perfect Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-judge: linear-gradient(135deg, #f59e0b 0%, #667eea 100%);
+            --gradient-evaluation: linear-gradient(135deg, #667eea 0%, #8b5cf6 100%);
+            
+            /* Dark Theme Colors */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-evaluation: rgba(102, 126, 234, 0.1);
+            --bg-scoring: rgba(16, 185, 129, 0.1);
+            --bg-evaluation-alt: rgba(139, 92, 246, 0.1);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            
+            /* Border Colors */
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-evaluation: rgba(102, 126, 234, 0.3);
+            
+            /* Layout Variables */
+            --sidebar-bg: var(--bg-secondary);
+            --topbar-bg: var(--bg-card);
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
+            --topbar-height: 72px;
+            --mobile-topbar-height: 64px;
+            --content-padding: 2rem;
+            --mobile-content-padding: 1rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            --shadow-evaluation: 0 0 32px rgba(102, 126, 234, 0.25);
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-evaluation: rgba(102, 126, 234, 0.05);
+            --bg-scoring: rgba(16, 185, 129, 0.05);
+            --bg-evaluation-alt: rgba(139, 92, 246, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-evaluation: rgba(102, 126, 234, 0.3);
+            --sidebar-bg: var(--bg-primary);
+            --topbar-bg: var(--bg-primary);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* PERFECT RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *::before, *::after { box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+            overflow-x: hidden; transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; height: 100vh; display: flex; flex-direction: column;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-glass); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; transition: var(--transition); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* MOBILE OVERLAY */
+        .mobile-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);
+            z-index: 999; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(4px);
+        }
+        .mobile-overlay.active { opacity: 1; visibility: visible; }
+
+        /* DASHBOARD LAYOUT */
+        .dashboard-container { display: flex; height: 100vh; overflow: hidden; position: relative; }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--sidebar-bg); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; position: fixed; left: 0; top: 0; height: 100vh;
+            z-index: 1000; transition: var(--transition); backdrop-filter: blur(20px);
+            user-select: none; overflow-y: auto; overflow-x: hidden;
+        }
+        .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); box-shadow: var(--shadow-xl); }
+            .sidebar.open { transform: translateX(0); }
+        }
+
+        /* LOGO */
+        .sidebar-logo {
+            padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem;
+            border-bottom: 1px solid var(--border); min-height: var(--topbar-height); flex-shrink: 0;
+        }
+        .logo-icon {
+            width: 40px; height: 40px; background: var(--gradient-evaluation); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1.2rem; box-shadow: var(--shadow-glow); transition: var(--transition); flex-shrink: 0;
+        }
+        .logo-text {
+            font-size: 1.5rem; font-weight: 900; background: var(--gradient-evaluation);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            transition: var(--transition); white-space: nowrap; overflow: hidden;
+        }
+        .sidebar.collapsed .logo-text { opacity: 0; width: 0; }
+
+        /* NAVIGATION */
+        .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; overflow-x: hidden; }
+        .nav-section { margin-bottom: 2rem; }
+        .nav-section-title {
+            font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.05em; padding: 0 1.5rem;
+            margin-bottom: 0.75rem; transition: var(--transition); white-space: nowrap; overflow: hidden;
+        }
+        .sidebar.collapsed .nav-section-title { opacity: 0; height: 0; margin: 0; padding: 0; }
+        .nav-link {
+            display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.5rem;
+            color: var(--text-secondary); text-decoration: none; transition: var(--transition);
+            position: relative; font-weight: 500; min-height: 48px; white-space: nowrap; overflow: hidden;
+        }
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-glass-hover); }
+        .nav-link.active { color: var(--primary); background: var(--bg-evaluation); border-right: 3px solid var(--primary); }
+        .nav-link.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--primary); }
+        .nav-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .nav-text { flex: 1; transition: var(--transition); overflow: hidden; }
+        .sidebar.collapsed .nav-text { opacity: 0; width: 0; }
+        .nav-badge {
+            background: var(--gradient-success); color: white; font-size: 0.7rem; font-weight: 600;
+            padding: 0.2rem 0.5rem; border-radius: 10px; min-width: 18px; text-align: center;
+            transition: var(--transition); flex-shrink: 0;
+        }
+        .nav-badge.active { background: var(--gradient-warning); }
+        .sidebar.collapsed .nav-badge { opacity: 0; width: 0; }
+
+        /* USER PROFILE */
+        .sidebar-user {
+            padding: 1.5rem; border-top: 1px solid var(--border); display: flex;
+            align-items: center; gap: 1rem; transition: var(--transition); flex-shrink: 0; min-height: 88px;
+        }
+        .user-avatar {
+            width: 40px; height: 40px; background: var(--gradient-evaluation); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-weight: 600; font-size: 0.9rem; flex-shrink: 0;
+        }
+        .user-info { flex: 1; transition: var(--transition); overflow: hidden; }
+        .user-name {
+            font-weight: 600; font-size: 0.9rem; margin-bottom: 0.1rem;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .user-role {
+            font-size: 0.8rem; color: var(--text-muted);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar.collapsed .user-info { opacity: 0; width: 0; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column;
+            transition: var(--transition); min-height: 100vh; overflow: hidden;
+        }
+        .sidebar.collapsed + .main-content { margin-left: var(--sidebar-collapsed-width); }
+        @media (max-width: 1024px) { .main-content { margin-left: 0; } }
+
+        /* TOPBAR */
+        .topbar {
+            background: var(--topbar-bg); border-bottom: 1px solid var(--border); padding: 1rem 2rem;
+            display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 999; min-height: var(--topbar-height); flex-shrink: 0;
+        }
+        @media (max-width: 768px) { .topbar { padding: 1rem; min-height: var(--mobile-topbar-height); } }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0; }
+        .sidebar-toggle {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.5rem; border-radius: 8px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex-shrink: 0;
+        }
+        .sidebar-toggle:hover { background: var(--bg-glass-hover); color: var(--text-primary); }
+        .page-title {
+            font-size: 1.5rem; font-weight: 700; color: var(--text-primary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        @media (max-width: 768px) { .page-title { font-size: 1.25rem; } }
+        @media (max-width: 480px) { .page-title { font-size: 1.1rem; } }
+        .topbar-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .topbar-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        @media (max-width: 480px) { .topbar-actions { gap: 0.5rem; } }
+        .action-btn {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.6rem; border-radius: 10px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            position: relative; outline: none; display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+        }
+        @media (max-width: 480px) { .action-btn { width: 36px; height: 36px; padding: 0.5rem; font-size: 0.9rem; } }
+        .action-btn:hover { background: var(--bg-glass-hover); color: var(--text-primary); transform: translateY(-1px); }
+        .theme-toggle {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.6rem; border-radius: 10px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            outline: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+        }
+        @media (max-width: 480px) { .theme-toggle { width: 36px; height: 36px; padding: 0.5rem; font-size: 0.9rem; } }
+        .theme-toggle:hover { background: var(--bg-glass-hover); color: var(--text-primary); transform: translateY(-1px); }
+
+        /* CONTENT */
+        .content { flex: 1; padding: var(--content-padding); overflow-y: auto; overflow-x: hidden; }
+        @media (max-width: 768px) { .content { padding: var(--mobile-content-padding); } }
+
+        /* EVALUATION HEADER */
+        .evaluation-header {
+            background: var(--gradient-evaluation); border-radius: 20px; padding: 3rem 2rem; margin-bottom: 2rem;
+            color: white; position: relative; overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .evaluation-header { padding: 2rem 1rem; margin-bottom: 1.5rem; border-radius: 16px; }
+        }
+        @media (max-width: 480px) {
+            .evaluation-header { padding: 1.5rem 1rem; margin-bottom: 1rem; border-radius: 12px; }
+        }
+        .evaluation-header::before {
+            content: ''; position: absolute; top: 0; right: 0; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%; transform: translate(50%, -50%);
+        }
+        @media (max-width: 768px) { .evaluation-header::before { width: 200px; height: 200px; } }
+        .evaluation-header-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; text-align: center; }
+        .evaluation-title {
+            font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; display: flex;
+            align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;
+        }
+        @media (max-width: 768px) {
+            .evaluation-title { font-size: 2rem; flex-direction: column; gap: 1rem; }
+        }
+        @media (max-width: 480px) { .evaluation-title { font-size: 1.75rem; } }
+        .evaluation-subtitle {
+            font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem; line-height: 1.6;
+        }
+        @media (max-width: 768px) { .evaluation-subtitle { font-size: 1rem; margin-bottom: 1rem; } }
+        @media (max-width: 480px) { .evaluation-subtitle { font-size: 0.9rem; } }
+        .evaluation-timer {
+            background: rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 1rem 2rem;
+            display: inline-flex; align-items: center; gap: 1rem; backdrop-filter: blur(10px);
+        }
+        @media (max-width: 480px) { .evaluation-timer { padding: 0.75rem 1.5rem; } }
+        .timer-icon { font-size: 1.2rem; }
+        .timer-text { font-weight: 600; font-size: 1.1rem; }
+
+        /* PROJECT OVERVIEW */
+        .project-overview {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; margin-bottom: 2rem; transition: var(--transition);
+        }
+        @media (max-width: 768px) { .project-overview { padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 16px; } }
+        @media (max-width: 480px) { .project-overview { padding: 1.25rem; margin-bottom: 1rem; border-radius: 12px; } }
+        .overview-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .overview-title {
+            font-size: 1.5rem; font-weight: 700; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        @media (max-width: 768px) { .overview-title { font-size: 1.25rem; } }
+        @media (max-width: 480px) { .overview-title { font-size: 1.1rem; } }
+        .project-status {
+            background: var(--gradient-warning); color: white; padding: 0.5rem 1rem;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+        }
+        .project-main {
+            display: flex; align-items: flex-start; gap: 2rem; margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) { .project-main { flex-direction: column; gap: 1.5rem; text-align: center; } }
+        .project-avatar {
+            width: 100px; height: 100px; background: var(--gradient-evaluation); border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 2.5rem; flex-shrink: 0; box-shadow: var(--shadow-evaluation);
+        }
+        @media (max-width: 768px) { .project-avatar { width: 80px; height: 80px; font-size: 2rem; margin: 0 auto; } }
+        .project-details { flex: 1; min-width: 0; }
+        .project-name {
+            font-size: 2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;
+        }
+        @media (max-width: 768px) { .project-name { font-size: 1.75rem; } }
+        @media (max-width: 480px) { .project-name { font-size: 1.5rem; } }
+        .project-team { font-size: 1.2rem; color: var(--text-accent); font-weight: 600; margin-bottom: 1rem; }
+        @media (max-width: 480px) { .project-team { font-size: 1.1rem; } }
+        .project-description {
+            color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;
+        }
+        .project-meta {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+        }
+        @media (max-width: 480px) { .project-meta { grid-template-columns: 1fr; gap: 0.75rem; } }
+        .meta-item {
+            background: var(--bg-glass); border-radius: 12px; padding: 1rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .meta-icon {
+            width: 40px; height: 40px; background: var(--gradient-evaluation); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem;
+        }
+        .meta-details { flex: 1; }
+        .meta-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+        .meta-value { font-weight: 600; color: var(--text-primary); }
+
+        /* EVALUATION TOOLS */
+        .evaluation-tools {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) { .evaluation-tools { gap: 1.5rem; margin-bottom: 1.5rem; } }
+        @media (max-width: 480px) { .evaluation-tools { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1rem; } }
+        .tool-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; transition: var(--transition); cursor: pointer; text-decoration: none; color: inherit;
+        }
+        @media (max-width: 768px) { .tool-card { padding: 1.5rem; border-radius: 16px; } }
+        @media (max-width: 480px) { .tool-card { padding: 1.25rem; border-radius: 12px; } }
+        .tool-card:hover {
+            transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-accent);
+        }
+        .tool-header {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+        }
+        .tool-icon {
+            width: 50px; height: 50px; border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; color: white; font-size: 1.2rem;
+        }
+        .tool-icon.scoring { background: var(--gradient-warning); }
+        .tool-icon.feedback { background: var(--gradient-ai); }
+        .tool-icon.code { background: var(--gradient-success); }
+        .tool-icon.interview { background: var(--gradient-danger); }
+        .tool-title {
+            font-size: 1.25rem; font-weight: 700; color: var(--text-primary);
+        }
+        @media (max-width: 480px) { .tool-title { font-size: 1.1rem; } }
+        .tool-description {
+            color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;
+        }
+        .tool-stats {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem; background: var(--bg-glass); border-radius: 8px;
+        }
+        .tool-progress { font-size: 0.9rem; color: var(--text-accent); font-weight: 600; }
+        .tool-status {
+            padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600;
+        }
+        .tool-status.pending { background: var(--gradient-warning); color: white; }
+        .tool-status.completed { background: var(--gradient-success); color: white; }
+        .tool-status.in-progress { background: var(--gradient-ai); color: white; }
+
+        /* EVALUATION PROGRESS */
+        .evaluation-progress {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; margin-bottom: 2rem; transition: var(--transition);
+        }
+        @media (max-width: 768px) { .evaluation-progress { padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 16px; } }
+        @media (max-width: 480px) { .evaluation-progress { padding: 1.25rem; margin-bottom: 1rem; border-radius: 12px; } }
+        .progress-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
+        }
+        .progress-title {
+            font-size: 1.5rem; font-weight: 700; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        @media (max-width: 768px) { .progress-title { font-size: 1.25rem; } }
+        @media (max-width: 480px) { .progress-title { font-size: 1.1rem; } }
+        .progress-percentage {
+            background: var(--gradient-success); color: white; padding: 0.5rem 1rem;
+            border-radius: 12px; font-size: 1rem; font-weight: 700;
+        }
+        .progress-list {
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .progress-item {
+            display: flex; align-items: center; gap: 1rem; padding: 1rem;
+            background: var(--bg-glass); border-radius: 12px; transition: var(--transition);
+        }
+        .progress-item:hover { background: var(--bg-glass-hover); }
+        .progress-icon {
+            width: 40px; height: 40px; border-radius: 8px; display: flex;
+            align-items: center; justify-content: center; color: white; font-size: 1rem; flex-shrink: 0;
+        }
+        .progress-icon.completed { background: var(--gradient-success); }
+        .progress-icon.in-progress { background: var(--gradient-warning); }
+        .progress-icon.pending { background: var(--bg-glass); color: var(--text-muted); border: 2px solid var(--border); }
+        .progress-details { flex: 1; }
+        .progress-name { font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .progress-description { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* ACTION BUTTONS */
+        .action-buttons {
+            display: flex; gap: 1rem; margin-top: 2rem; justify-content: center; flex-wrap: wrap;
+        }
+        @media (max-width: 480px) { .action-buttons { flex-direction: column; } }
+
+        /* BUTTONS */
+        .btn {
+            padding: 0.75rem 1.5rem; border: none; border-radius: 12px; font-weight: 600;
+            font-size: 0.9rem; cursor: pointer; transition: var(--transition);
+            text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.5rem; position: relative; overflow: hidden; outline: none; white-space: nowrap;
+        }
+        @media (max-width: 480px) { .btn { padding: 0.625rem 1.25rem; font-size: 0.85rem; border-radius: 10px; } }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+        .btn:hover::before { left: 100%; }
+        .btn-primary { background: var(--gradient-evaluation); color: white; }
+        .btn-primary:hover { background: var(--gradient-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-primary); }
+        .btn-secondary:hover { background: var(--bg-glass-hover); border-color: var(--border-accent); }
+        .btn-success { background: var(--gradient-success); color: white; }
+        .btn-success:hover { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+
+        /* RESPONSIVE MOBILE FIXES */
+        @media (max-width: 640px) { .topbar-actions .action-btn:nth-child(2) { display: none; } }
+        @media (max-width: 360px) {
+            .topbar { padding: 0.75rem; }
+            .page-title { font-size: 1rem; }
+            .evaluation-title { font-size: 1.5rem; }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+            .evaluation-header { padding: 1.5rem 1rem; }
+            .evaluation-title { font-size: 1.75rem; }
+            .content { padding: 1rem; }
+        }
+
+        /* ACCESSIBILITY & PERFORMANCE */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+        .nav-link:focus, .action-btn:focus, .btn:focus, .theme-toggle:focus, .sidebar-toggle:focus,
+        .tool-card:focus, .progress-item:focus {
+            outline: 2px solid var(--primary); outline-offset: 2px;
+        }
+        @media (pointer: coarse) {
+            .nav-link, .action-btn, .theme-toggle, .sidebar-toggle, .btn, .tool-card { min-height: 44px; }
+        }
+        @media print {
+            .sidebar, .topbar, .mobile-overlay, .topbar-actions { display: none !important; }
+            .main-content { margin-left: 0 !important; }
+            .content { padding: 1rem !important; }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fas fa-clipboard-check"></i></div>
+                <div class="logo-text">NexusHack</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge active">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-star"></i></div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="nav-text">Feedback</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-code"></i></div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-video"></i></div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-images"></i></div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-list-check"></i></div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Project Evaluation</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="Save Progress" onclick="saveProgress()">
+                            <i class="fas fa-save"></i>
+                        </button>
+                        <button class="action-btn" title="Export Evaluation" onclick="exportEvaluation()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Evaluation Header -->
+                <div class="evaluation-header">
+                    <div class="evaluation-header-content">
+                        <h1 class="evaluation-title">
+                            <i class="fas fa-clipboard-check"></i>
+                            Project Evaluation
+                        </h1>
+                        <p class="evaluation-subtitle">
+                            Comprehensive evaluation workspace with integrated assessment tools
+                        </p>
+                        <div class="evaluation-timer">
+                            <i class="fas fa-clock timer-icon"></i>
+                            <span class="timer-text" id="evaluationTimer">45:30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Overview -->
+                <div class="project-overview">
+                    <div class="overview-header">
+                        <h2 class="overview-title">
+                            <i class="fas fa-folder-open"></i>
+                            Project Overview
+                        </h2>
+                        <div class="project-status">Under Review</div>
+                    </div>
+
+                    <div class="project-main">
+                        <div class="project-avatar">DP</div>
+                        <div class="project-details">
+                            <h3 class="project-name">DeFi Portfolio Tracker</h3>
+                            <div class="project-team">Team: Blockchain Innovators</div>
+                            <p class="project-description">
+                                A comprehensive decentralized finance portfolio tracking application that allows users to 
+                                monitor their DeFi investments across multiple protocols and blockchains in real-time. 
+                                Features advanced analytics, yield farming optimization, and risk assessment tools.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-users"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Team Size</div>
+                                <div class="meta-value">4 Members</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-calendar"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Submitted</div>
+                                <div class="meta-value">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-tag"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Category</div>
+                                <div class="meta-value">Web3 & Blockchain</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-code"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Tech Stack</div>
+                                <div class="meta-value">React, Node.js, Solidity</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evaluation Tools -->
+                <div class="evaluation-tools">
+                    <a href="scoring.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon scoring">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="tool-title">Scoring System</div>
+                        </div>
+                        <div class="tool-description">
+                            Evaluate the project using weighted criteria with our comprehensive 10-point scoring system. 
+                            Track innovation, technical implementation, and business impact.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">0/5 Criteria Scored</div>
+                            <div class="tool-status pending">Pending</div>
+                        </div>
+                    </a>
+
+                    <a href="feedback.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon feedback">
+                                <i class="fas fa-comment-alt"></i>
+                            </div>
+                            <div class="tool-title">Feedback System</div>
+                        </div>
+                        <div class="tool-description">
+                            Provide detailed feedback using pre-built templates or custom comments. 
+                            Help teams understand strengths and areas for improvement.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">Draft Saved</div>
+                            <div class="tool-status in-progress">In Progress</div>
+                        </div>
+                    </a>
+
+                    <a href="code-review.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon code">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="tool-title">Code Review</div>
+                        </div>
+                        <div class="tool-description">
+                            Analyze source code with AI-powered tools. Review architecture, 
+                            identify issues, and provide technical recommendations.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">8 Files Reviewed</div>
+                            <div class="tool-status completed">Completed</div>
+                        </div>
+                    </a>
+
+                    <a href="video-interview.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon interview">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="tool-title">Video Interview</div>
+                        </div>
+                        <div class="tool-description">
+                            Conduct live video interviews with team members. Use integrated questions, 
+                            take notes, and record sessions for detailed evaluation.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">Scheduled: 3:00 PM</div>
+                            <div class="tool-status pending">Scheduled</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Evaluation Progress -->
+                <div class="evaluation-progress">
+                    <div class="progress-header">
+                        <h2 class="progress-title">
+                            <i class="fas fa-tasks"></i>
+                            Evaluation Progress
+                        </h2>
+                        <div class="progress-percentage" id="overallProgress">25%</div>
+                    </div>
+
+                    <div class="progress-list">
+                        <div class="progress-item">
+                            <div class="progress-icon completed">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Initial Review</div>
+                                <div class="progress-description">Project overview and basic requirements check</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon completed">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Code Analysis</div>
+                                <div class="progress-description">Technical implementation and architecture review</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon in-progress">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Detailed Scoring</div>
+                                <div class="progress-description">Comprehensive evaluation using weighted criteria</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon pending">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Team Interview</div>
+                                <div class="progress-description">Live discussion with project team members</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon pending">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Final Report</div>
+                                <div class="progress-description">Comprehensive evaluation summary and recommendations</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="saveProgress()">
+                        <i class="fas fa-save"></i>
+                        Save Progress
+                    </button>
+                    <button class="btn btn-primary" onclick="continueEvaluation()">
+                        <i class="fas fa-arrow-right"></i>
+                        Continue Evaluation
+                    </button>
+                    <button class="btn btn-success" onclick="finalizeEvaluation()" style="display: none;" id="finalizeBtn">
+                        <i class="fas fa-check-circle"></i>
+                        Finalize Evaluation
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ADVANCED EVALUATION SYSTEM
+        class EvaluationSystem {
+            constructor() {
+                this.evaluationData = {};
+                this.startTime = Date.now() - 2730000; // 45:30 ago
+                this.progress = 25;
+                this.isMobile = window.innerWidth <= 1024;
+                this.currentUser = { name: 'Dr. Jane Smith', initials: 'JS', role: 'Senior Judge', id: 'judge_001' };
+                this.currentProject = {
+                    id: 1,
+                    name: 'DeFi Portfolio Tracker',
+                    team: 'Blockchain Innovators',
+                    avatar: 'DP',
+                    category: 'Web3 & Blockchain'
+                };
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.startTimer();
+                this.loadEvaluationData();
+                this.updateProgress();
+                this.initializeUser();
+                this.handleResize();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                const themeToggle = document.getElementById('themeToggle');
+                themeToggle.querySelector('i').className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            initializeUser() {
+                const userSession = localStorage.getItem('judgeSession');
+                if (userSession) {
+                    const session = JSON.parse(userSession);
+                    this.currentUser.name = session.name || this.currentUser.name;
+                    this.currentUser.initials = session.initials || this.currentUser.initials;
+                }
+                document.getElementById('userName').textContent = this.currentUser.name;
+                document.getElementById('userAvatar').textContent = this.currentUser.initials;
+            }
+
+            setupEventListeners() {
+                document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
+                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
+                document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
+                window.addEventListener('resize', () => this.handleResize());
+                window.addEventListener('beforeunload', (e) => this.handleBeforeUnload(e));
+                
+                // Auto-save every 2 minutes
+                setInterval(() => {
+                    this.autoSave();
+                }, 120000);
+
+                this.setupTouchGestures();
+            }
+
+            setupTouchGestures() {
+                let startX;
+                document.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+                document.addEventListener('touchend', (e) => {
+                    if (!startX) return;
+                    const endX = e.changedTouches[0].clientX;
+                    const diffX = startX - endX;
+                    if (Math.abs(diffX) > 50) {
+                        if (diffX > 0) this.closeMobileSidebar();
+                        else if (this.isMobile) this.openMobileSidebar();
+                    }
+                    startX = null;
+                });
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 1024;
+                if (!this.isMobile) this.closeMobileSidebar();
+            }
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                if (this.isMobile) {
+                    sidebar.classList.toggle('open');
+                    this.toggleMobileOverlay();
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            }
+
+            openMobileSidebar() {
+                if (this.isMobile) {
+                    document.getElementById('sidebar').classList.add('open');
+                    this.showMobileOverlay();
+                }
+            }
+
+            closeMobileSidebar() {
+                document.getElementById('sidebar').classList.remove('open');
+                this.hideMobileOverlay();
+            }
+
+            toggleMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.toggle('active');
+            }
+
+            showMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.add('active');
+            }
+
+            hideMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.remove('active');
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+            }
+
+            startTimer() {
+                setInterval(() => {
+                    const elapsed = Date.now() - this.startTime;
+                    const minutes = Math.floor(elapsed / 60000);
+                    const seconds = Math.floor((elapsed % 60000) / 1000);
+                    const timer = document.getElementById('evaluationTimer');
+                    timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                }, 1000);
+            }
+
+            loadEvaluationData() {
+                const savedData = localStorage.getItem(`evaluation_${this.currentProject.id}`);
+                if (savedData) {
+                    this.evaluationData = JSON.parse(savedData);
+                    this.progress = this.calculateProgress();
+                    this.updateProgressDisplay();
+                } else {
+                    this.evaluationData = {
+                        projectId: this.currentProject.id,
+                        judgeId: this.currentUser.id,
+                        startTime: this.startTime,
+                        stages: {
+                            initialReview: { completed: true, timestamp: Date.now() - 3600000 },
+                            codeAnalysis: { completed: true, timestamp: Date.now() - 1800000 },
+                            detailedScoring: { completed: false, progress: 0.3 },
+                            teamInterview: { completed: false, scheduled: Date.now() + 7200000 },
+                            finalReport: { completed: false }
+                        }
+                    };
+                }
+            }
+
+            calculateProgress() {
+                const stages = this.evaluationData.stages;
+                let completedStages = 0;
+                let totalStages = Object.keys(stages).length;
+                
+                Object.values(stages).forEach(stage => {
+                    if (stage.completed) {
+                        completedStages += 1;
+                    } else if (stage.progress) {
+                        completedStages += stage.progress;
+                    }
+                });
+
+                return Math.round((completedStages / totalStages) * 100);
+            }
+
+            updateProgress() {
+                this.progress = this.calculateProgress();
+                this.updateProgressDisplay();
+                
+                if (this.progress >= 80) {
+                    document.getElementById('finalizeBtn').style.display = 'inline-flex';
+                }
+            }
+
+            updateProgressDisplay() {
+                const progressElement = document.getElementById('overallProgress');
+                progressElement.textContent = `${this.progress}%`;
+                
+                if (this.progress >= 75) {
+                    progressElement.style.background = 'var(--gradient-success)';
+                } else if (this.progress >= 50) {
+                    progressElement.style.background = 'var(--gradient-warning)';
+                } else {
+                    progressElement.style.background = 'var(--gradient-ai)';
+                }
+            }
+
+            saveProgress() {
+                const saveData = {
+                    ...this.evaluationData,
+                    lastSaved: Date.now(),
+                    progress: this.progress
+                };
+
+                localStorage.setItem(`evaluation_${this.currentProject.id}`, JSON.stringify(saveData));
+                this.showToast('Evaluation progress saved successfully!', 'success');
+            }
+
+            autoSave() {
+                if (Object.keys(this.evaluationData).length > 0) {
+                    const saveData = {
+                        ...this.evaluationData,
+                        autoSaved: Date.now(),
+                        progress: this.progress
+                    };
+                    localStorage.setItem(`evaluation_autosave_${this.currentProject.id}`, JSON.stringify(saveData));
+                }
+            }
+
+            continueEvaluation() {
+                // Determine next step based on progress
+                const stages = this.evaluationData.stages;
+                
+                if (!stages.detailedScoring.completed) {
+                    this.showToast('Redirecting to scoring system...', 'info');
+                    setTimeout(() => window.location.href = 'scoring.html', 1000);
+                } else if (!stages.teamInterview.completed) {
+                    this.showToast('Starting video interview...', 'info');
+                    setTimeout(() => window.location.href = 'video-interview.html', 1000);
+                } else if (!stages.finalReport.completed) {
+                    this.showToast('Opening final report editor...', 'info');
+                    setTimeout(() => window.location.href = 'feedback.html', 1000);
+                } else {
+                    this.showToast('All stages completed! Ready for finalization.', 'success');
+                }
+            }
+
+            finalizeEvaluation() {
+                if (this.progress < 80) {
+                    this.showToast('Please complete at least 80% of the evaluation before finalizing', 'warning');
+                    return;
+                }
+
+                if (!confirm('Are you sure you want to finalize this evaluation? This action cannot be undone.')) {
+                    return;
+                }
+
+                const finalData = {
+                    ...this.evaluationData,
+                    status: 'finalized',
+                    finalizedAt: Date.now(),
+                    finalizedBy: this.currentUser.id,
+                    totalTime: Date.now() - this.startTime
+                };
+
+                // Save to submissions
+                const submissions = JSON.parse(localStorage.getItem('evaluationSubmissions') || '[]');
+                submissions.push(finalData);
+                localStorage.setItem('evaluationSubmissions', JSON.stringify(submissions));
+
+                // Clear current evaluation
+                localStorage.removeItem(`evaluation_${this.currentProject.id}`);
+                localStorage.removeItem(`evaluation_autosave_${this.currentProject.id}`);
+
+                this.showToast('Evaluation finalized successfully!', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            }
+
+            exportEvaluation() {
+                const exportData = {
+                    project: this.currentProject,
+                    judge: this.currentUser,
+                    evaluation: this.evaluationData,
+                    progress: this.progress,
+                    exportedAt: Date.now()
+                };
+
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `evaluation_${this.currentProject.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                this.showToast('Evaluation data exported successfully!', 'success');
+            }
+
+            handleBeforeUnload(event) {
+                if (this.progress > 0 && this.progress < 100) {
+                    event.preventDefault();
+                    event.returnValue = 'You have an evaluation in progress. Are you sure you want to leave?';
+                    return 'You have an evaluation in progress. Are you sure you want to leave?';
+                }
+            }
+
+            showToast(message, type = 'success') {
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) existingToast.remove();
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed; top: 2rem; right: 2rem; padding: 1rem 1.5rem;
+                    border-radius: 12px; color: white; font-weight: 500; z-index: 10001;
+                    animation: slideInToast 0.3s ease-out; max-width: 350px;
+                    box-shadow: var(--shadow-lg); background: var(--gradient-${type});
+                `;
+                
+                if (window.innerWidth <= 768) {
+                    toast.style.top = '1rem'; toast.style.right = '1rem';
+                    toast.style.left = '1rem'; toast.style.maxWidth = 'none';
+                }
+                
+                toast.innerHTML = `<i class="fas ${this.getToastIcon(type)}"></i><span style="margin-left: 0.5rem;">${message}</span>`;
+                document.body.appendChild(toast);
+                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 4000);
+            }
+
+            getToastIcon(type) {
+                const icons = {
+                    success: 'fa-check-circle', error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle', warning: 'fa-exclamation-triangle'
+                };
+                return icons[type] || 'fa-check-circle';
+            }
+        }
+
+        // Global functions and initialization
+        let evaluationSystem;
+
+        function saveProgress() { evaluationSystem.saveProgress(); }
+        function continueEvaluation() { evaluationSystem.continueEvaluation(); }
+        function finalizeEvaluation() { evaluationSystem.finalizeEvaluation(); }
+        function exportEvaluation() { evaluationSystem.exportEvaluation(); }
+        function backToDashboard() { window.location.href = 'dashboard.html'; }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            evaluationSystem = new EvaluationSystem();
+            
+            // Add entrance animations
+            setTimeout(() => {
+                document.querySelectorAll('.tool-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    }, index * 150);
+                });
+            }, 1000);
+
+            // Progress item animations
+            setTimeout(() => {
+                document.querySelectorAll('.progress-item').forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateX(-20px)';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateX(0)';
+                        }, 100);
+                    }, index * 100);
+                });
+            }, 1500);
+
+            // Performance optimization for mobile
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+                const style = document.createElement('style');
+                style.textContent = `.mobile-device * { animation-duration: 0.1s !important; transition-duration: 0.1s !important; }`;
+                document.head.appendChild(style);
+            }
+        });
+
+        // Animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @media (max-width: 768px) {
+                @keyframes slideInToast {
+                    from { transform: translateY(-100%); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            }
+            .tool-card, .progress-item, .meta-item { transition: var(--transition) !important; }
+            @media (hover: hover) and (pointer: fine) {
+                .tool-card:hover { transform: translateY(-8px) !important; }
+                .progress-item:hover { transform: translateX(4px) !important; }
+                .meta-item:hover { transform: translateY(-2px) !important; }
+            }
+            *:focus-visible { outline: 2px solid var(--primary) !important; outline-offset: 2px !important; }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

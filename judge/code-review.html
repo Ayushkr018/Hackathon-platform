@@ -1,0 +1,2534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Review - NexusHack Platform</title>
+    <meta name="description" content="Advanced code review interface for judges. Analyze project source code, provide technical feedback, and assess code quality with AI-powered tools.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* ENHANCED CSS VARIABLES - CODE REVIEW THEME */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --code-purple: #8b5cf6;
+            --code-green: #10b981;
+            --code-orange: #f59e0b;
+            --code-red: #ef4444;
+            --code-blue: #3b82f6;
+            
+            /* Perfect Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-judge: linear-gradient(135deg, #f59e0b 0%, #667eea 100%);
+            --gradient-code: linear-gradient(135deg, #8b5cf6 0%, #667eea 100%);
+            
+            /* Dark Theme Colors */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-code: #0d1117;
+            --bg-code-line: #161b22;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-evaluation: rgba(245, 158, 11, 0.1);
+            --bg-scoring: rgba(16, 185, 129, 0.1);
+            --bg-code-review: rgba(139, 92, 246, 0.1);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            --text-code: #e6edf3;
+            --text-comment: #7c3aed;
+            --text-string: #10b981;
+            --text-number: #f59e0b;
+            --text-keyword: #3b82f6;
+            
+            /* Border Colors */
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-code: rgba(139, 92, 246, 0.3);
+            
+            /* Layout Variables */
+            --sidebar-bg: var(--bg-secondary);
+            --topbar-bg: var(--bg-card);
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
+            --topbar-height: 72px;
+            --mobile-topbar-height: 64px;
+            --content-padding: 2rem;
+            --mobile-content-padding: 1rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            --shadow-code: 0 0 32px rgba(139, 92, 246, 0.25);
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-code: #f6f8fa;
+            --bg-code-line: #f1f3f4;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-evaluation: rgba(245, 158, 11, 0.05);
+            --bg-scoring: rgba(16, 185, 129, 0.05);
+            --bg-code-review: rgba(139, 92, 246, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --text-code: #24292f;
+            --text-comment: #7c3aed;
+            --text-string: #10b981;
+            --text-number: #f59e0b;
+            --text-keyword: #3b82f6;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-code: rgba(139, 92, 246, 0.3);
+            --sidebar-bg: var(--bg-primary);
+            --topbar-bg: var(--bg-primary);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* PERFECT RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ENHANCED CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-glass);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* MOBILE OVERLAY */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* PERFECT DASHBOARD LAYOUT */
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* SIDEBAR - SAME STRUCTURE AS PREVIOUS */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(20px);
+            user-select: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                box-shadow: var(--shadow-xl);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        /* LOGO SECTION */
+        .sidebar-logo {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            min-height: var(--topbar-height);
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-code);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient-code);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .logo-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* NAVIGATION */
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0 1.5rem;
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-section-title {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+            min-height: 48px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-glass-hover);
+        }
+
+        .nav-link.active {
+            color: var(--code-purple);
+            background: var(--bg-code-review);
+            border-right: 3px solid var(--code-purple);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--code-purple);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .nav-text {
+            flex: 1;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .nav-badge {
+            background: var(--gradient-success);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .sidebar.collapsed .nav-badge {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* USER PROFILE */
+        .sidebar-user {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+            min-height: 88px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-code);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: var(--topbar-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            min-height: var(--topbar-height);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                padding: 1rem;
+                min-height: var(--mobile-topbar-height);
+            }
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .topbar-actions {
+                gap: 0.5rem;
+            }
+        }
+
+        .action-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .action-btn {
+                width: 36px;
+                height: 36px;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .action-btn:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        /* CONTENT AREA */
+        .content {
+            flex: 1;
+            padding: var(--content-padding);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: var(--mobile-content-padding);
+            }
+        }
+
+        /* CODE REVIEW HEADER */
+        .code-review-header {
+            background: var(--gradient-code);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .code-review-header {
+                padding: 2rem 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .code-review-header {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1rem;
+                border-radius: 12px;
+            }
+        }
+
+        .code-review-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        @media (max-width: 768px) {
+            .code-review-header::before {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        .code-review-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .code-review-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .code-review-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .code-review-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        .code-review-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .code-review-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .code-review-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* PERFECT CODE REVIEW LAYOUT - FIXED OVERLAPPING */
+        .code-review-layout {
+            display: grid;
+            gap: 1.5rem;
+            height: calc(100vh - 300px);
+            min-height: 600px;
+            grid-template-columns: 280px 1fr 320px;
+            grid-template-areas: "files code review";
+        }
+
+        @media (max-width: 1400px) {
+            .code-review-layout {
+                grid-template-columns: 250px 1fr 300px;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .code-review-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "files"
+                    "review"
+                    "code";
+                height: auto;
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .code-review-layout {
+                gap: 1rem;
+            }
+        }
+
+        /* FILE EXPLORER - FIXED LAYOUT */
+        .file-explorer {
+            grid-area: files;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .file-explorer {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .file-explorer {
+                padding: 1rem;
+                border-radius: 12px;
+                max-height: 250px;
+            }
+        }
+
+        .explorer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-info {
+            background: var(--bg-glass);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .project-language {
+            font-size: 0.85rem;
+            color: var(--text-accent);
+        }
+
+        .file-tree {
+            list-style: none;
+        }
+
+        .file-tree li {
+            margin-bottom: 0.25rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            min-height: 36px;
+        }
+
+        .file-item:hover {
+            background: var(--bg-glass-hover);
+        }
+
+        .file-item.active {
+            background: var(--bg-code-review);
+            color: var(--code-purple);
+        }
+
+        .file-icon {
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .file-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* CODE VIEWER - FIXED LAYOUT */
+        .code-viewer {
+            grid-area: code;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .code-viewer {
+                border-radius: 12px;
+                min-height: 400px;
+            }
+        }
+
+        .code-header {
+            background: var(--bg-glass);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .code-header {
+                padding: 0.75rem 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        .current-file {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .code-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .code-btn:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .code-content {
+            flex: 1;
+            background: var(--bg-code);
+            color: var(--text-code);
+            overflow: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .code-line {
+            display: flex;
+            min-height: 20px;
+            padding: 0;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+
+        .code-line:hover {
+            background: var(--bg-code-line);
+        }
+
+        .code-line.highlighted {
+            background: var(--bg-code-review);
+            border-left-color: var(--code-purple);
+        }
+
+        .line-number {
+            width: 45px;
+            color: var(--text-muted);
+            text-align: right;
+            padding: 0 0.75rem 0 0.5rem;
+            user-select: none;
+            font-size: 12px;
+            flex-shrink: 0;
+            background: var(--bg-glass);
+            border-right: 1px solid var(--border-light);
+        }
+
+        .line-content {
+            flex: 1;
+            white-space: pre;
+            padding: 0 1rem;
+            overflow-x: auto;
+        }
+
+        /* REVIEW PANEL - FIXED LAYOUT */
+        .review-panel {
+            grid-area: review;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .review-panel {
+                max-height: 600px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .review-panel {
+                padding: 1rem;
+                border-radius: 12px;
+                max-height: 500px;
+            }
+        }
+
+        .review-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* CODE QUALITY METRICS - FIXED SPACING */
+        .code-metrics {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .metric-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+
+        .metric-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .metric-value.excellent {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .metric-value.good {
+            background: var(--gradient-warning);
+            color: white;
+        }
+
+        .metric-value.poor {
+            background: var(--gradient-danger);
+            color: white;
+        }
+
+        /* COMMENTS SECTION - FIXED SPACING */
+        .comments-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .comments-header h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .add-comment-btn {
+            background: var(--gradient-code);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .add-comment-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .comment-item {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        .comment-item:hover {
+            background: var(--bg-glass-hover);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+
+        .comment-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .comment-content {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-line {
+            color: var(--code-purple);
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* AI SUGGESTIONS - FIXED SPACING */
+        .ai-suggestions {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .ai-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .suggestion-item {
+            background: var(--gradient-ai);
+            color: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .suggestion-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .suggestion-content {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* BUTTONS */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-code);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+        }
+
+        /* EMPTY STATE */
+        .empty-code-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-code-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-code-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-code-state p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE MOBILE FIXES */
+        @media (max-width: 640px) {
+            .topbar-actions .action-btn:nth-child(2) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .topbar {
+                padding: 0.75rem;
+            }
+            
+            .page-title {
+                font-size: 1rem;
+            }
+            
+            .code-review-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* LANDSCAPE MOBILE OPTIMIZATION */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .code-review-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .code-review-title {
+                font-size: 1.75rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+
+            .code-review-layout {
+                height: calc(100vh - 200px);
+            }
+        }
+
+        /* ACCESSIBILITY IMPROVEMENTS */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* FOCUS IMPROVEMENTS */
+        .nav-link:focus,
+        .action-btn:focus,
+        .btn:focus,
+        .theme-toggle:focus,
+        .sidebar-toggle:focus,
+        .file-item:focus,
+        .code-btn:focus,
+        .add-comment-btn:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* BETTER TOUCH TARGETS */
+        @media (pointer: coarse) {
+            .nav-link,
+            .action-btn,
+            .theme-toggle,
+            .sidebar-toggle,
+            .btn,
+            .file-item,
+            .code-btn,
+            .add-comment-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            .sidebar,
+            .topbar,
+            .mobile-overlay,
+            .topbar-actions {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            .content {
+                padding: 1rem !important;
+            }
+
+            .code-review-layout {
+                display: block;
+                height: auto;
+            }
+
+            .file-explorer,
+            .review-panel {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="logo-text">NexusHack</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="nav-text">Feedback</div>
+                        <div class="nav-badge">NEW</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link active">
+                        <div class="nav-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Code Review</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="AI Analysis" onclick="runAIAnalysis()">
+                            <i class="fas fa-robot"></i>
+                        </button>
+                        <button class="action-btn" title="Export Review" onclick="exportReview()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Code Review Header -->
+                <div class="code-review-header">
+                    <div class="code-review-header-content">
+                        <h1 class="code-review-title">
+                            <i class="fas fa-code"></i>
+                            Advanced Code Review
+                        </h1>
+                        <p class="code-review-subtitle">
+                            Analyze project source code with AI-powered tools. Review architecture, 
+                            identify issues, and provide comprehensive technical feedback.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Code Review Layout -->
+                <div class="code-review-layout">
+                    <!-- File Explorer -->
+                    <div class="file-explorer">
+                        <h3 class="explorer-title">
+                            <i class="fas fa-folder-open"></i>
+                            Project Files
+                        </h3>
+                        
+                        <div class="project-info">
+                            <div class="project-name">DeFi Portfolio Tracker</div>
+                            <div class="project-language">React • Node.js • Solidity</div>
+                        </div>
+
+                        <ul class="file-tree" id="fileTree">
+                            <!-- Files will be dynamically loaded here -->
+                        </ul>
+                    </div>
+
+                    <!-- Code Viewer -->
+                    <div class="code-viewer">
+                        <div class="code-header">
+                            <div class="current-file" id="currentFile">Select a file to view</div>
+                            <div class="code-actions">
+                                <button class="code-btn" onclick="copyCode()">
+                                    <i class="fas fa-copy"></i>Copy
+                                </button>
+                                <button class="code-btn" onclick="formatCode()">
+                                    <i class="fas fa-magic"></i>Format
+                                </button>
+                                <button class="code-btn" onclick="analyzeSecurity()">
+                                    <i class="fas fa-shield-alt"></i>Security
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="codeContent">
+                            <div class="empty-code-state">
+                                <i class="fas fa-code"></i>
+                                <h3>Ready to Review Code</h3>
+                                <p>Select a file from the project explorer to start reviewing code and analyzing its quality.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Panel -->
+                    <div class="review-panel">
+                        <h3 class="review-title">
+                            <i class="fas fa-clipboard-list"></i>
+                            Code Analysis
+                        </h3>
+
+                        <!-- Code Quality Metrics -->
+                        <div class="code-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">Overall Quality</span>
+                                <span class="metric-value excellent">
+                                    <i class="fas fa-check-circle"></i>Excellent
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Code Complexity</span>
+                                <span class="metric-value good">
+                                    <i class="fas fa-exclamation-triangle"></i>Moderate
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Security Score</span>
+                                <span class="metric-value excellent">
+                                    <i class="fas fa-shield-alt"></i>A+
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Documentation</span>
+                                <span class="metric-value good">
+                                    <i class="fas fa-book"></i>Good
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Test Coverage</span>
+                                <span class="metric-value excellent">
+                                    <i class="fas fa-vial"></i>85%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="comments-section">
+                            <div class="comments-header">
+                                <h4>Review Comments</h4>
+                                <button class="add-comment-btn" onclick="addComment()">
+                                    <i class="fas fa-plus"></i>Add Comment
+                                </button>
+                            </div>
+                            <div class="comments-list" id="commentsList">
+                                <!-- Comments will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- AI Suggestions -->
+                        <div class="ai-suggestions">
+                            <h4 class="ai-title">
+                                <i class="fas fa-robot"></i>AI Suggestions
+                            </h4>
+                            <div class="suggestion-item">
+                                <div class="suggestion-title">Performance Optimization</div>
+                                <div class="suggestion-content">
+                                    Consider implementing memoization for expensive calculations in the portfolio tracker component.
+                                </div>
+                            </div>
+                            <div class="suggestion-item">
+                                <div class="suggestion-title">Security Enhancement</div>
+                                <div class="suggestion-content">
+                                    Add input validation for user wallet addresses to prevent injection attacks.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ADVANCED CODE REVIEW SYSTEM - FIXED OVERLAPPING ISSUES
+        class CodeReview {
+            constructor() {
+                this.currentFile = null;
+                this.files = [];
+                this.comments = [];
+                this.isMobile = window.innerWidth <= 1024;
+                this.currentUser = {
+                    name: 'Dr. Jane Smith',
+                    initials: 'JS',
+                    role: 'Senior Judge',
+                    id: 'judge_001'
+                };
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.loadProjectData();
+                this.renderFileTree();
+                this.loadComments();
+                this.initializeUser();
+                this.handleResize();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                const themeToggle = document.getElementById('themeToggle');
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            initializeUser() {
+                const userSession = localStorage.getItem('judgeSession');
+                if (userSession) {
+                    const session = JSON.parse(userSession);
+                    this.currentUser.name = session.name || this.currentUser.name;
+                    this.currentUser.initials = session.initials || this.currentUser.initials;
+                }
+                document.getElementById('userName').textContent = this.currentUser.name;
+                document.getElementById('userAvatar').textContent = this.currentUser.initials;
+            }
+
+            setupEventListeners() {
+                document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
+                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
+                document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
+                window.addEventListener('resize', () => this.handleResize());
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => this.handleResize(), 100);
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeMobileSidebar();
+                    }
+                    if (e.ctrlKey && e.key === 's') {
+                        e.preventDefault();
+                        this.saveReview();
+                    }
+                });
+
+                this.setupTouchGestures();
+            }
+
+            setupTouchGestures() {
+                let startX, startY, endX, endY;
+                
+                document.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches.clientY;
+                });
+                
+                document.addEventListener('touchend', (e) => {
+                    if (!startX || !startY) return;
+                    
+                    endX = e.changedTouches.clientX;
+                    endY = e.changedTouches.clientY;
+                    
+                    const diffX = startX - endX;
+                    const diffY = startY - endY;
+                    
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                        if (diffX > 0) {
+                            this.closeMobileSidebar();
+                        } else {
+                            if (this.isMobile) {
+                                this.openMobileSidebar();
+                            }
+                        }
+                    }
+                    
+                    startX = null;
+                    startY = null;
+                });
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 1024;
+                
+                if (!this.isMobile) {
+                    this.closeMobileSidebar();
+                }
+                
+                this.adjustLayoutForScreen();
+            }
+
+            adjustLayoutForScreen() {
+                // Adjust layout based on screen size
+                const layout = document.querySelector('.code-review-layout');
+                if (window.innerWidth <= 1024) {
+                    layout.style.height = 'auto';
+                } else {
+                    layout.style.height = 'calc(100vh - 300px)';
+                }
+            }
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                
+                if (this.isMobile) {
+                    sidebar.classList.toggle('open');
+                    this.toggleMobileOverlay();
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            }
+
+            openMobileSidebar() {
+                if (this.isMobile) {
+                    const sidebar = document.getElementById('sidebar');
+                    sidebar.classList.add('open');
+                    this.showMobileOverlay();
+                }
+            }
+
+            closeMobileSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.remove('open');
+                this.hideMobileOverlay();
+            }
+
+            toggleMobileOverlay() {
+                const overlay = document.getElementById('mobileOverlay');
+                overlay.classList.toggle('active');
+            }
+
+            showMobileOverlay() {
+                const overlay = document.getElementById('mobileOverlay');
+                overlay.classList.add('active');
+            }
+
+            hideMobileOverlay() {
+                const overlay = document.getElementById('mobileOverlay');
+                overlay.classList.remove('active');
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+            }
+
+            loadProjectData() {
+                this.files = [
+                    { id: 1, name: 'App.js', type: 'file', language: 'javascript', path: 'src/', icon: 'fab fa-js-square' },
+                    { id: 2, name: 'Portfolio.js', type: 'file', language: 'javascript', path: 'src/components/', icon: 'fab fa-js-square' },
+                    { id: 3, name: 'DeFiService.js', type: 'file', language: 'javascript', path: 'src/services/', icon: 'fab fa-js-square' },
+                    { id: 4, name: 'SmartContract.sol', type: 'file', language: 'solidity', path: 'contracts/', icon: 'fas fa-file-code' },
+                    { id: 5, name: 'package.json', type: 'file', language: 'json', path: '', icon: 'fab fa-npm' },
+                    { id: 6, name: 'README.md', type: 'file', language: 'markdown', path: '', icon: 'fab fa-markdown' },
+                    { id: 7, name: 'styles.css', type: 'file', language: 'css', path: 'src/', icon: 'fab fa-css3-alt' },
+                    { id: 8, name: 'api.js', type: 'file', language: 'javascript', path: 'src/utils/', icon: 'fab fa-js-square' }
+                ];
+            }
+
+            renderFileTree() {
+                const fileTree = document.getElementById('fileTree');
+                fileTree.innerHTML = '';
+                
+                this.files.forEach(file => {
+                    const fileItem = document.createElement('li');
+                    fileItem.innerHTML = `
+                        <div class="file-item" onclick="loadFile(${file.id})" data-file-id="${file.id}" tabindex="0" role="button" aria-label="Open ${file.name}">
+                            <i class="file-icon ${file.icon}"></i>
+                            <span class="file-name">${file.path}${file.name}</span>
+                        </div>
+                    `;
+                    fileTree.appendChild(fileItem);
+                });
+            }
+
+            loadFile(fileId) {
+                const file = this.files.find(f => f.id === fileId);
+                if (!file) return;
+
+                this.currentFile = file;
+                
+                // Update active file
+                document.querySelectorAll('.file-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[data-file-id="${fileId}"]`).classList.add('active');
+                
+                // Update header
+                document.getElementById('currentFile').textContent = `${file.path}${file.name}`;
+                
+                // Load code content
+                this.displayCode(file);
+                this.showToast(`Loaded ${file.name}`, 'info');
+            }
+
+            displayCode(file) {
+                const codeContent = document.getElementById('codeContent');
+                const sampleCode = this.getSampleCode(file.language);
+                
+                codeContent.innerHTML = '';
+                
+                const lines = sampleCode.split('\n');
+                lines.forEach((line, index) => {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'code-line';
+                    lineDiv.innerHTML = `
+                        <span class="line-number">${index + 1}</span>
+                        <span class="line-content">${this.escapeHtml(line)}</span>
+                    `;
+                    lineDiv.addEventListener('click', () => this.highlightLine(lineDiv, index + 1));
+                    codeContent.appendChild(lineDiv);
+                });
+            }
+
+            getSampleCode(language) {
+                const samples = {
+                    javascript: `import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import './Portfolio.css';
+
+const Portfolio = () => {
+  const [balance, setBalance] = useState('0');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    loadPortfolioData();
+  }, []);
+
+  const loadPortfolioData = async () => {
+    try {
+      setLoading(true);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const balance = await provider.getBalance(address);
+      setBalance(ethers.utils.formatEther(balance));
+    } catch (err) {
+      setError('Failed to load portfolio data');
+      console.error('Portfolio error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="portfolio-container">
+      <h2>DeFi Portfolio</h2>
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : error ? (
+        <div className="error">{error}</div>
+      ) : (
+        <div className="balance">
+          <span>Total Balance: {balance} ETH</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Portfolio;`,
+                    solidity: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract PortfolioTracker is ERC20, Ownable {
+    struct Investment {
+        address token;
+        uint256 amount;
+        uint256 timestamp;
+        uint256 price;
+    }
+    
+    mapping(address => Investment[]) public userInvestments;
+    mapping(address => uint256) public totalValue;
+    
+    event InvestmentAdded(address indexed user, address token, uint256 amount);
+    event InvestmentRemoved(address indexed user, address token, uint256 amount);
+    
+    constructor() ERC20("Portfolio Token", "PTK") {}
+    
+    function addInvestment(
+        address _token, 
+        uint256 _amount, 
+        uint256 _price
+    ) external {
+        require(_token != address(0), "Invalid token address");
+        require(_amount > 0, "Amount must be greater than 0");
+        
+        userInvestments[msg.sender].push(Investment({
+            token: _token,
+            amount: _amount,
+            timestamp: block.timestamp,
+            price: _price
+        }));
+        
+        totalValue[msg.sender] += _amount * _price;
+        emit InvestmentAdded(msg.sender, _token, _amount);
+    }
+    
+    function getPortfolioValue(address _user) external view returns (uint256) {
+        return totalValue[_user];
+    }
+}`,
+                    css: `.portfolio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--bg-card);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+}
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.portfolio-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.balance-card {
+  background: var(--gradient-success);
+  color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.balance-amount {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+
+.loading {
+  background: var(--bg-glass);
+  color: var(--text-muted);
+}
+
+.error {
+  background: var(--gradient-danger);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .portfolio-container {
+    padding: 1rem;
+  }
+  
+  .balance-amount {
+    font-size: 2rem;
+  }
+}`,
+                    json: `{
+  "name": "defi-portfolio-tracker",
+  "version": "1.0.0",
+  "description": "Advanced DeFi portfolio tracking application",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && gh-pages -d build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ethers": "^5.7.2",
+    "web3": "^1.8.0",
+    "@openzeppelin/contracts": "^4.8.0",
+    "axios": "^1.2.0",
+    "recharts": "^2.4.3",
+    "framer-motion": "^8.5.0"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "hardhat": "^2.12.6",
+    "gh-pages": "^4.0.0"
+  },
+  "keywords": [
+    "defi",
+    "blockchain",
+    "portfolio",
+    "ethereum",
+    "react"
+  ],
+  "author": "Blockchain Innovators",
+  "license": "MIT"
+}`,
+                    markdown: `# DeFi Portfolio Tracker
+
+A comprehensive decentralized finance portfolio tracking application built with React.js and Solidity.
+
+## 🚀 Features
+
+- **Multi-Blockchain Support**: Track investments across Ethereum, Polygon, and BSC
+- **Real-time Price Updates**: Live price feeds using Chainlink oracles
+- **Risk Assessment**: Advanced algorithms to calculate portfolio risk
+- **Yield Farming Tracker**: Monitor your DeFi yield farming positions
+- **Mobile Responsive**: Perfect experience across all devices
+
+## 📋 Requirements
+
+- Node.js v16 or higher
+- MetaMask or compatible Web3 wallet
+- Git for version control
+
+## 🛠️ Installation
+
+\`\`\`bash
+# Clone the repository
+git clone https://github.com/team/defi-portfolio-tracker.git
+
+# Navigate to project directory
+cd defi-portfolio-tracker
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
+\`\`\`
+
+## 🏗️ Architecture
+
+### Frontend
+- **React.js**: Modern UI components
+- **Ethers.js**: Blockchain interactions
+- **Recharts**: Portfolio visualizations
+
+### Backend
+- **Node.js**: API server
+- **Express.js**: REST API framework
+- **MongoDB**: Database for user data
+
+### Blockchain
+- **Solidity**: Smart contracts
+- **Hardhat**: Development environment
+- **OpenZeppelin**: Security libraries
+
+## 🧪 Testing
+
+\`\`\`bash
+# Run tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+\`\`\`
+
+## 📝 License
+
+This project is licensed under the MIT License.`
+                };
+                return samples[language] || samples.javascript;
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            highlightLine(lineElement, lineNumber) {
+                // Remove previous highlights
+                document.querySelectorAll('.code-line.highlighted').forEach(line => {
+                    line.classList.remove('highlighted');
+                });
+                
+                // Highlight current line
+                lineElement.classList.add('highlighted');
+                
+                // Show comment option
+                this.showLineComment(lineNumber);
+            }
+
+            showLineComment(lineNumber) {
+                this.showToast(`Line ${lineNumber} selected. Click "Add Comment" to review this line.`, 'info');
+            }
+
+            loadComments() {
+                this.comments = [
+                    {
+                        id: 1,
+                        author: 'Dr. Jane Smith',
+                        time: '2 hours ago',
+                        line: 15,
+                        content: 'Consider adding error handling for network failures in this section.',
+                        file: 'Portfolio.js'
+                    },
+                    {
+                        id: 2,
+                        author: 'Dr. Jane Smith',
+                        time: '1 hour ago',
+                        line: 8,
+                        content: 'Good use of useEffect for data loading. Performance looks optimal.',
+                        file: 'App.js'
+                    }
+                ];
+                this.renderComments();
+            }
+
+            renderComments() {
+                const commentsList = document.getElementById('commentsList');
+                commentsList.innerHTML = '';
+
+                if (this.comments.length === 0) {
+                    commentsList.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p style="font-size: 0.9rem;">No comments yet. Start reviewing code to add comments.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.comments.forEach(comment => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = 'comment-item';
+                    commentDiv.innerHTML = `
+                        <div class="comment-header">
+                            <span class="comment-author">${comment.author}</span>
+                            <span class="comment-time">${comment.time}</span>
+                        </div>
+                        <div class="comment-content">${comment.content}</div>
+                        <div class="comment-line">📍 ${comment.file}:${comment.line}</div>
+                    `;
+                    commentsList.appendChild(commentDiv);
+                });
+            }
+
+            addComment() {
+                const content = prompt('Enter your code review comment:');
+                if (content && content.trim()) {
+                    const newComment = {
+                        id: Date.now(),
+                        author: this.currentUser.name,
+                        time: 'just now',
+                        line: Math.floor(Math.random() * 50) + 1,
+                        content: content.trim(),
+                        file: this.currentFile ? this.currentFile.name : 'Unknown'
+                    };
+                    
+                    this.comments.unshift(newComment);
+                    this.renderComments();
+                    this.showToast('Comment added successfully!', 'success');
+                }
+            }
+
+            saveReview() {
+                // Save review data
+                const reviewData = {
+                    comments: this.comments,
+                    currentFile: this.currentFile,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('codeReviewData', JSON.stringify(reviewData));
+                this.showToast('Review saved successfully!', 'success');
+            }
+
+            showToast(message, type = 'success') {
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 2rem;
+                    right: 2rem;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10001;
+                    animation: slideInToast 0.3s ease-out;
+                    max-width: 350px;
+                    box-shadow: var(--shadow-lg);
+                    background: var(--gradient-${type});
+                `;
+                
+                if (window.innerWidth <= 768) {
+                    toast.style.top = '1rem';
+                    toast.style.right = '1rem';
+                    toast.style.left = '1rem';
+                    toast.style.maxWidth = 'none';
+                }
+                
+                toast.innerHTML = `
+                    <i class="fas ${this.getToastIcon(type)}"></i>
+                    <span style="margin-left: 0.5rem;">${message}</span>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 4000);
+            }
+
+            getToastIcon(type) {
+                const icons = {
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle',
+                    warning: 'fa-exclamation-triangle'
+                };
+                return icons[type] || 'fa-check-circle';
+            }
+        }
+
+        // Global instance and functions
+        let codeReview;
+
+        function loadFile(fileId) {
+            codeReview.loadFile(fileId);
+        }
+
+        function addComment() {
+            codeReview.addComment();
+        }
+
+        function copyCode() {
+            codeReview.showToast('Code copied to clipboard!', 'success');
+        }
+
+        function formatCode() {
+            codeReview.showToast('Code formatted successfully!', 'success');
+        }
+
+        function analyzeSecurity() {
+            codeReview.showToast('Security analysis complete - No issues found!', 'success');
+        }
+
+        function runAIAnalysis() {
+            codeReview.showToast('AI analysis started...', 'info');
+        }
+
+        function exportReview() {
+            codeReview.showToast('Review exported successfully!', 'success');
+        }
+
+        function backToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            codeReview = new CodeReview();
+            
+            // Auto-load first file after delay
+            setTimeout(() => {
+                codeReview.loadFile(1);
+            }, 1000);
+            
+            // Add entrance animations
+            setTimeout(() => {
+                document.querySelectorAll('.file-item').forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateX(-20px)';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateX(0)';
+                        }, 50);
+                    }, index * 50);
+                });
+            }, 500);
+
+            // Performance optimization for mobile devices
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    .mobile-device * {
+                        animation-duration: 0.1s !important;
+                        transition-duration: 0.1s !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            // Add keyboard support for file items
+            document.addEventListener('keydown', (e) => {
+                if (e.target.classList.contains('file-item')) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        e.target.click();
+                    }
+                }
+            });
+        });
+
+        // Enhanced animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                @keyframes slideInToast {
+                    from {
+                        transform: translateY(-100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+            }
+            
+            .file-item,
+            .code-line,
+            .comment-item,
+            .metric-item {
+                transition: var(--transition) !important;
+            }
+            
+            .file-item:active,
+            .code-btn:active,
+            .add-comment-btn:active {
+                transform: scale(0.98) !important;
+            }
+            
+            @media (hover: hover) and (pointer: fine) {
+                .file-item:hover {
+                    transform: translateX(4px) !important;
+                }
+                
+                .comment-item:hover {
+                    transform: translateY(-2px) !important;
+                }
+                
+                .code-line:hover {
+                    background: var(--bg-code-line) !important;
+                }
+            }
+            
+            *:focus-visible {
+                outline: 2px solid var(--primary) !important;
+                outline-offset: 2px !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

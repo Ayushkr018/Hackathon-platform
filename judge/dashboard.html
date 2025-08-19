@@ -1,0 +1,2906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Dashboard - NexusHack Platform</title>
+    <meta name="description" content="Comprehensive judge dashboard for evaluating hackathon projects, managing assessments, and providing feedback to participants.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* ENHANCED CSS VARIABLES - FULLY RESPONSIVE */
+        :root {
+            /* Primary Brand Colors */
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            
+            /* Enhanced Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-judge: linear-gradient(135deg, #f59e0b 0%, #667eea 100%);
+            
+            /* Enhanced Dark Theme */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-evaluation: rgba(245, 158, 11, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --sidebar-bg: var(--bg-secondary);
+            --topbar-bg: var(--bg-card);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            
+            /* Enhanced Animations */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* Responsive Variables */
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
+            --topbar-height: 72px;
+            --mobile-topbar-height: 64px;
+            --content-padding: 2rem;
+            --mobile-content-padding: 1rem;
+        }
+        
+        /* Enhanced Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-evaluation: rgba(245, 158, 11, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --sidebar-bg: var(--bg-primary);
+            --topbar-bg: var(--bg-primary);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* PERFECT RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ENHANCED CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-glass);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* MOBILE OVERLAY BACKDROP */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* PERFECT DASHBOARD LAYOUT */
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* FULLY RESPONSIVE SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(20px);
+            user-select: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        /* MOBILE SIDEBAR BEHAVIOR */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                box-shadow: var(--shadow-xl);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        /* LOGO SECTION - FULLY RESPONSIVE */
+        .sidebar-logo {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            min-height: var(--topbar-height);
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-judge);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient-judge);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .logo-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* NAVIGATION - PERFECT ALIGNMENT */
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0 1.5rem;
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-section-title {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+            min-height: 48px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-glass-hover);
+        }
+
+        .nav-link.active {
+            color: var(--warning);
+            background: var(--bg-evaluation);
+            border-right: 3px solid var(--warning);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--warning);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .nav-text {
+            flex: 1;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .nav-badge {
+            background: var(--gradient-warning);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .sidebar.collapsed .nav-badge {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* USER PROFILE - RESPONSIVE */
+        .sidebar-user {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+            min-height: 88px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-judge);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* MAIN CONTENT - PERFECT RESPONSIVE */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* TOPBAR - FULLY RESPONSIVE */
+        .topbar {
+            background: var(--topbar-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            min-height: var(--topbar-height);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                padding: 1rem;
+                min-height: var(--mobile-topbar-height);
+            }
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* SEARCH BOX - RESPONSIVE */
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                display: none;
+            }
+        }
+
+        .search-input {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 300px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        @media (max-width: 1200px) {
+            .search-input {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .search-input {
+                width: 180px;
+            }
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.8;
+        }
+
+        .search-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-focus);
+            transform: translateY(-1px);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* TOPBAR ACTIONS - RESPONSIVE */
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .topbar-actions {
+                gap: 0.5rem;
+            }
+        }
+
+        .action-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .action-btn {
+                width: 36px;
+                height: 36px;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .action-btn:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .action-btn.has-badge::after {
+            content: '';
+            position: absolute;
+            top: 0.3rem;
+            right: 0.3rem;
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .theme-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        /* CONTENT AREA - PERFECT RESPONSIVE */
+        .content {
+            flex: 1;
+            padding: var(--content-padding);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: var(--mobile-content-padding);
+            }
+        }
+
+        /* DASHBOARD HEADER - FULLY RESPONSIVE */
+        .dashboard-header {
+            background: var(--gradient-judge);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 2rem 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-header {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1rem;
+                border-radius: 12px;
+            }
+        }
+
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header::before {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        .dashboard-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .dashboard-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-stats {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-stats {
+                gap: 1.5rem;
+                flex-direction: column;
+            }
+        }
+
+        .dashboard-stat {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .stat-number {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 480px) {
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* QUICK ACTIONS - PERFECT GRID RESPONSIVE */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quick-actions {
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .action-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .action-card {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .action-card {
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-accent);
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-judge);
+        }
+
+        .action-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .action-header {
+                margin-bottom: 1rem;
+                gap: 0.75rem;
+            }
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-judge);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-glow);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .action-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+                border-radius: 12px;
+            }
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 480px) {
+            .action-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .action-count {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            .action-count {
+                font-size: 0.8rem;
+            }
+        }
+
+        .action-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .action-description {
+                margin-bottom: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .action-btn-secondary {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            .action-btn-secondary {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+            transform: translateY(-1px);
+        }
+
+        /* PERFORMANCE METRICS - PERFECT GRID */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 480px) {
+            .metric-card {
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-judge);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .metric-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .metric-value {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .metric-value {
+                font-size: 1.5rem;
+            }
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .metric-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        .metric-trend {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        @media (max-width: 480px) {
+            .metric-trend {
+                font-size: 0.75rem;
+            }
+        }
+
+        .metric-trend.positive {
+            color: var(--success);
+        }
+
+        .metric-trend.negative {
+            color: var(--danger);
+        }
+
+        /* CARDS & SECTIONS - RESPONSIVE */
+        .recent-activity,
+        .evaluation-queue {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        @media (max-width: 768px) {
+            .recent-activity,
+            .evaluation-queue {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                border-radius: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .recent-activity,
+            .evaluation-queue {
+                padding: 1.25rem;
+                margin-bottom: 1rem;
+                border-radius: 12px;
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* PROJECT QUEUE - RESPONSIVE */
+        .queue-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .queue-header {
+                margin-bottom: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .queue-header {
+                flex-direction: column;
+                align-items: stretch;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .project-queue {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .project-queue {
+                gap: 0.75rem;
+            }
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .project-item {
+                gap: 1rem;
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        .project-item:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .project-item.urgent {
+            border-left: 4px solid var(--danger);
+        }
+
+        .project-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .project-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+
+        .project-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 480px) {
+            .project-title {
+                font-size: 1rem;
+            }
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .project-meta {
+                gap: 0.75rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-meta {
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .project-tags {
+                justify-content: center;
+            }
+        }
+
+        .project-tag {
+            background: var(--bg-evaluation);
+            color: var(--warning);
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .project-tag {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+        }
+
+        .project-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .project-actions {
+                flex-direction: row;
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        .project-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        @media (max-width: 480px) {
+            .project-btn {
+                flex: 1;
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* ACTIVITY LIST - RESPONSIVE */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .activity-list {
+                gap: 0.75rem;
+            }
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .activity-item {
+                gap: 0.75rem;
+                padding: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .activity-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+                padding: 0.75rem;
+            }
+        }
+
+        .activity-item:hover {
+            background: var(--bg-glass-hover);
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 480px) {
+            .activity-item:hover {
+                transform: translateY(-2px);
+            }
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-judge);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .activity-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .activity-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 480px) {
+            .activity-title {
+                font-size: 0.9rem;
+            }
+        }
+
+        .activity-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            .activity-description {
+                font-size: 0.8rem;
+            }
+        }
+
+        .activity-time {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .activity-time {
+                font-size: 0.75rem;
+                white-space: normal;
+            }
+        }
+
+        /* BUTTONS - RESPONSIVE */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-judge);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+        }
+
+        /* EMPTY STATE - RESPONSIVE */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .empty-state {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-state {
+                padding: 2rem 1rem;
+            }
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .empty-icon {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .empty-title {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .empty-description {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .empty-description {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-description {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* PERFECT MOBILE MENU BUTTON */
+        @media (max-width: 1024px) {
+            .sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        /* HIDDEN ELEMENTS ON MOBILE */
+        @media (max-width: 640px) {
+            .search-box {
+                display: none !important;
+            }
+            
+            .topbar-actions .action-btn:nth-child(2) {
+                display: none;
+            }
+        }
+
+        /* ULTRA SMALL SCREENS */
+        @media (max-width: 360px) {
+            .topbar {
+                padding: 0.75rem;
+            }
+            
+            .page-title {
+                font-size: 1rem;
+            }
+            
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+            
+            .action-card {
+                padding: 1rem;
+            }
+            
+            .metric-card {
+                padding: 1rem;
+            }
+        }
+
+        /* LANDSCAPE MOBILE OPTIMIZATION */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .dashboard-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .dashboard-title {
+                font-size: 1.75rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+        }
+
+        /* HIGH DPI SCREENS */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .logo-icon,
+            .action-icon,
+            .metric-icon,
+            .activity-icon,
+            .project-avatar,
+            .user-avatar {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            .sidebar,
+            .topbar,
+            .mobile-overlay {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            .content {
+                padding: 1rem !important;
+            }
+            
+            .dashboard-header,
+            .action-card,
+            .metric-card {
+                break-inside: avoid;
+            }
+        }
+
+        /* ACCESSIBILITY IMPROVEMENTS */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* FOCUS IMPROVEMENTS */
+        .nav-link:focus,
+        .action-btn:focus,
+        .btn:focus,
+        .theme-toggle:focus,
+        .sidebar-toggle:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* BETTER TOUCH TARGETS */
+        @media (pointer: coarse) {
+            .nav-link,
+            .action-btn,
+            .theme-toggle,
+            .sidebar-toggle,
+            .btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="logo-text">NexusHack</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link active">
+                        <div class="nav-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="nav-text">Feedback</div>
+                        <div class="nav-badge">NEW</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Judge Dashboard</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search projects, participants..." id="searchInput">
+                    </div>
+
+                    <div class="topbar-actions">
+                        <button class="action-btn has-badge" title="Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="action-btn" title="Messages" aria-label="Messages">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="logout()" title="Logout" aria-label="Logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-header-content">
+                        <h1 class="dashboard-title">
+                            <i class="fas fa-gavel"></i>
+                            Welcome Back, Judge!
+                        </h1>
+                        <p class="dashboard-subtitle">
+                            Your evaluation dashboard with all the tools you need to assess hackathon projects fairly and efficiently.
+                        </p>
+                        
+                        <div class="dashboard-stats">
+                            <div class="dashboard-stat">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">Pending Evaluations</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-number">47</span>
+                                <span class="stat-label">Projects Reviewed</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-number">3</span>
+                                <span class="stat-label">Active Events</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-number">4.8/5</span>
+                                <span class="stat-label">Judge Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="action-card" onclick="startEvaluation()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Start Evaluation</div>
+                                <div class="action-count">12 projects waiting</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            Begin evaluating pending project submissions with our advanced scoring system.
+                        </p>
+                        <a href="evaluation.html" class="action-btn-secondary">
+                            <i class="fas fa-play"></i>
+                            Begin Assessment
+                        </a>
+                    </div>
+
+                    <div class="action-card" onclick="viewAssignedEvents()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Assigned Events</div>
+                                <div class="action-count">3 active events</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            View all hackathon events you're assigned to judge and manage your schedule.
+                        </p>
+                        <a href="assigned-events.html" class="action-btn-secondary">
+                            <i class="fas fa-eye"></i>
+                            View Events
+                        </a>
+                    </div>
+
+                    <div class="action-card" onclick="conductInterview()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Video Interview</div>
+                                <div class="action-count">2 scheduled</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            Conduct live interviews with teams to get deeper insights into their projects.
+                        </p>
+                        <a href="video-interview.html" class="action-btn-secondary">
+                            <i class="fas fa-video"></i>
+                            Start Interview
+                        </a>
+                    </div>
+
+                    <div class="action-card" onclick="reviewCode()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Code Review</div>
+                                <div class="action-count">8 repositories</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            Examine project source code with advanced tools for technical assessment.
+                        </p>
+                        <a href="code-review.html" class="action-btn-secondary">
+                            <i class="fas fa-search"></i>
+                            Review Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-value">18.5</div>
+                        <div class="metric-label">Avg. Review Time (mins)</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i>
+                            12% faster
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="metric-value">8.7</div>
+                        <div class="metric-label">Avg. Score Given</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            0.3 higher
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="metric-value">127</div>
+                        <div class="metric-label">Feedback Comments</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            23% more
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div class="metric-value">96%</div>
+                        <div class="metric-label">Participant Satisfaction</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            4% higher
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evaluation Queue -->
+                <div class="evaluation-queue">
+                    <div class="queue-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-list-ol"></i>
+                            Evaluation Queue
+                        </h2>
+                        <button class="btn btn-primary" onclick="startBatchEvaluation()">
+                            <i class="fas fa-play"></i>
+                            Start Batch Review
+                        </button>
+                    </div>
+
+                    <div class="project-queue" id="projectQueue">
+                        <!-- Projects will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h2 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recent Activity
+                    </h2>
+
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items will be dynamically inserted here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ADVANCED JAVASCRIPT - FULLY RESPONSIVE
+        class JudgeDashboard {
+            constructor() {
+                this.projects = [];
+                this.activities = [];
+                this.currentUser = {
+                    name: 'Dr. Jane Smith',
+                    initials: 'JS',
+                    role: 'Senior Judge',
+                    id: 'judge_001'
+                };
+                this.isMobile = window.innerWidth <= 1024;
+                
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.loadDashboardData();
+                this.renderProjects();
+                this.renderActivities();
+                this.initializeUser();
+                this.startRealTimeUpdates();
+                this.handleResize();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                
+                const themeToggle = document.getElementById('themeToggle');
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            initializeUser() {
+                const userSession = localStorage.getItem('judgeSession');
+                if (userSession) {
+                    const session = JSON.parse(userSession);
+                    this.currentUser.name = session.name || this.currentUser.name;
+                    this.currentUser.initials = session.initials || this.currentUser.initials;
+                }
+                
+                document.getElementById('userName').textContent = this.currentUser.name;
+                document.getElementById('userAvatar').textContent = this.currentUser.initials;
+            }
+
+            setupEventListeners() {
+                // Sidebar toggle
+                document.getElementById('sidebarToggle').addEventListener('click', () => {
+                    this.toggleSidebar();
+                });
+
+                // Theme toggle
+                document.getElementById('themeToggle').addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+
+                // Mobile overlay
+                document.getElementById('mobileOverlay').addEventListener('click', () => {
+                    this.closeMobileSidebar();
+                });
+
+                // Search functionality
+                const searchInput = document.getElementById('searchInput');
+                let searchTimeout;
+
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        this.performSearch(e.target.value);
+                    }, 300);
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+
+                // Handle orientation change
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => {
+                        this.handleResize();
+                    }, 100);
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeMobileSidebar();
+                    }
+                    if (e.ctrlKey && e.key === '/') {
+                        e.preventDefault();
+                        const searchInput = document.getElementById('searchInput');
+                        if (searchInput) {
+                            searchInput.focus();
+                        }
+                    }
+                });
+
+                // Touch gestures for mobile
+                this.setupTouchGestures();
+            }
+
+            setupTouchGestures() {
+                let startX, startY, endX, endY;
+                
+                document.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                                        startY = e.touches[0].clientY;
+                });
+                
+                document.addEventListener('touchend', (e) => {
+                    if (!startX || !startY) return;
+                    
+                    endX = e.changedTouches[0].clientX;
+                    endY = e.changedTouches.clientY;
+                    
+                    const diffX = startX - endX;
+                    const diffY = startY - endY;
+                    
+                    // Horizontal swipe detection
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                        if (diffX > 0) {
+                            // Swipe left - close sidebar
+                            this.closeMobileSidebar();
+                        } else {
+                            // Swipe right - open sidebar
+                            if (this.isMobile) {
+                                this.openMobileSidebar();
+                            }
+                        }
+                    }
+                    
+                    startX = null;
+                    startY = null;
+                });
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 1024;
+                
+                if (!this.isMobile) {
+                    this.closeMobileSidebar();
+                }
+                
+                // Adjust content padding for different screen sizes
+                this.adjustContentPadding();
+            }
+
+            adjustContentPadding() {
+                const content = document.querySelector('.content');
+                if (window.innerWidth <= 480) {
+                    content.style.setProperty('--content-padding', '1rem');
+                } else if (window.innerWidth <= 768) {
+                    content.style.setProperty('--content-padding', '1.5rem');
+                } else {
+                    content.style.setProperty('--content-padding', '2rem');
+                }
+            }
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                
+                if (this.isMobile) {
+                    sidebar.classList.toggle('open');
+                    this.toggleMobileOverlay();
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            }
+
+            openMobileSidebar() {
+                if (this.isMobile) {
+                    const sidebar = document.getElementById('sidebar');
+                    sidebar.classList.add('open');
+                    this.showMobileOverlay();
+                }
+            }
+
+            closeMobileSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.remove('open');
+                this.hideMobileOverlay();
+            }
+
+            toggleMobileOverlay() {
+                const overlay = document.getElementById('mobileOverlay');
+                overlay.classList.toggle('active');
+            }
+
+            showMobileOverlay() {
+                const overlay = document.getElementById('mobileOverlay');
+                overlay.classList.add('active');
+            }
+
+            hideMobileOverlay() {
+                const overlay = document.getElementById('mobileOverlay');
+                overlay.classList.remove('active');
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+            }
+
+            loadDashboardData() {
+                const storedProjects = localStorage.getItem('judgeProjects');
+                if (storedProjects) {
+                    this.projects = JSON.parse(storedProjects);
+                } else {
+                    this.projects = this.getMockProjects();
+                    this.saveProjects();
+                }
+
+                const storedActivities = localStorage.getItem('judgeActivities');
+                if (storedActivities) {
+                    this.activities = JSON.parse(storedActivities);
+                } else {
+                    this.activities = this.getMockActivities();
+                    this.saveActivities();
+                }
+            }
+
+            getMockProjects() {
+                const now = Date.now();
+                return [
+                    {
+                        id: 1,
+                        title: 'DeFi Portfolio Tracker',
+                        team: 'Blockchain Innovators',
+                        event: 'Web3 Challenge 2025',
+                        submittedAt: now - 3600000,
+                        deadline: now + 86400000,
+                        priority: 'high',
+                        tags: ['Web3', 'DeFi', 'React'],
+                        status: 'pending',
+                        participants: 4
+                    },
+                    {
+                        id: 2,
+                        title: 'AI-Powered Health Assistant',
+                        team: 'MedTech Warriors',
+                        event: 'Healthcare Hack 2025',
+                        submittedAt: now - 7200000,
+                        deadline: now + 172800000,
+                        priority: 'medium',
+                        tags: ['AI', 'Healthcare', 'Python'],
+                        status: 'pending',
+                        participants: 3
+                    },
+                    {
+                        id: 3,
+                        title: 'Smart City Traffic Manager',
+                        team: 'Urban Solutions',
+                        event: 'Smart Cities Challenge',
+                        submittedAt: now - 10800000,
+                        deadline: now + 259200000,
+                        priority: 'medium',
+                        tags: ['IoT', 'Smart City', 'Node.js'],
+                        status: 'pending',
+                        participants: 5
+                    },
+                    {
+                        id: 4,
+                        title: 'Sustainable Energy Optimizer',
+                        team: 'GreenTech Innovators',
+                        event: 'Climate Tech Hackathon',
+                        submittedAt: now - 14400000,
+                        deadline: now + 432000000,
+                        priority: 'low',
+                        tags: ['Green Tech', 'Energy', 'Python'],
+                        status: 'pending',
+                        participants: 4
+                    }
+                ];
+            }
+
+            getMockActivities() {
+                const now = Date.now();
+                return [
+                    {
+                        id: 1,
+                        type: 'evaluation',
+                        icon: 'fa-clipboard-check',
+                        title: 'Completed evaluation',
+                        description: 'Scored "Crypto Trading Bot" project - 8.5/10',
+                        time: now - 1800000,
+                        project: 'Crypto Trading Bot'
+                    },
+                    {
+                        id: 2,
+                        type: 'feedback',
+                        icon: 'fa-comment-alt',
+                        title: 'Provided detailed feedback',
+                        description: 'Left comprehensive review for Team Alpha',
+                        time: now - 3600000,
+                        project: 'NFT Marketplace'
+                    },
+                    {
+                        id: 3,
+                        type: 'interview',
+                        icon: 'fa-video',
+                        title: 'Conducted video interview',
+                        description: 'Technical interview with Team Beta completed',
+                        time: now - 5400000,
+                        project: 'AI Assistant'
+                    },
+                    {
+                        id: 4,
+                        type: 'code_review',
+                        icon: 'fa-code',
+                        title: 'Code review completed',
+                        description: 'Reviewed React.js implementation quality',
+                        time: now - 7200000,
+                        project: 'E-commerce Platform'
+                    },
+                    {
+                        id: 5,
+                        type: 'assignment',
+                        icon: 'fa-calendar-plus',
+                        title: 'New event assignment',
+                        description: 'Assigned as judge for "Mobile App Challenge"',
+                        time: now - 86400000,
+                        project: 'Mobile App Challenge'
+                    }
+                ];
+            }
+
+            saveProjects() {
+                localStorage.setItem('judgeProjects', JSON.stringify(this.projects));
+            }
+
+            saveActivities() {
+                localStorage.setItem('judgeActivities', JSON.stringify(this.activities));
+            }
+
+            renderProjects() {
+                const container = document.getElementById('projectQueue');
+                container.innerHTML = '';
+
+                if (this.projects.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-inbox"></i>
+                            </div>
+                            <h3 class="empty-title">No projects to evaluate</h3>
+                            <p class="empty-description">
+                                You're all caught up! New project submissions will appear here.
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const sortedProjects = this.projects
+                    .filter(p => p.status === 'pending')
+                    .sort((a, b) => {
+                        const priorityOrder = { high: 0, medium: 1, low: 2 };
+                        if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
+                            return priorityOrder[a.priority] - priorityOrder[b.priority];
+                        }
+                        return a.deadline - b.deadline;
+                    });
+
+                sortedProjects.forEach(project => {
+                    const projectEl = document.createElement('div');
+                    projectEl.className = `project-item ${project.priority === 'high' ? 'urgent' : ''}`;
+                    projectEl.dataset.id = project.id;
+
+                    projectEl.innerHTML = `
+                        <div class="project-avatar">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="project-details">
+                            <h3 class="project-title">${project.title}</h3>
+                            <div class="project-meta">
+                                <span><i class="fas fa-users"></i> ${project.team}</span>
+                                <span><i class="fas fa-calendar"></i> ${project.event}</span>
+                                <span><i class="fas fa-clock"></i> Due ${this.formatDeadline(project.deadline)}</span>
+                                <span><i class="fas fa-user-friends"></i> ${project.participants} members</span>
+                            </div>
+                            <div class="project-tags">
+                                ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn btn-primary project-btn" onclick="evaluateProject(${project.id})">
+                                <i class="fas fa-play"></i>
+                                Evaluate
+                            </button>
+                            <button class="btn btn-secondary project-btn" onclick="previewProject(${project.id})">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    `;
+
+                    projectEl.addEventListener('click', (e) => {
+                        if (!e.target.closest('button')) {
+                            this.showProjectDetails(project.id);
+                        }
+                    });
+
+                    container.appendChild(projectEl);
+                });
+            }
+
+            renderActivities() {
+                const container = document.getElementById('activityList');
+                container.innerHTML = '';
+
+                if (this.activities.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3 class="empty-title">No recent activity</h3>
+                            <p class="empty-description">
+                                Your evaluation activities will appear here.
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const sortedActivities = this.activities
+                    .sort((a, b) => b.time - a.time)
+                    .slice(0, 6);
+
+                sortedActivities.forEach(activity => {
+                    const activityEl = document.createElement('div');
+                    activityEl.className = 'activity-item';
+
+                    activityEl.innerHTML = `
+                        <div class="activity-icon">
+                            <i class="fas ${activity.icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">${activity.title}</div>
+                            <div class="activity-description">${activity.description}</div>
+                        </div>
+                        <div class="activity-time">${this.formatTime(activity.time)}</div>
+                    `;
+
+                    container.appendChild(activityEl);
+                });
+            }
+
+            formatTime(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                
+                if (diff < 60000) {
+                    return 'just now';
+                } else if (diff < 3600000) {
+                    const minutes = Math.floor(diff / 60000);
+                    return `${minutes}m ago`;
+                } else if (diff < 86400000) {
+                    const hours = Math.floor(diff / 3600000);
+                    return `${hours}h ago`;
+                } else {
+                    const days = Math.floor(diff / 86400000);
+                    return `${days}d ago`;
+                }
+            }
+
+            formatDeadline(timestamp) {
+                const now = Date.now();
+                const diff = timestamp - now;
+                
+                if (diff < 0) {
+                    return 'Overdue';
+                } else if (diff < 3600000) {
+                    const minutes = Math.floor(diff / 60000);
+                    return `in ${minutes}m`;
+                } else if (diff < 86400000) {
+                    const hours = Math.floor(diff / 3600000);
+                    return `in ${hours}h`;
+                } else {
+                    const days = Math.floor(diff / 86400000);
+                    return `in ${days}d`;
+                }
+            }
+
+            performSearch(query) {
+                console.log('Searching for:', query);
+                if (query.length > 2) {
+                    const filteredProjects = this.projects.filter(project =>
+                        project.title.toLowerCase().includes(query.toLowerCase()) ||
+                        project.team.toLowerCase().includes(query.toLowerCase()) ||
+                        project.event.toLowerCase().includes(query.toLowerCase()) ||
+                        project.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+                    );
+                    
+                    this.showToast(`Found ${filteredProjects.length} results for "${query}"`, 'info');
+                }
+            }
+
+            showProjectDetails(projectId) {
+                const project = this.projects.find(p => p.id === projectId);
+                if (project) {
+                    this.showToast(`Loading details for "${project.title}"...`, 'info');
+                    setTimeout(() => {
+                        console.log('Show project details:', project);
+                    }, 1000);
+                }
+            }
+
+            startRealTimeUpdates() {
+                setInterval(() => {
+                    this.checkForUpdates();
+                }, 30000);
+            }
+
+            checkForUpdates() {
+                const random = Math.random();
+                if (random < 0.3) {
+                    this.addActivity({
+                        id: Date.now(),
+                        type: 'update',
+                        icon: 'fa-bell',
+                        title: 'New project submission',
+                        description: 'A new project has been submitted for evaluation',
+                        time: Date.now(),
+                        project: 'New Project'
+                    });
+                    this.renderActivities();
+                    this.showToast('New project submission received!', 'info');
+                }
+            }
+
+            addActivity(activity) {
+                this.activities.unshift(activity);
+                if (this.activities.length > 50) {
+                    this.activities = this.activities.slice(0, 50);
+                }
+                this.saveActivities();
+            }
+
+            showToast(message, type = 'success') {
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 2rem;
+                    right: 2rem;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10001;
+                    animation: slideInToast 0.3s ease-out;
+                    max-width: 350px;
+                    box-shadow: var(--shadow-lg);
+                    background: var(--gradient-${type});
+                `;
+                
+                // Mobile responsive toast positioning
+                if (window.innerWidth <= 768) {
+                    toast.style.top = '1rem';
+                    toast.style.right = '1rem';
+                    toast.style.left = '1rem';
+                    toast.style.maxWidth = 'none';
+                }
+                
+                toast.innerHTML = `
+                    <i class="fas ${this.getToastIcon(type)}"></i>
+                    <span style="margin-left: 0.5rem;">${message}</span>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 4000);
+            }
+
+            getToastIcon(type) {
+                switch (type) {
+                    case 'success': return 'fa-check-circle';
+                    case 'error': return 'fa-exclamation-circle';
+                    case 'info': return 'fa-info-circle';
+                    case 'warning': return 'fa-exclamation-triangle';
+                    default: return 'fa-check-circle';
+                }
+            }
+        }
+
+        // Global instance and functions
+        let judgeDashboard;
+
+        function startEvaluation() {
+            judgeDashboard.showToast('Opening evaluation interface...', 'info');
+            setTimeout(() => {
+                window.location.href = 'evaluation.html';
+            }, 1000);
+        }
+
+        function viewAssignedEvents() {
+            judgeDashboard.showToast('Loading assigned events...', 'info');
+            setTimeout(() => {
+                window.location.href = 'assigned-events.html';
+            }, 1000);
+        }
+
+        function conductInterview() {
+            judgeDashboard.showToast('Preparing video interview interface...', 'info');
+            setTimeout(() => {
+                window.location.href = 'video-interview.html';
+            }, 1000);
+        }
+
+        function reviewCode() {
+            judgeDashboard.showToast('Loading code review tools...', 'info');
+            setTimeout(() => {
+                window.location.href = 'code-review.html';
+            }, 1000);
+        }
+
+        function evaluateProject(projectId) {
+            judgeDashboard.showToast('Starting evaluation process...', 'info');
+            setTimeout(() => {
+                localStorage.setItem('evaluateProjectId', projectId);
+                window.location.href = 'evaluation.html';
+            }, 1000);
+        }
+
+        function previewProject(projectId) {
+            judgeDashboard.showToast('Loading project preview...', 'info');
+            setTimeout(() => {
+                console.log('Preview project:', projectId);
+            }, 1000);
+        }
+
+        function startBatchEvaluation() {
+            judgeDashboard.showToast('Preparing batch evaluation interface...', 'info');
+            setTimeout(() => {
+                window.location.href = 'batch-evaluation.html';
+            }, 1000);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('judgeSession');
+                judgeDashboard.showToast('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.href = '../auth/login.html';
+                }, 1000);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            judgeDashboard = new JudgeDashboard();
+            
+            // Animate dashboard elements
+            setTimeout(() => {
+                document.querySelectorAll('.action-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.transform = 'translateY(-4px)';
+                        setTimeout(() => {
+                            card.style.transform = 'translateY(0)';
+                        }, 200);
+                    }, index * 100);
+                });
+            }, 1000);
+            
+            // Performance optimization for mobile
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+                
+                // Reduce animations on mobile for better performance
+                const style = document.createElement('style');
+                style.textContent = `
+                    .mobile-device * {
+                        animation-duration: 0.1s !important;
+                        transition-duration: 0.1s !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        });
+
+        // Add enhanced animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                @keyframes slideInToast {
+                    from {
+                        transform: translateY(-100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+            }
+            
+            /* Loading animation */
+            @keyframes loading {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            .loading {
+                animation: loading 1s linear infinite;
+            }
+            
+            /* Enhanced hover effects for desktop */
+            @media (hover: hover) and (pointer: fine) {
+                .action-card:hover {
+                    transform: translateY(-8px) !important;
+                    box-shadow: var(--shadow-xl) !important;
+                }
+                
+                .metric-card:hover {
+                    transform: translateY(-4px) !important;
+                }
+            }
+            
+            /* Smooth scrolling for all elements */
+            * {
+                scroll-behavior: smooth;
+            }
+            
+            /* Better focus indicators */
+            *:focus-visible {
+                outline: 2px solid var(--primary) !important;
+                outline-offset: 2px !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
