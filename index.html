@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusHack - AI-Powered Hackathon Ecosystem</title>
+    <meta name="description" content="Next-generation hackathon platform with AI-driven team matching, real-time analytics, and enterprise-grade security.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* Enhanced CSS Variables */
+        :root {
+            /* Primary Brand Colors */
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            
+            /* Enhanced Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            
+            /* Enhanced Dark Theme */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #b4b6c7;
+            --text-muted: #8b8ca7;
+            --text-accent: var(--primary);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(255, 255, 255, 0.04);
+            --border-accent: rgba(102, 126, 234, 0.3);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.2);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.4);
+            
+            /* Enhanced Animations */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Enhanced Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --border: rgba(71, 85, 105, 0.2);
+            --border-light: rgba(71, 85, 105, 0.1);
+            --border-accent: rgba(102, 126, 234, 0.3);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.16);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition-slow);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced Container System */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .container-wide {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Enhanced Header with Better Light Mode */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .header {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .header.scrolled {
+            background: rgba(10, 10, 26, 0.95);
+            box-shadow: var(--shadow-lg);
+            border-bottom-color: var(--border-accent);
+        }
+
+        [data-theme="light"] .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        /* Enhanced Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(180deg);
+            box-shadow: var(--shadow-glow-strong);
+        }
+
+        /* Enhanced Navigation with Better Light Mode */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--text-accent);
+        }
+
+        .nav-link.active::before {
+            width: 100%;
+        }
+
+        /* Enhanced Navigation Actions with Better Light Mode */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.75rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.2);
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            border-color: var(--border-accent);
+            transform: scale(1.05);
+        }
+
+        /* Enhanced Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="light"] .btn-outline {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.2);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+                var(--bg-primary);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23667eea" fill-opacity="0.03"><circle cx="30" cy="30" r="1"/></g></g></svg>');
+            animation: float 25s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -200px;
+            width: 400px;
+            height: 400px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.1;
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.8) translateY(-50%); opacity: 0.1; }
+            100% { transform: scale(1.2) translateY(-50%); opacity: 0.2; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        /* Enhanced Hero Badge */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-accent);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .hero-badge {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .hero-badge:hover {
+            transform: scale(1.05);
+            background: var(--bg-glass-hover);
+        }
+
+        .badge-icon {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Enhanced Typography */
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slide-up 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            animation: slide-up 1s ease-out 0.2s both;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Hero CTA */
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            animation: slide-up 1s ease-out 0.4s both;
+        }
+
+        /* Enhanced Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 2.5rem;
+            margin-top: 5rem;
+            animation: slide-up 1s ease-out 0.6s both;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .stat-card {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .works-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .works-card {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .works-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .works-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--border-accent);
+        }
+
+        .works-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .works-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .works-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .works-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .works-features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .works-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .works-features li:hover {
+            color: var(--text-primary);
+        }
+
+        .works-features li::before {
+            content: '✨';
+            font-size: 1.1rem;
+        }
+
+        /* Enhanced Features Section */
+        .features {
+            padding: 6rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .feature-card {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-accent);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.7rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Enhanced About Section */
+        .about {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .about-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="light"] .about-stat {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .about-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-accent);
+            display: block;
+        }
+
+        .about-stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Enhanced About Visual */
+        .about-visual {
+            position: relative;
+            height: 400px;
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .visual-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .visual-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .visual-desc {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .visual-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+        }
+
+        .visual-stat {
+            text-align: center;
+        }
+
+        .visual-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .visual-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Enhanced Roles Section */
+        .roles {
+            padding: 6rem 0;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .role-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .role-card {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition-slow);
+        }
+
+        .role-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--border-accent);
+        }
+
+        .role-icon {
+            width: 90px;
+            height: 90px;
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+        }
+
+        .role-card:hover .role-icon {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow-strong);
+        }
+
+        .role-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .role-desc {
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 2;
+            line-height: 1.7;
+        }
+
+        .role-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .role-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .role-features li:hover {
+            color: var(--text-primary);
+            transform: translateX(5px);
+        }
+
+        .role-features li::before {
+            content: '⚡';
+            font-size: 1rem;
+        }
+
+        /* Enhanced Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-accent);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .section-badge {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .section-badge:hover {
+            transform: scale(1.05);
+            background: var(--bg-glass-hover);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Enhanced CTA Section */
+        .cta {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.1;
+            transform: translate(-50%, -50%);
+            animation: pulse-bg 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% { transform: translate(-50%, -50%) scale(0.8); }
+            100% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        /* Enhanced Footer with Social Media */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-accent);
+            transform: translateX(3px);
+        }
+
+        /* Social Media Icons */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="light"] .social-link {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Mobile Menu Enhanced */
+        .mobile-menu-toggle {
+            display: none;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="light"] .mobile-menu-toggle {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .mobile-menu-toggle:hover {
+            background: var(--bg-glass-hover);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5rem;
+            transform: translateX(-100%);
+            transition: var(--transition-slow);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu-close:hover {
+            background: var(--bg-glass-hover);
+            transform: scale(1.05);
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-visual {
+                height: 300px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .features-grid,
+            .roles-grid,
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .visual-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-left {
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-right {
+            animation: fadeInRight 0.8s ease-out forwards;
+        }
+
+        /* Page Transition Effect */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: 10000;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .page-transition.active {
+            transform: scaleX(1);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--bg-secondary);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo" onclick="scrollToTop()">
+                    <div class="logo-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    NexusHack
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                    <li><a href="#features" class="nav-link" data-section="features">Features</a></li>
+                    <li><a href="#how-it-works" class="nav-link" data-section="how-it-works">How It Works</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                    <li><a href="#roles" class="nav-link" data-section="roles">Roles</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="auth/login.html" class="btn btn-outline" onclick="handlePageTransition(event, this.href)">Login</a>
+                    <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">Get Started</a>
+                </div>
+
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#home" class="nav-link" data-section="home">Home</a>
+        <a href="#features" class="nav-link" data-section="features">Features</a>
+        <a href="#how-it-works" class="nav-link" data-section="how-it-works">How It Works</a>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#roles" class="nav-link" data-section="roles">Roles</a>
+        <a href="auth/login.html" class="btn btn-outline" onclick="handlePageTransition(event, this.href)">Login</a>
+        <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">Get Started</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <div class="badge-icon"></div>
+                    <span>🚀 AI-Powered Hackathon Platform</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Next-Gen Hackathon<br>Ecosystem
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Experience the future of hackathons with AI-driven team matching, 
+                    real-time analytics, and enterprise-grade security. Built for developers, 
+                    organizers, and judges who demand excellence.
+                </p>
+                
+                <div class="hero-cta">
+                    <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        <i class="fas fa-rocket"></i>
+                        Start Your Journey
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline">
+                        <i class="fas fa-play"></i>
+                        See How It Works
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="statUsers">5,000+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statEvents">150+</span>
+                        <span class="stat-label">Events Hosted</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statProjects">1,200+</span>
+                        <span class="stat-label">Projects Built</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statSuccess">95%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🎯 How It Works</span>
+                <h2 class="section-title">Simple Process for Every Role</h2>
+                <p class="section-subtitle">
+                    Our platform streamlines the hackathon experience with intuitive workflows 
+                    tailored for participants, organizers, and judges.
+                </p>
+            </div>
+            
+            <div class="works-grid">
+                <div class="works-card">
+                    <div class="works-number">1</div>
+                    <h3 class="works-title">For Participants</h3>
+                    <p class="works-desc">
+                        Join hackathons, find perfect teammates, and showcase your skills 
+                        with our intelligent matching system.
+                    </p>
+                    <ul class="works-features">
+                        <li>Sign up and complete your skill profile</li>
+                        <li>Browse AI-recommended events</li>
+                        <li>Get matched with ideal teammates</li>
+                        <li>Submit projects through guided wizard</li>
+                        <li>Track progress on live leaderboards</li>
+                    </ul>
+                    <a href="auth/register.html?role=participant" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Participant
+                    </a>
+                </div>
+                
+                <div class="works-card">
+                    <div class="works-number">2</div>
+                    <h3 class="works-title">For Organizers</h3>
+                    <p class="works-desc">
+                        Create and manage hackathons effortlessly with comprehensive 
+                        tools and real-time analytics.
+                    </p>
+                    <ul class="works-features">
+                        <li>Set up events with step-by-step wizard</li>
+                        <li>Configure judging criteria and rubrics</li>
+                        <li>Manage participants with AI insights</li>
+                        <li>Monitor engagement through analytics</li>
+                        <li>Automate result compilation and sharing</li>
+                    </ul>
+                    <a href="auth/register.html?role=organizer" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Become Organizer
+                    </a>
+                </div>
+                
+                <div class="works-card">
+                    <div class="works-number">3</div>
+                    <h3 class="works-title">For Judges</h3>
+                    <p class="works-desc">
+                        Evaluate projects fairly and efficiently with AI-assisted 
+                        tools and bias-free scoring systems.
+                    </p>
+                    <ul class="works-features">
+                        <li>Receive optimal project assignments</li>
+                        <li>Use bias-mitigation evaluation tools</li>
+                        <li>Collaborate with other judges seamlessly</li>
+                        <li>Provide structured, actionable feedback</li>
+                        <li>Generate comprehensive evaluation reports</li>
+                    </ul>
+                    <a href="auth/register.html?role=judge" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Judge
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">⚡ Core Features</span>
+                <h2 class="section-title">Powerful Tools for Every Need</h2>
+                <p class="section-subtitle">
+                    Our platform provides cutting-edge features designed to streamline 
+                    the entire hackathon experience from registration to results.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Matching</h3>
+                    <p class="feature-desc">
+                        Advanced machine learning algorithms analyze skills, experience, and preferences 
+                        to create optimal team compositions and personalized event recommendations.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Analytics</h3>
+                    <p class="feature-desc">
+                        Comprehensive dashboards provide instant insights into participation patterns, 
+                        engagement metrics, and performance data for informed decision-making.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Enterprise Security</h3>
+                    <p class="feature-desc">
+                        Bank-grade encryption, GDPR compliance, multi-factor authentication, 
+                        and comprehensive audit trails ensure your data is always protected.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Progressive Web App</h3>
+                    <p class="feature-desc">
+                        Native app experience with offline capabilities, push notifications, 
+                        and seamless performance across all devices and screen sizes.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Integrated Communication</h3>
+                    <p class="feature-desc">
+                        Built-in messaging, video conferencing, file sharing, and collaborative 
+                        whiteboards keep teams connected throughout their hackathon journey.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Judging System</h3>
+                    <p class="feature-desc">
+                        AI-assisted evaluation with bias mitigation, collaborative scoring interfaces, 
+                        and automated result compilation ensures fair and efficient judging.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Enhanced Visual -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🌟 About NexusHack</span>
+                <h2 class="section-title">Revolutionizing Hackathon Experiences</h2>
+                <p class="section-subtitle">
+                    Born from the need to solve real problems in the hackathon ecosystem, 
+                    NexusHack represents the next evolution of collaborative innovation platforms.
+                </p>
+            </div>
+            
+            <div class="about-content">
+                <div>
+                    <p class="about-text">
+                        Traditional hackathon platforms force organizers to juggle multiple tools, 
+                        participants to waste time finding compatible teammates, and judges to 
+                        navigate biased evaluation processes. We saw these pain points and built 
+                        a comprehensive solution.
+                    </p>
+                    <p class="about-text">
+                        NexusHack leverages artificial intelligence, modern web technologies, 
+                        and user-centered design to create an ecosystem where innovation thrives. 
+                        Our platform eliminates friction, promotes fairness, and amplifies creativity.
+                    </p>
+                    <p class="about-text">
+                        From Fortune 500 companies running internal innovation challenges to 
+                        universities hosting student competitions, NexusHack scales to meet 
+                        any hackathon need while maintaining the highest standards of security and performance.
+                    </p>
+                    
+                    <div class="about-stats">
+                        <div class="about-stat">
+                            <span class="about-stat-number">99.9%</span>
+                            <span class="about-stat-label">Uptime</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">< 2s</span>
+                            <span class="about-stat-label">Load Time</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">SOC 2</span>
+                            <span class="about-stat-label">Certified</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">24/7</span>
+                            <span class="about-stat-label">Support</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div class="visual-content">
+                        <div class="visual-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="visual-title">Powering Innovation</h3>
+                        <p class="visual-desc">Trusted by leading organizations worldwide</p>
+                        
+                        <div class="visual-stats">
+                            <div class="visual-stat">
+                                <span class="visual-stat-number">50+</span>
+                                <span class="visual-stat-label">Countries</span>
+                            </div>
+                            <div class="visual-stat">
+                                <span class="visual-stat-number">1M+</span>
+                                <span class="visual-stat-label">Developers</span>
+                            </div>
+                            <div class="visual-stat">
+                                <span class="visual-stat-number">500+</span>
+                                <span class="visual-stat-label">Companies</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roles Section -->
+    <section class="roles" id="roles">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">👥 Choose Your Role</span>
+                <h2 class="section-title">Built for Every Stakeholder</h2>
+                <p class="section-subtitle">
+                    Whether you're a participant, organizer, or judge, our platform 
+                    provides tailored experiences that maximize value and efficiency.
+                </p>
+            </div>
+            
+            <div class="roles-grid">
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="role-title">Participants</h3>
+                    <p class="role-desc">
+                        Join hackathons, discover teammates who complement your skills, 
+                        and showcase your projects with our intelligent platform designed for creators.
+                    </p>
+                    <ul class="role-features">
+                        <li>AI-powered team matching algorithms</li>
+                        <li>Personalized event discovery engine</li>
+                        <li>Intuitive project submission wizard</li>
+                        <li>Real-time leaderboard tracking</li>
+                        <li>Portfolio and GitHub integration</li>
+                        <li>Skill verification and badges</li>
+                    </ul>
+                    <a href="auth/register.html?role=participant" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Participant
+                    </a>
+                </div>
+                
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="role-title">Organizers</h3>
+                    <p class="role-desc">
+                        Create and manage world-class hackathons with enterprise-grade tools 
+                        for participant management, analytics, and seamless event execution.
+                    </p>
+                    <ul class="role-features">
+                        <li>Step-by-step event creation wizard</li>
+                        <li>Advanced participant management</li>
+                        <li>Real-time analytics and insights</li>
+                        <li>Automated judge assignment system</li>
+                        <li>Sponsor integration and branding</li>
+                        <li>Custom registration workflows</li>
+                    </ul>
+                    <a href="auth/register.html?role=organizer" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Become Organizer
+                    </a>
+                </div>
+                
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="role-title">Judges</h3>
+                    <p class="role-desc">
+                        Evaluate projects with confidence using AI-assisted tools that ensure 
+                        fair assessment, reduce bias, and streamline the judging process.
+                    </p>
+                    <ul class="role-features">
+                        <li>Intelligent project assignment</li>
+                        <li>Bias mitigation and fairness tools</li>
+                        <li>Collaborative scoring interfaces</li>
+                        <li>Automated result compilation</li>
+                        <li>Structured feedback systems</li>
+                        <li>Conflict of interest detection</li>
+                    </ul>
+                    <a href="auth/register.html?role=judge" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Judge
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Transform Your Hackathon Experience?</h2>
+                <p class="cta-subtitle">
+                    Join thousands of developers, organizers, and judges who are already 
+                    using NexusHack to create extraordinary hackathon experiences that drive innovation.
+                </p>
+                <div class="hero-cta">
+                    <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        <i class="fas fa-rocket"></i>
+                        Get Started Now
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-envelope"></i>
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer with Social Media -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        NexusHack
+                    </div>
+                    <p style="margin-top: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
+                        The next-generation hackathon platform powered by AI and 
+                        designed for the modern developer ecosystem. Building the future of collaborative innovation.
+                    </p>
+                    
+                    <!-- Social Media Links -->
+                    <div class="social-links">
+                        <a href="https://twitter.com/nexushack" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://github.com/nexushack" class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/nexushack" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://discord.gg/nexushack" class="social-link" title="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="https://youtube.com/c/nexushack" class="social-link" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#security">Security</a></li>
+                        <li><a href="#api">API Documentation</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#guides">Best Practices</a></li>
+                        <li><a href="#support">Support Center</a></li>
+                        <li><a href="#community">Community</a></li>
+                        <li><a href="#webinars">Webinars</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#press">Press Kit</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 NexusHack Platform. All rights reserved. Built with 💜 for the global developer community.</p>
+                
+                <div class="footer-social">
+                    <a href="mailto:hello@nexushack.com" class="social-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="tel:+1-555-NEXUS" class="social-link" title="Phone">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="#newsletter" class="social-link" title="Newsletter">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        });
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        
+        // Enhanced Header scroll effect with scroll progress
+        const header = document.getElementById('header');
+        const scrollProgress = document.getElementById('scrollProgress');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrolled / maxScroll) * 100;
+            
+            scrollProgress.style.width = progress + '%';
+            
+            if (scrolled > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Enhanced Mobile menu
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        
+        // Close mobile menu when clicking on a link
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.classList.contains('nav-link')) {
+                closeMobileMenu();
+            }
+        });
+        
+        // Enhanced navigation with active states
+        const navLinks = document.querySelectorAll('.nav-link[data-section]');
+        const sections = document.querySelectorAll('section[id]');
+        
+        function updateActiveNavLink() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const sectionHeight = section.offsetHeight;
+                if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNavLink);
+        
+        // Smooth scrolling for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-section');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                closeMobileMenu();
+            });
+        });
+        
+        // Enhanced animated counters with more realistic animation
+        function animateCounter(element, target, suffix = '+', duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    let displayValue = Math.floor(start);
+                    if (suffix === '%') {
+                        element.textContent = displayValue + '%';
+                    } else {
+                        element.textContent = displayValue.toLocaleString() + suffix;
+                    }
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    if (suffix === '%') {
+                        element.textContent = target + '%';
+                    } else {
+                        element.textContent = target.toLocaleString() + suffix;
+                    }
+                }
+            }
+            
+            updateCounter();
+        }
+        
+        // Enhanced Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('hero-stats')) {
+                        // Animate hero stats
+                        setTimeout(() => {
+                            animateCounter(document.getElementById('statUsers'), 5000);
+                            animateCounter(document.getElementById('statEvents'), 150);
+                            animateCounter(document.getElementById('statProjects'), 1200);
+                            animateCounter(document.getElementById('statSuccess'), 95, '%');
+                        }, 500);
+                    }
+                    
+                    // Add animation classes
+                    entry.target.classList.add('animate-fade-in-up');
+                    
+                    // Stagger animations for grid items
+                    if (entry.target.classList.contains('features-grid') || 
+                        entry.target.classList.contains('roles-grid') ||
+                        entry.target.classList.contains('works-grid')) {
+                        const cards = entry.target.children;
+                        Array.from(cards).forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('animate-fade-in-up');
+                            }, index * 100);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements for animation
+        document.querySelectorAll('.hero-content, .section-header, .feature-card, .role-card, .works-card, .hero-stats, .features-grid, .roles-grid, .works-grid, .about-content').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Page transition function
+        function handlePageTransition(event, url) {
+            event.preventDefault();
+            const transition = document.getElementById('pageTransition');
+            
+            transition.classList.add('active');
+            
+            setTimeout(() => {
+                window.location.href = url;
+            }, 600);
+        }
+        
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Enhanced loading states for buttons
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.href && this.href.includes('.html')) {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<span class="loading"></span> Loading...';
+                    this.style.pointerEvents = 'none';
+                    
+                    // Reset after a delay (for demo purposes)
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.pointerEvents = '';
+                    }, 2000);
+                }
+            });
+        });
+        
+        // Enhanced parallax effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroParallax = document.querySelector('.hero::after');
+            
+            // Parallax for hero background
+            if (heroParallax) {
+                const speed = scrolled * 0.3;
+                document.documentElement.style.setProperty('--parallax-offset', `${speed}px`);
+            }
+        });
+        
+        // Social media hover effects
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.1)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateActiveNavLink();
+            
+            // Add initial animation delay to hero content
+            setTimeout(() => {
+                document.querySelector('.hero-content').classList.add('animate-fade-in-up');
+            }, 300);
+        });
+    </script>
+</body>
+</html>
