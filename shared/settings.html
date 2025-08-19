@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - NexusHack Platform</title>
+    <meta name="description" content="Manage your account settings, preferences, privacy controls, and platform configuration on NexusHack.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* Enhanced CSS Variables - CONSISTENT THEME */
+        :root {
+            /* Primary Brand Colors - SAME AS ORIGINAL */
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            
+            /* Enhanced Gradients - CONSISTENT */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-settings: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+            /* Enhanced Dark Theme */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-toggle: #374151;
+            --bg-toggle-active: var(--primary);
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            
+            /* Enhanced Animations */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Enhanced Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-toggle: #d1d5db;
+            --bg-toggle-active: var(--primary);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-glass);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+        }
+
+        /* Content Container */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Settings Header */
+        .settings-header {
+            background: var(--gradient-settings);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .settings-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .settings-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .settings-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .settings-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .settings-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        .settings-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Settings Layout */
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+        }
+
+        /* Settings Sidebar */
+        .settings-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .settings-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .settings-nav-item:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .settings-nav-item.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* Settings Content */
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .settings-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .settings-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            background: var(--bg-select);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-focus);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2e8f0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2rem;
+            padding-right: 3rem;
+        }
+
+        [data-theme="light"] .form-select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        }
+
+        .form-select option {
+            background-color: var(--bg-option);
+            color: var(--text-option);
+            padding: 0.75rem;
+        }
+
+        .form-help {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Toggle Switch */
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .toggle-group:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-info {
+            flex: 1;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .toggle-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background: var(--bg-toggle);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .toggle-switch.active {
+            background: var(--bg-toggle-active);
+            border-color: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(22px);
+        }
+
+        /* Settings Grid */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .settings-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .settings-card:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Danger Zone */
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .danger-title {
+            color: var(--danger);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .danger-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .btn-danger {
+            background: var(--gradient-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-modal);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn-cancel {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-cancel:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+            color: var(--text-primary);
+        }
+
+        .btn-save {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: var(--gradient-hover);
+        }
+
+        /* Data Usage Chart */
+        .data-usage {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .usage-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 1rem;
+        }
+
+        .usage-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .usage-value {
+            color: var(--text-accent);
+            font-weight: 700;
+        }
+
+        .usage-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .usage-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .settings-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .settings-sidebar {
+                position: static;
+                order: 1;
+            }
+            
+            .settings-content {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 1rem;
+            }
+            
+            .settings-header {
+                padding: 2rem 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .settings-title {
+                font-size: 2rem;
+            }
+            
+            .settings-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .toggle-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="logo-text">NexusHack</div>
+            </a>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="../participant/dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button class="btn btn-primary" onclick="saveAllSettings()">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="content">
+        <!-- Settings Header -->
+        <div class="settings-header">
+            <div class="settings-header-content">
+                <h1 class="settings-title">
+                    <i class="fas fa-cog"></i>
+                    Account Settings
+                </h1>
+                <p class="settings-subtitle">
+                    Manage your account preferences, privacy settings, and platform configuration 
+                    to customize your NexusHack experience.
+                </p>
+                
+                <div class="settings-stats">
+                    <div class="settings-stat">
+                        <span class="stat-number">Profile</span>
+                        <span class="stat-label">100% Complete</span>
+                    </div>
+                    <div class="settings-stat">
+                        <span class="stat-number">Security</span>
+                        <span class="stat-label">2FA Enabled</span>
+                    </div>
+                    <div class="settings-stat">
+                        <span class="stat-number">Privacy</span>
+                        <span class="stat-label">Enhanced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Layout -->
+        <div class="settings-layout">
+            <!-- Settings Sidebar -->
+            <div class="settings-sidebar">
+                <h3 class="sidebar-title">Settings Categories</h3>
+                
+                <nav class="settings-nav">
+                    <a href="#" class="settings-nav-item active" onclick="switchSection('account')" data-section="account">
+                        <div class="nav-icon"><i class="fas fa-user"></i></div>
+                        <span>Account</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('security')" data-section="security">
+                        <div class="nav-icon"><i class="fas fa-shield-alt"></i></div>
+                        <span>Security</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('privacy')" data-section="privacy">
+                        <div class="nav-icon"><i class="fas fa-eye-slash"></i></div>
+                        <span>Privacy</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('notifications')" data-section="notifications">
+                        <div class="nav-icon"><i class="fas fa-bell"></i></div>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('appearance')" data-section="appearance">
+                        <div class="nav-icon"><i class="fas fa-palette"></i></div>
+                        <span>Appearance</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('data')" data-section="data">
+                        <div class="nav-icon"><i class="fas fa-database"></i></div>
+                        <span>Data & Storage</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('integrations')" data-section="integrations">
+                        <div class="nav-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <span>Integrations</span>
+                    </a>
+                    <a href="#" class="settings-nav-item" onclick="switchSection('advanced')" data-section="advanced">
+                        <div class="nav-icon"><i class="fas fa-sliders-h"></i></div>
+                        <span>Advanced</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="settings-content">
+                <!-- Account Settings -->
+                <div class="settings-section active" id="accountSection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Account Settings
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Manage your basic account information, contact details, and profile settings.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" id="fullName" value="John Doe" placeholder="Enter your full name">
+                        <div class="form-help">This name will be displayed on your profile and submissions.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" value="john.doe@example.com" placeholder="Enter your email">
+                        <div class="form-help">We'll send important notifications to this email address.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" id="username" value="johndoe" placeholder="Choose a unique username">
+                        <div class="form-help">Your username is unique and cannot be changed frequently.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Bio</label>
+                        <textarea class="form-textarea" id="bio" placeholder="Tell us about yourself...">Passionate full-stack developer and hackathon enthusiast. Love building innovative solutions with cutting-edge technologies.</textarea>
+                        <div class="form-help">Share a brief description about yourself and your interests.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" id="location" value="San Francisco, CA" placeholder="Your current location">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Time Zone</label>
+                        <select class="form-select" id="timezone">
+                            <option value="PST">Pacific Standard Time (PST)</option>
+                            <option value="EST">Eastern Standard Time (EST)</option>
+                            <option value="GMT">Greenwich Mean Time (GMT)</option>
+                            <option value="IST">India Standard Time (IST)</option>
+                            <option value="JST">Japan Standard Time (JST)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="saveAccountSettings()">
+                        <i class="fas fa-save"></i>
+                        Save Account Settings
+                    </button>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="settings-section" id="securitySection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-shield-alt"></i>
+                            Security Settings
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Protect your account with advanced security features and authentication methods.
+                    </p>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Change Password</div>
+                                    <div class="card-subtitle">Last changed 2 months ago</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Update your password to keep your account secure.
+                            </div>
+                            <button class="btn btn-secondary" onclick="openPasswordModal()" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-key"></i>
+                                Change Password
+                            </button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Two-Factor Authentication</div>
+                                    <div class="card-subtitle">Enabled via SMS</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Add an extra layer of security to your account.
+                            </div>
+                            <button class="btn btn-primary" onclick="manage2FA()" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-cog"></i>
+                                Manage 2FA
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Login Notifications</div>
+                            <div class="toggle-description">Get notified when someone logs into your account</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Security Alerts</div>
+                            <div class="toggle-description">Receive alerts about suspicious account activity</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Active Sessions</label>
+                        <div style="background: var(--bg-glass); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary);">Current Session</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Chrome on Windows • San Francisco, CA</div>
+                                </div>
+                                <div style="color: var(--success); font-size: 0.8rem;">Active Now</div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary);">Mobile Session</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">iPhone Safari • 2 hours ago</div>
+                                </div>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                                    Revoke
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Settings -->
+                <div class="settings-section" id="privacySection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-eye-slash"></i>
+                            Privacy Settings
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Control who can see your information and how your data is used across the platform.
+                    </p>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Public Profile</div>
+                            <div class="toggle-description">Make your profile visible to other users and search engines</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Show Activity Status</div>
+                            <div class="toggle-description">Let others see when you're online and active</div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Show Project Statistics</div>
+                            <div class="toggle-description">Display your hackathon participation and project stats publicly</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Profile Visibility</label>
+                        <select class="form-select" id="profileVisibility">
+                            <option value="public">Public - Visible to everyone</option>
+                            <option value="members">Members Only - Visible to platform members</option>
+                            <option value="private">Private - Only visible to you</option>
+                        </select>
+                        <div class="form-help">Choose who can view your full profile information.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Contact Permissions</label>
+                        <select class="form-select" id="contactPermissions">
+                            <option value="everyone">Anyone can contact me</option>
+                            <option value="members">Only platform members</option>
+                            <option value="teams">Only team members</option>
+                            <option value="none">No one can contact me</option>
+                        </select>
+                        <div class="form-help">Control who can send you messages and invitations.</div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Data Analytics</div>
+                            <div class="toggle-description">Help improve the platform by sharing anonymous usage data</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Settings -->
+                <div class="settings-section" id="notificationsSection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-bell"></i>
+                            Notification Preferences
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Customize how and when you receive notifications about hackathons, teams, and platform updates.
+                    </p>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Email Notifications</div>
+                                    <div class="card-subtitle">Receive updates via email</div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-info">
+                                    <div class="toggle-label">New Hackathons</div>
+                                    <div class="toggle-description">Get notified about new hackathon events</div>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-info">
+                                    <div class="toggle-label">Team Invitations</div>
+                                    <div class="toggle-description">Receive team join requests and invitations</div>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-info">
+                                    <div class="toggle-label">Project Updates</div>
+                                    <div class="toggle-description">Updates about your project submissions</div>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Push Notifications</div>
+                                    <div class="card-subtitle">Real-time mobile alerts</div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-info">
+                                    <div class="toggle-label">Messages</div>
+                                    <div class="toggle-description">New direct messages and mentions</div>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-info">
+                                    <div class="toggle-label">Event Reminders</div>
+                                    <div class="toggle-description">Reminders for upcoming events and deadlines</div>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-info">
+                                    <div class="toggle-label">Achievement Unlocked</div>
+                                    <div class="toggle-description">Celebrate when you earn new achievements</div>
+                                </div>
+                                <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Notification Frequency</label>
+                        <select class="form-select" id="notificationFrequency">
+                            <option value="instant">Instant - Receive notifications immediately</option>
+                            <option value="hourly">Hourly - Digest every hour</option>
+                            <option value="daily">Daily - Daily summary</option>
+                            <option value="weekly">Weekly - Weekly roundup</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Quiet Hours</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label class="form-label" style="font-size: 0.8rem;">Start Time</label>
+                                <input type="time" class="form-input" value="22:00">
+                            </div>
+                            <div>
+                                <label class="form-label" style="font-size: 0.8rem;">End Time</label>
+                                <input type="time" class="form-input" value="08:00">
+                            </div>
+                        </div>
+                        <div class="form-help">Set hours when you don't want to receive notifications.</div>
+                    </div>
+                </div>
+
+                <!-- Appearance Settings -->
+                <div class="settings-section" id="appearanceSection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-palette"></i>
+                            Appearance & Display
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Customize the look and feel of your NexusHack experience to match your preferences.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Theme</label>
+                        <select class="form-select" id="themeSelect" onchange="changeTheme(this.value)">
+                            <option value="dark">Dark Theme</option>
+                            <option value="light">Light Theme</option>
+                            <option value="auto">Auto (System)</option>
+                        </select>
+                        <div class="form-help">Choose your preferred color scheme for the interface.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Font Size</label>
+                        <select class="form-select" id="fontSize">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                            <option value="extra-large">Extra Large</option>
+                        </select>
+                        <div class="form-help">Adjust text size for better readability.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Sidebar Behavior</label>
+                        <select class="form-select" id="sidebarBehavior">
+                            <option value="expanded">Always Expanded</option>
+                            <option value="collapsed">Always Collapsed</option>
+                            <option value="auto">Auto-hide on Mobile</option>
+                        </select>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Reduce Motion</div>
+                            <div class="toggle-description">Minimize animations and transitions for better performance</div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">High Contrast</div>
+                            <div class="toggle-description">Increase contrast for better visibility</div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Dashboard Layout</label>
+                        <select class="form-select" id="dashboardLayout">
+                            <option value="cards">Card View</option>
+                            <option value="list">List View</option>
+                            <option value="compact">Compact View</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Data & Storage Settings -->
+                <div class="settings-section" id="dataSection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-database"></i>
+                            Data & Storage
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Monitor your data usage, manage storage, and control how your information is processed.
+                    </p>
+                    
+                    <div class="data-usage">
+                        <div class="usage-header">
+                            <div class="usage-title">Storage Used</div>
+                            <div class="usage-value">2.3 GB of 5 GB</div>
+                        </div>
+                        <div class="usage-bar">
+                            <div class="usage-fill" style="width: 46%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-file"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Project Files</div>
+                                    <div class="card-subtitle">1.8 GB</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Source code, documentation, and project assets from your submissions.
+                            </div>
+                            <button class="btn btn-secondary" onclick="manageFiles()" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-folder"></i>
+                                Manage Files
+                            </button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Media Files</div>
+                                    <div class="card-subtitle">0.5 GB</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Profile pictures, project screenshots, and uploaded media content.
+                            </div>
+                            <button class="btn btn-secondary" onclick="manageMedia()" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-image"></i>
+                                Manage Media
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Auto-cleanup</label>
+                        <select class="form-select" id="autoCleanup">
+                            <option value="never">Never</option>
+                            <option value="30days">After 30 days</option>
+                            <option value="90days" selected>After 90 days</option>
+                            <option value="1year">After 1 year</option>
+                        </select>
+                        <div class="form-help">Automatically delete old temporary files and cache data.</div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Data Export</div>
+                            <div class="toggle-description">Allow downloading of all your account data</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        Export My Data
+                    </button>
+                </div>
+
+                <!-- Integrations Settings -->
+                <div class="settings-section" id="integrationsSection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-puzzle-piece"></i>
+                            Integrations & Connections
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Connect your NexusHack account with external services and development tools.
+                    </p>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: #333;">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">GitHub</div>
+                                    <div class="card-subtitle">Connected</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Import repositories, sync projects, and showcase your GitHub contributions.
+                            </div>
+                            <button class="btn btn-danger" onclick="disconnectService('github')" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-unlink"></i>
+                                Disconnect
+                            </button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: #0077b5;">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">LinkedIn</div>
+                                    <div class="card-subtitle">Not Connected</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Share achievements, connect with professionals, and showcase hackathon wins.
+                            </div>
+                            <button class="btn btn-primary" onclick="connectService('linkedin')" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-link"></i>
+                                Connect
+                            </button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: #7289da;">
+                                    <i class="fab fa-discord"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Discord</div>
+                                    <div class="card-subtitle">Connected</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Join hackathon channels, communicate with teams, and get real-time updates.
+                            </div>
+                            <button class="btn btn-secondary" onclick="manageDiscord()" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-cog"></i>
+                                Manage
+                            </button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: #1da1f2;">
+                                    <i class="fab fa-twitter"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Twitter</div>
+                                    <div class="card-subtitle">Not Connected</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                Share your hackathon journey, celebrate wins, and build your developer brand.
+                            </div>
+                            <button class="btn btn-primary" onclick="connectService('twitter')" style="margin-top: 1rem; width: 100%;">
+                                <i class="fas fa-link"></i>
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Auto-share Achievements</div>
+                            <div class="toggle-description">Automatically post hackathon wins to connected social networks</div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Import GitHub Activity</div>
+                            <div class="toggle-description">Show GitHub commits and contributions on your profile</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings -->
+                <div class="settings-section" id="advancedSection">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-sliders-h"></i>
+                            Advanced Settings
+                        </h2>
+                    </div>
+                    
+                    <p class="section-description">
+                        Advanced configuration options for power users and developers.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">API Access</label>
+                        <div style="background: var(--bg-glass); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary);">Personal Access Token</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">For programmatic access to your account data</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="generateAPIKey()">
+                                    <i class="fas fa-key"></i>
+                                    Generate
+                                </button>
+                            </div>
+                            <div style="font-family: 'Courier New', monospace; background: var(--bg-select); padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; color: var(--text-muted);">
+                                nh_1a2b3c4d5e6f7g8h9i0j...
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Developer Mode</div>
+                            <div class="toggle-description">Enable advanced features and debugging tools</div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <div class="toggle-label">Beta Features</div>
+                            <div class="toggle-description">Get early access to experimental features</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Data Retention Period</label>
+                        <select class="form-select" id="dataRetention">
+                            <option value="1year">1 Year</option>
+                            <option value="2years" selected>2 Years</option>
+                            <option value="5years">5 Years</option>
+                            <option value="forever">Forever</option>
+                        </select>
+                        <div class="form-help">How long to keep your account data after deletion.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Debug Level</label>
+                        <select class="form-select" id="debugLevel">
+                            <option value="none" selected>None</option>
+                            <option value="basic">Basic</option>
+                            <option value="verbose">Verbose</option>
+                            <option value="full">Full Debug</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Danger Zone -->
+                    <div class="danger-zone">
+                        <h3 class="danger-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Danger Zone
+                        </h3>
+                        <p class="danger-description">
+                            These actions are irreversible and will permanently affect your account. 
+                            Please proceed with extreme caution.
+                        </p>
+                        
+                        <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
+                            <button class="btn btn-danger" onclick="resetAllSettings()">
+                                <i class="fas fa-undo"></i>
+                                Reset All Settings
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                            <button class="btn btn-danger" onclick="deactivateAccount()">
+                                <i class="fas fa-user-slash"></i>
+                                Deactivate Account
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteAccount()">
+                                <i class="fas fa-user-times"></i>
+                                Delete Account Permanently
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Change Password Modal -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Change Password</h3>
+                <button class="modal-close" onclick="closePasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-input" placeholder="Enter current password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-input" id="newPassword" placeholder="Enter new password" required>
+                    <div class="form-help">Password must be at least 8 characters long with numbers and symbols.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-input" placeholder="Confirm new password" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-cancel" onclick="closePasswordModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-save">
+                        <i class="fas fa-save"></i>
+                        Change Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Advanced JavaScript for Settings Management
+        class SettingsManager {
+            constructor() {
+                this.currentSection = 'account';
+                this.settings = {
+                    account: {},
+                    security: {},
+                    privacy: {},
+                    notifications: {},
+                    appearance: {},
+                    data: {},
+                    integrations: {},
+                    advanced: {}
+                };
+                
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.loadSettings();
+                this.setupFormListeners();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                
+                const themeToggle = document.getElementById('themeToggle');
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                const themeSelect = document.getElementById('themeSelect');
+                if (themeSelect) {
+                    themeSelect.value = savedTheme;
+                }
+            }
+
+            setupEventListeners() {
+                // Theme toggle
+                document.getElementById('themeToggle').addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+
+                // Close modals when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        this.closeAllModals();
+                    }
+                });
+
+                // ESC key to close modals
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeAllModals();
+                    }
+                });
+            }
+
+            setupFormListeners() {
+                // Password Form
+                const passwordForm = document.getElementById('passwordForm');
+                passwordForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handlePasswordChange(e);
+                });
+            }
+
+            loadSettings() {
+                // Load settings from localStorage
+                const savedSettings = localStorage.getItem('userSettings');
+                if (savedSettings) {
+                    this.settings = { ...this.settings, ...JSON.parse(savedSettings) };
+                }
+                
+                // Populate form fields with saved settings
+                this.populateFormFields();
+            }
+
+            populateFormFields() {
+                // Account settings
+                const fullName = document.getElementById('fullName');
+                if (fullName && this.settings.account.fullName) {
+                    fullName.value = this.settings.account.fullName;
+                }
+                
+                // Add more field population as needed
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                const themeSelect = document.getElementById('themeSelect');
+                if (themeSelect) {
+                    themeSelect.value = newTheme;
+                }
+            }
+
+            // Section Management
+            switchSection(sectionName) {
+                this.currentSection = sectionName;
+                
+                // Update navigation
+                document.querySelectorAll('.settings-nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+                
+                // Show/hide sections
+                document.querySelectorAll('.settings-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(`${sectionName}Section`).classList.add('active');
+            }
+
+            // Toggle Switch Handler
+            toggleSwitch(toggleElement) {
+                toggleElement.classList.toggle('active');
+                
+                // Save toggle state
+                const isActive = toggleElement.classList.contains('active');
+                this.showToast(`Setting ${isActive ? 'enabled' : 'disabled'}`, 'info');
+            }
+
+            // Theme Change Handler
+            changeTheme(theme) {
+                if (theme === 'auto') {
+                    // Use system theme
+                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', systemTheme);
+                } else {
+                    document.documentElement.setAttribute('data-theme', theme);
+                }
+                
+                localStorage.setItem('theme', theme);
+                
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                themeIcon.className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                this.showToast(`Theme changed to ${theme}`, 'success');
+            }
+
+            // Account Settings
+            saveAccountSettings() {
+                const accountData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    username: document.getElementById('username').value,
+                    bio: document.getElementById('bio').value,
+                    location: document.getElementById('location').value,
+                    timezone: document.getElementById('timezone').value
+                };
+                
+                const button = event.target;
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    this.settings.account = { ...this.settings.account, ...accountData };
+                    localStorage.setItem('userSettings', JSON.stringify(this.settings));
+                    
+                    this.showToast('Account settings saved successfully!', 'success');
+                    
+                    // Reset button
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+
+            // Security Functions
+            openPasswordModal() {
+                const modal = document.getElementById('passwordModal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            closePasswordModal() {
+                const modal = document.getElementById('passwordModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            handlePasswordChange(event) {
+                const formData = new FormData(event.target);
+                const submitBtn = event.target.querySelector('.btn-save');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Changing...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    this.showToast('Password changed successfully!', 'success');
+                    this.closePasswordModal();
+                    
+                    // Reset form and button
+                    event.target.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+
+            manage2FA() {
+                this.showToast('Opening 2FA management...', 'info');
+                setTimeout(() => {
+                    console.log('Manage 2FA functionality');
+                    // In real implementation, would open 2FA modal
+                }, 1000);
+            }
+
+            // Integration Functions
+            connectService(service) {
+                const button = event.target;
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    this.showToast(`${service.charAt(0).toUpperCase() + service.slice(1)} connected successfully!`, 'success');
+                    
+                    // Update UI to show connected state
+                    const card = button.closest('.settings-card');
+                    const subtitle = card.querySelector('.card-subtitle');
+                    subtitle.textContent = 'Connected';
+                    
+                    button.innerHTML = '<i class="fas fa-unlink"></i> Disconnect';
+                    button.className = 'btn btn-danger';
+                    button.onclick = () => this.disconnectService(service);
+                    
+                    button.disabled = false;
+                }, 2500);
+            }
+
+            disconnectService(service) {
+                if (confirm(`Are you sure you want to disconnect ${service}?`)) {
+                    const button = event.target;
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Disconnecting...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.showToast(`${service.charAt(0).toUpperCase() + service.slice(1)} disconnected`, 'info');
+                        
+                        // Update UI to show disconnected state
+                        const card = button.closest('.settings-card');
+                        const subtitle = card.querySelector('.card-subtitle');
+                        subtitle.textContent = 'Not Connected';
+                        
+                        button.innerHTML = '<i class="fas fa-link"></i> Connect';
+                        button.className = 'btn btn-primary';
+                        button.onclick = () => this.connectService(service);
+                        
+                        button.disabled = false;
+                    }, 2000);
+                }
+            }
+
+            manageDiscord() {
+                this.showToast('Opening Discord management...', 'info');
+                setTimeout(() => {
+                    console.log('Manage Discord functionality');
+                }, 1000);
+            }
+
+            // Data Management Functions
+            manageFiles() {
+                this.showToast('Opening file manager...', 'info');
+                setTimeout(() => {
+                    console.log('File management functionality');
+                }, 1000);
+            }
+
+            manageMedia() {
+                this.showToast('Opening media manager...', 'info');
+                setTimeout(() => {
+                    console.log('Media management functionality');
+                }, 1000);
+            }
+
+            exportData() {
+                const button = event.target;
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing Export...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    this.showToast('Data export completed! Download link sent to your email.', 'success');
+                    
+                    // Reset button
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    
+                    // In real implementation, would trigger actual data export
+                    console.log('Export user data');
+                }, 4000);
+            }
+
+            // Advanced Functions
+            generateAPIKey() {
+                const button = event.target;
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    const apiKey = 'nh_' + Math.random().toString(36).substr(2, 30);
+                    const keyDisplay = document.querySelector('[style*="Courier New"]');
+                    keyDisplay.textContent = apiKey + '...';
+                    
+                    this.showToast('New API key generated!', 'success');
+                    
+                    // Reset button
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+
+            // Danger Zone Functions
+            resetAllSettings() {
+                if (confirm('Are you sure you want to reset ALL settings to default? This cannot be undone.')) {
+                    const button = event.target;
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        localStorage.removeItem('userSettings');
+                        this.settings = {
+                            account: {},
+                            security: {},
+                            privacy: {},
+                            notifications: {},
+                            appearance: {},
+                            data: {},
+                            integrations: {},
+                            advanced: {}
+                        };
+                        
+                        this.showToast('All settings have been reset to default', 'success');
+                        
+                        // Reset button
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                        
+                        // Reload page to reflect changes
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    }, 3000);
+                }
+            }
+
+            clearAllData() {
+                if (confirm('Are you sure you want to clear ALL your data? This will remove all projects, files, and personal information. This cannot be undone.')) {
+                    const button = event.target;
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Clearing...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.showToast('All data has been cleared from your account', 'success');
+                        
+                        // Reset button
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                        
+                        console.log('Clear all user data');
+                    }, 4000);
+                }
+            }
+
+            deactivateAccount() {
+                if (confirm('Are you sure you want to deactivate your account? You can reactivate it later by logging in.')) {
+                    const button = event.target;
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deactivating...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.showToast('Account deactivated. Redirecting to login...', 'info');
+                        
+                        setTimeout(() => {
+                            window.location.href = '../auth/login.html';
+                        }, 2000);
+                    }, 3000);
+                }
+            }
+
+            deleteAccount() {
+                const confirmation = prompt('This will permanently delete your account and all associated data. This action cannot be undone.\n\nType "DELETE ACCOUNT" to confirm:');
+                
+                if (confirmation === 'DELETE ACCOUNT') {
+                    const button = event.target;
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.showToast('Account deletion initiated. You will receive a confirmation email.', 'danger');
+                        
+                        setTimeout(() => {
+                            window.location.href = '../index.html';
+                        }, 3000);
+                    }, 4000);
+                } else if (confirmation !== null) {
+                    this.showToast('Account deletion cancelled - confirmation text did not match', 'info');
+                }
+            }
+
+            // Utility Functions
+            saveAllSettings() {
+                const button = event.target;
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                button.disabled = true;
+                
+                // Collect all form data
+                const allSettings = this.collectAllSettings();
+                
+                setTimeout(() => {
+                    localStorage.setItem('userSettings', JSON.stringify(allSettings));
+                    this.showToast('All settings saved successfully!', 'success');
+                    
+                    // Reset button
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 3000);
+            }
+
+            collectAllSettings() {
+                // Collect data from all forms and toggles
+                const settings = { ...this.settings };
+                
+                // Account settings
+                const fullName = document.getElementById('fullName');
+                if (fullName) settings.account.fullName = fullName.value;
+                
+                // Add more setting collection logic here
+                
+                return settings;
+            }
+
+            closeAllModals() {
+                this.closePasswordModal();
+            }
+
+            showToast(message, type = 'success') {
+                // Remove any existing toasts
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 2rem;
+                    right: 2rem;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10001;
+                    animation: slideInToast 0.3s ease-out;
+                    max-width: 400px;
+                    box-shadow: var(--shadow-lg);
+                    background: var(--gradient-${type});
+                `;
+                toast.innerHTML = `
+                    <i class="fas ${this.getToastIcon(type)}"></i>
+                    <span style="margin-left: 0.5rem;">${message}</span>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 5000);
+            }
+
+            getToastIcon(type) {
+                switch (type) {
+                    case 'success': return 'fa-check-circle';
+                    case 'error': return 'fa-exclamation-circle';
+                    case 'info': return 'fa-info-circle';
+                    case 'danger': return 'fa-exclamation-triangle';
+                    default: return 'fa-check-circle';
+                }
+            }
+        }
+
+        // Global instance and functions for onclick handlers
+        let settingsManager;
+
+        function switchSection(sectionName) {
+            settingsManager.switchSection(sectionName);
+        }
+
+        function toggleSwitch(element) {
+            settingsManager.toggleSwitch(element);
+        }
+
+        function changeTheme(theme) {
+            settingsManager.changeTheme(theme);
+        }
+
+        function saveAccountSettings() {
+            settingsManager.saveAccountSettings();
+        }
+
+        function openPasswordModal() {
+            settingsManager.openPasswordModal();
+        }
+
+        function closePasswordModal() {
+            settingsManager.closePasswordModal();
+        }
+
+        function manage2FA() {
+            settingsManager.manage2FA();
+        }
+
+        function connectService(service) {
+            settingsManager.connectService(service);
+        }
+
+        function disconnectService(service) {
+            settingsManager.disconnectService(service);
+        }
+
+        function manageDiscord() {
+            settingsManager.manageDiscord();
+        }
+
+        function manageFiles() {
+            settingsManager.manageFiles();
+        }
+
+        function manageMedia() {
+            settingsManager.manageMedia();
+        }
+
+        function exportData() {
+            settingsManager.exportData();
+        }
+
+        function generateAPIKey() {
+            settingsManager.generateAPIKey();
+        }
+
+        function resetAllSettings() {
+            settingsManager.resetAllSettings();
+        }
+
+        function clearAllData() {
+            settingsManager.clearAllData();
+        }
+
+        function deactivateAccount() {
+            settingsManager.deactivateAccount();
+        }
+
+        function deleteAccount() {
+            settingsManager.deleteAccount();
+        }
+
+        function saveAllSettings() {
+            settingsManager.saveAllSettings();
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            settingsManager = new SettingsManager();
+            
+            // Animate settings cards on page load
+            setTimeout(() => {
+                document.querySelectorAll('.settings-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.transform = 'translateY(-4px)';
+                        setTimeout(() => {
+                            card.style.transform = 'translateY(0)';
+                        }, 200);
+                    }, index * 100);
+                });
+            }, 1000);
+        });
+
+        // Add animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

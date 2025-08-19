@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - NexusHack Platform</title>
+    <meta name="description" content="Manage all your notifications, alerts, and messages from hackathons, teams, and platform updates on NexusHack.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* Enhanced CSS Variables - CONSISTENT THEME */
+        :root {
+            /* Primary Brand Colors - SAME AS ORIGINAL */
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            
+            /* Enhanced Gradients - CONSISTENT */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-notifications: linear-gradient(135deg, #06b6d4 0%, #667eea 100%);
+            
+            /* Enhanced Dark Theme */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-notification: rgba(102, 126, 234, 0.1);
+            --bg-notification-unread: rgba(102, 126, 234, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            
+            /* Enhanced Animations */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Enhanced Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-notification: rgba(102, 126, 234, 0.05);
+            --bg-notification-unread: rgba(102, 126, 234, 0.1);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-glass);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            padding: 0.6rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            border-color: var(--border-accent);
+        }
+
+        /* Content Container */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Notifications Header */
+        .notifications-header {
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .notifications-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .notifications-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .notifications-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .notifications-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .notifications-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        .notifications-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Notifications Controls */
+        .notifications-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .notifications-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .notifications-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        /* Notifications List */
+        .notifications-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item:hover {
+            background: var(--bg-glass-hover);
+        }
+
+        .notification-item.unread {
+            background: var(--bg-notification-unread);
+            border-left: 4px solid var(--primary);
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.info {
+            background: var(--gradient-ai);
+        }
+
+        .notification-icon.success {
+            background: var(--gradient-success);
+        }
+
+        .notification-icon.warning {
+            background: var(--gradient-warning);
+        }
+
+        .notification-icon.danger {
+            background: var(--gradient-danger);
+        }
+
+        .notification-icon.event {
+            background: var(--gradient-primary);
+        }
+
+        .notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .notification-message {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .notification-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .notification-time {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .notification-category {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: var(--bg-notification);
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+        }
+
+        .notification-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .notification-action {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .notification-action:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .notification-action.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .notification-action.danger {
+            background: var(--gradient-danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-description {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Loading State */
+        .loading-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                padding: 1rem;
+            }
+            
+            .notifications-header {
+                padding: 2rem 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .notifications-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .notifications-stats {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .notifications-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .notifications-filters {
+                justify-content: center;
+            }
+            
+            .notification-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .notification-actions {
+                flex-direction: row;
+                margin-left: 0;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .notifications-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .notifications-filters {
+                flex-direction: column;
+            }
+            
+            .notification-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="logo-text">NexusHack</div>
+            </a>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="../participant/dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <button class="btn btn-primary" onclick="markAllAsRead()">
+                    <i class="fas fa-check"></i>
+                    Mark All Read
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="content">
+        <!-- Notifications Header -->
+        <div class="notifications-header">
+            <div class="notifications-header-content">
+                <h1 class="notifications-title">
+                    <i class="fas fa-bell"></i>
+                    Your Notifications
+                </h1>
+                <p class="notifications-subtitle">
+                    Stay up to date with hackathon updates, team invitations, submissions, 
+                    and important platform announcements.
+                </p>
+                
+                <div class="notifications-stats">
+                    <div class="notifications-stat">
+                        <span class="stat-number" id="totalCount">8</span>
+                        <span class="stat-label">Total</span>
+                    </div>
+                    <div class="notifications-stat">
+                        <span class="stat-number" id="unreadCount">3</span>
+                        <span class="stat-label">Unread</span>
+                    </div>
+                    <div class="notifications-stat">
+                        <span class="stat-number" id="todayCount">2</span>
+                        <span class="stat-label">Today</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Controls -->
+        <div class="notifications-controls">
+            <div class="notifications-filters">
+                <button class="filter-btn active" onclick="filterNotifications('all')" data-filter="all">
+                    All
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('unread')" data-filter="unread">
+                    Unread
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('events')" data-filter="events">
+                    Events
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('teams')" data-filter="teams">
+                    Teams
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('submissions')" data-filter="submissions">
+                    Submissions
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('system')" data-filter="system">
+                    System
+                </button>
+            </div>
+            
+            <div class="notifications-actions">
+                <button class="action-btn" onclick="refreshNotifications()">
+                    <i class="fas fa-sync"></i>
+                    Refresh
+                </button>
+                <button class="action-btn" onclick="clearAllNotifications()">
+                    <i class="fas fa-trash"></i>
+                    Clear All
+                </button>
+            </div>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="notifications-list" id="notificationsList">
+            <!-- Loading State -->
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-spinner"></div>
+                <span>Loading notifications...</span>
+            </div>
+
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">
+                <i class="fas fa-bell-slash"></i>
+            </div>
+            <h3 class="empty-title">No notifications yet</h3>
+            <p class="empty-description">
+                You'll see notifications about hackathons, team invitations, submissions, and platform updates here.
+            </p>
+            <button class="btn btn-primary" onclick="refreshNotifications()">
+                <i class="fas fa-sync"></i>
+                Check for Updates
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Advanced JavaScript for Notifications Management
+        class NotificationCenter {
+            constructor() {
+                this.notifications = [];
+                this.currentFilter = 'all';
+                
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.loadNotifications();
+                this.startAutoRefresh();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                
+                const themeToggle = document.getElementById('themeToggle');
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            setupEventListeners() {
+                // Theme toggle
+                document.getElementById('themeToggle').addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            loadNotifications() {
+                // Show loading state
+                document.getElementById('loadingContainer').style.display = 'flex';
+                
+                // Simulate loading delay
+                setTimeout(() => {
+                    // Load from localStorage or use mock data
+                    const stored = localStorage.getItem('userNotifications');
+                    if (stored) {
+                        this.notifications = JSON.parse(stored);
+                    } else {
+                        this.notifications = this.getMockNotifications();
+                        this.saveNotifications();
+                    }
+                    
+                    this.renderNotifications();
+                    this.updateStats();
+                    
+                    document.getElementById('loadingContainer').style.display = 'none';
+                }, 1500);
+            }
+
+            getMockNotifications() {
+                return [
+                    {
+                        id: 1,
+                        title: 'Welcome to NexusHack!',
+                        message: 'Thanks for joining our hackathon community! Get ready to build amazing projects.',
+                        time: '2 hours ago',
+                        category: 'system',
+                        type: 'info',
+                        read: false,
+                        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 2,
+                        title: 'New Hackathon Available',
+                        message: 'The Web3 Innovation Challenge 2025 is now open for registration. Don\'t miss out!',
+                        time: '1 day ago',
+                        category: 'events',
+                        type: 'event',
+                        read: false,
+                        timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 3,
+                        title: 'Team Invitation Received',
+                        message: 'BlockMasters team has invited you to join their hackathon project.',
+                        time: '1 day ago',
+                        category: 'teams',
+                        type: 'success',
+                        read: false,
+                        timestamp: new Date(Date.now() - 25 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 4,
+                        title: 'Submission Successful',
+                        message: 'Your project "DeFi Wallet" has been successfully submitted to the Web3 Challenge.',
+                        time: '2 days ago',
+                        category: 'submissions',
+                        type: 'success',
+                        read: true,
+                        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 5,
+                        title: 'Hackathon Reminder',
+                        message: 'Only 3 days left to submit your project for the AI Healthcare Hackathon.',
+                        time: '3 days ago',
+                        category: 'events',
+                        type: 'warning',
+                        read: true,
+                        timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 6,
+                        title: 'Profile Updated',
+                        message: 'Your profile information has been successfully updated.',
+                        time: '1 week ago',
+                        category: 'system',
+                        type: 'info',
+                        read: true,
+                        timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 7,
+                        title: 'Achievement Unlocked!',
+                        message: 'Congratulations! You\'ve earned the "Team Player" achievement.',
+                        time: '1 week ago',
+                        category: 'system',
+                        type: 'success',
+                        read: true,
+                        timestamp: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000)
+                    },
+                    {
+                        id: 8,
+                        title: 'Security Alert',
+                        message: 'New login detected from Chrome on Windows. If this wasn\'t you, please secure your account.',
+                        time: '2 weeks ago',
+                        category: 'system',
+                        type: 'danger',
+                        read: true,
+                        timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)
+                    }
+                ];
+            }
+
+            saveNotifications() {
+                localStorage.setItem('userNotifications', JSON.stringify(this.notifications));
+            }
+
+            renderNotifications() {
+                const container = document.getElementById('notificationsList');
+                const emptyState = document.getElementById('emptyState');
+                
+                let filteredNotifications = this.getFilteredNotifications();
+                
+                if (filteredNotifications.length === 0) {
+                    container.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                emptyState.style.display = 'none';
+                
+                container.innerHTML = filteredNotifications.map(notification => `
+                    <div class="notification-item ${!notification.read ? 'unread' : ''}" data-id="${notification.id}">
+                        <div class="notification-icon ${notification.type}">
+                            <i class="fas ${this.getNotificationIcon(notification.type, notification.category)}"></i>
+                        </div>
+                        <div class="notification-content" onclick="handleNotificationClick(${notification.id})">
+                            <h3 class="notification-title">${notification.title}</h3>
+                            <p class="notification-message">${notification.message}</p>
+                            <div class="notification-meta">
+                                <div class="notification-time">
+                                    <i class="fas fa-clock"></i>
+                                    ${notification.time}
+                                </div>
+                                <div class="notification-category">
+                                    <i class="fas fa-tag"></i>
+                                    ${notification.category}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-actions">
+                            ${!notification.read ? `
+                                <button class="notification-action primary" onclick="markAsRead(${notification.id})">
+                                    <i class="fas fa-check"></i>
+                                    Mark Read
+                                </button>
+                            ` : `
+                                <button class="notification-action" onclick="markAsUnread(${notification.id})">
+                                    <i class="fas fa-envelope"></i>
+                                    Mark Unread
+                                </button>
+                            `}
+                            <button class="notification-action danger" onclick="deleteNotification(${notification.id})">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            getFilteredNotifications() {
+                if (this.currentFilter === 'all') {
+                    return this.notifications;
+                } else if (this.currentFilter === 'unread') {
+                    return this.notifications.filter(n => !n.read);
+                } else {
+                    return this.notifications.filter(n => n.category === this.currentFilter);
+                }
+            }
+
+            getNotificationIcon(type, category) {
+                const icons = {
+                    info: 'fa-info-circle',
+                    success: 'fa-check-circle',
+                    warning: 'fa-exclamation-triangle',
+                    danger: 'fa-exclamation-circle',
+                    event: 'fa-calendar'
+                };
+                
+                const categoryIcons = {
+                    events: 'fa-calendar-alt',
+                    teams: 'fa-users',
+                    submissions: 'fa-upload',
+                    system: 'fa-cog'
+                };
+                
+                return categoryIcons[category] || icons[type] || 'fa-bell';
+            }
+
+            updateStats() {
+                const totalCount = this.notifications.length;
+                const unreadCount = this.notifications.filter(n => !n.read).length;
+                const todayCount = this.notifications.filter(n => {
+                    const today = new Date();
+                    const notifDate = new Date(n.timestamp);
+                    return notifDate.toDateString() === today.toDateString();
+                }).length;
+                
+                document.getElementById('totalCount').textContent = totalCount;
+                document.getElementById('unreadCount').textContent = unreadCount;
+                document.getElementById('todayCount').textContent = todayCount;
+            }
+
+            filterNotifications(filter) {
+                this.currentFilter = filter;
+                
+                // Update active filter button
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+                
+                this.renderNotifications();
+            }
+
+            markAsRead(id) {
+                const notification = this.notifications.find(n => n.id === id);
+                if (notification) {
+                    notification.read = true;
+                    this.saveNotifications();
+                    this.renderNotifications();
+                    this.updateStats();
+                    this.showToast('Notification marked as read', 'success');
+                }
+            }
+
+            markAsUnread(id) {
+                const notification = this.notifications.find(n => n.id === id);
+                if (notification) {
+                    notification.read = false;
+                    this.saveNotifications();
+                    this.renderNotifications();
+                    this.updateStats();
+                    this.showToast('Notification marked as unread', 'info');
+                }
+            }
+
+            deleteNotification(id) {
+                if (confirm('Are you sure you want to delete this notification?')) {
+                    this.notifications = this.notifications.filter(n => n.id !== id);
+                    this.saveNotifications();
+                    this.renderNotifications();
+                    this.updateStats();
+                    this.showToast('Notification deleted', 'success');
+                }
+            }
+
+            markAllAsRead() {
+                this.notifications.forEach(n => n.read = true);
+                this.saveNotifications();
+                this.renderNotifications();
+                this.updateStats();
+                this.showToast('All notifications marked as read', 'success');
+            }
+
+            clearAllNotifications() {
+                if (confirm('Are you sure you want to delete all notifications? This action cannot be undone.')) {
+                    this.notifications = [];
+                    this.saveNotifications();
+                    this.renderNotifications();
+                    this.updateStats();
+                    this.showToast('All notifications cleared', 'success');
+                }
+            }
+
+            refreshNotifications() {
+                const button = event.target;
+                const originalContent = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    // In real implementation, would fetch from server
+                    this.showToast('Notifications refreshed!', 'info');
+                    
+                    // Reset button
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 2000);
+            }
+
+            handleNotificationClick(id) {
+                const notification = this.notifications.find(n => n.id === id);
+                if (notification && !notification.read) {
+                    this.markAsRead(id);
+                }
+                
+                // Handle different notification types
+                switch (notification.category) {
+                    case 'events':
+                        this.showToast('Redirecting to event details...', 'info');
+                        // setTimeout(() => window.location.href = 'event-details.html', 1000);
+                        break;
+                    case 'teams':
+                        this.showToast('Opening team invitation...', 'info');
+                        break;
+                    case 'submissions':
+                        this.showToast('Viewing submission details...', 'info');
+                        break;
+                    default:
+                        this.showToast(`Notification: ${notification.title}`, 'info');
+                }
+            }
+
+            startAutoRefresh() {
+                // Auto refresh every 30 seconds
+                setInterval(() => {
+                    // In real implementation, would check for new notifications from server
+                    console.log('Auto-refreshing notifications...');
+                }, 30000);
+            }
+
+            showToast(message, type = 'success') {
+                // Remove any existing toasts
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 2rem;
+                    right: 2rem;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10001;
+                    animation: slideInToast 0.3s ease-out;
+                    max-width: 350px;
+                    box-shadow: var(--shadow-lg);
+                    background: var(--gradient-${type});
+                `;
+                toast.innerHTML = `
+                    <i class="fas ${this.getToastIcon(type)}"></i>
+                    <span style="margin-left: 0.5rem;">${message}</span>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                // Auto remove after 4 seconds
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 4000);
+            }
+
+            getToastIcon(type) {
+                switch (type) {
+                    case 'success': return 'fa-check-circle';
+                    case 'error': return 'fa-exclamation-circle';
+                    case 'info': return 'fa-info-circle';
+                    default: return 'fa-check-circle';
+                }
+            }
+        }
+
+        // Global instance and functions for onclick handlers
+        let notificationCenter;
+
+        function filterNotifications(filter) {
+            notificationCenter.filterNotifications(filter);
+        }
+
+        function markAsRead(id) {
+            notificationCenter.markAsRead(id);
+        }
+
+        function markAsUnread(id) {
+            notificationCenter.markAsUnread(id);
+        }
+
+        function deleteNotification(id) {
+            notificationCenter.deleteNotification(id);
+        }
+
+        function markAllAsRead() {
+            notificationCenter.markAllAsRead();
+        }
+
+        function clearAllNotifications() {
+            notificationCenter.clearAllNotifications();
+        }
+
+        function refreshNotifications() {
+            notificationCenter.refreshNotifications();
+        }
+
+        function handleNotificationClick(id) {
+            notificationCenter.handleNotificationClick(id);
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            notificationCenter = new NotificationCenter();
+            
+            // Animate notifications on page load
+            setTimeout(() => {
+                document.querySelectorAll('.notification-item').forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.transform = 'translateX(-10px)';
+                        item.style.opacity = '0';
+                        setTimeout(() => {
+                            item.style.transform = 'translateX(0)';
+                            item.style.opacity = '1';
+                        }, 100);
+                    }, index * 100);
+                });
+            }, 2000);
+        });
+
+        // Add animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
