@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Analytics - NexusHack Platform</title>
+    <meta name="description" content="Comprehensive analytics dashboard for hackathon organizers. Real-time insights, participant behavior analysis, performance metrics, and AI-powered predictions for event optimization.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCdncmFkaWVudDApJy8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* ENHANCED CSS VARIABLES - MODERN ANALYTICS THEME */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --organizer-blue: #3b82f6;
+            --organizer-green: #10b981;
+            --organizer-purple: #8b5cf6;
+            --organizer-orange: #f97316;
+            --organizer-pink: #ec4899;
+            --organizer-cyan: #06b6d4;
+            --organizer-indigo: #6366f1;
+            --organizer-red: #ef4444;
+            
+            /* Perfect Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-judge: linear-gradient(135deg, #f59e0b 0%, #667eea 100%);
+            --gradient-organizer: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            --gradient-participant: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-analytics: linear-gradient(135deg, #667eea 0%, #8b5cf6 100%);
+            --gradient-web3: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-leaderboard: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+            
+            /* Dark Theme Colors */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-organizer: rgba(59, 130, 246, 0.1);
+            --bg-participant: rgba(16, 185, 129, 0.1);
+            --bg-judge: rgba(245, 158, 11, 0.1);
+            --bg-analytics: rgba(102, 126, 234, 0.1);
+            --bg-web3: rgba(139, 92, 246, 0.1);
+            --bg-ai: rgba(139, 92, 246, 0.1);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            
+            /* Border Colors */
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-organizer: rgba(59, 130, 246, 0.3);
+            --border-participant: rgba(16, 185, 129, 0.3);
+            --border-judge: rgba(245, 158, 11, 0.3);
+            --border-analytics: rgba(102, 126, 234, 0.3);
+            
+            /* Layout Variables */
+            --sidebar-bg: var(--bg-secondary);
+            --topbar-bg: var(--bg-card);
+            --sidebar-width: 300px;
+            --sidebar-collapsed-width: 80px;
+            --topbar-height: 75px;
+            --mobile-topbar-height: 65px;
+            --content-padding: 2rem;
+            --mobile-content-padding: 1rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            --shadow-organizer: 0 0 32px rgba(59, 130, 246, 0.25);
+            --shadow-participant: 0 0 32px rgba(16, 185, 129, 0.25);
+            --shadow-judge: 0 0 32px rgba(245, 158, 11, 0.25);
+            --shadow-analytics: 0 0 32px rgba(102, 126, 234, 0.25);
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-organizer: rgba(59, 130, 246, 0.05);
+            --bg-participant: rgba(16, 185, 129, 0.05);
+            --bg-judge: rgba(245, 158, 11, 0.05);
+            --bg-analytics: rgba(102, 126, 234, 0.05);
+            --bg-web3: rgba(139, 92, 246, 0.05);
+            --bg-ai: rgba(139, 92, 246, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-organizer: rgba(59, 130, 246, 0.3);
+            --border-participant: rgba(16, 185, 129, 0.3);
+            --border-judge: rgba(245, 158, 11, 0.3);
+            --border-analytics: rgba(102, 126, 234, 0.3);
+            --sidebar-bg: var(--bg-primary);
+            --topbar-bg: var(--bg-primary);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* PERFECT RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *::before, *::after { box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+            overflow-x: hidden; transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; height: 100vh; display: flex; flex-direction: column;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-glass); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; transition: var(--transition); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* MOBILE OVERLAY */
+        .mobile-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);
+            z-index: 999; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(4px);
+        }
+        .mobile-overlay.active { opacity: 1; visibility: visible; }
+
+        /* DASHBOARD LAYOUT */
+        .dashboard-container { display: flex; height: 100vh; overflow: hidden; position: relative; }
+
+        /* MODERN SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--sidebar-bg); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; position: fixed; left: 0; top: 0; height: 100vh;
+            z-index: 1000; transition: var(--transition); backdrop-filter: blur(20px);
+            user-select: none; overflow-y: auto; overflow-x: hidden;
+        }
+        .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); box-shadow: var(--shadow-xl); }
+            .sidebar.open { transform: translateX(0); }
+        }
+
+        /* MODERN LOGO */
+        .sidebar-logo {
+            padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem;
+            border-bottom: 1px solid var(--border); min-height: var(--topbar-height); flex-shrink: 0;
+        }
+        .logo-icon {
+            width: 45px; height: 45px; background: var(--gradient-analytics); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1.3rem; box-shadow: var(--shadow-glow); transition: var(--transition); flex-shrink: 0;
+        }
+        .logo-text {
+            font-size: 1.6rem; font-weight: 900; background: var(--gradient-analytics);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            transition: var(--transition); white-space: nowrap; overflow: hidden;
+        }
+        .sidebar.collapsed .logo-text { opacity: 0; width: 0; }
+
+        /* MODERN NAVIGATION */
+        .sidebar-nav { flex: 1; padding: 1.5rem 0; overflow-y: auto; overflow-x: hidden; }
+        .nav-section { margin-bottom: 2.5rem; }
+        .nav-section-title {
+            font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.1em; padding: 0 2rem;
+            margin-bottom: 1rem; transition: var(--transition); white-space: nowrap; overflow: hidden;
+        }
+        .sidebar.collapsed .nav-section-title { opacity: 0; height: 0; margin: 0; padding: 0; }
+        .nav-link {
+            display: flex; align-items: center; gap: 1.25rem; padding: 1rem 2rem;
+            color: var(--text-secondary); text-decoration: none; transition: var(--transition);
+            position: relative; font-weight: 500; min-height: 52px; white-space: nowrap; overflow: hidden;
+            border-radius: 0 25px 25px 0; margin-right: 1rem;
+        }
+        .nav-link:hover { 
+            color: var(--text-primary); background: var(--bg-glass-hover); 
+            transform: translateX(4px);
+        }
+        .nav-link.active { 
+            color: var(--primary); background: var(--bg-analytics); 
+            box-shadow: var(--shadow-analytics);
+        }
+        .nav-icon { 
+            width: 22px; height: 22px; display: flex; align-items: center; 
+            justify-content: center; font-size: 1.1rem; flex-shrink: 0; 
+        }
+        .nav-text { flex: 1; transition: var(--transition); overflow: hidden; font-size: 0.95rem; }
+        .sidebar.collapsed .nav-text { opacity: 0; width: 0; }
+        .nav-badge {
+            background: var(--gradient-success); color: white; font-size: 0.7rem; font-weight: 700;
+            padding: 0.3rem 0.6rem; border-radius: 12px; min-width: 20px; text-align: center;
+            transition: var(--transition); flex-shrink: 0;
+        }
+        .nav-badge.active { background: var(--gradient-warning); animation: pulse 2s infinite; }
+        .nav-badge.urgent { background: var(--gradient-danger); animation: urgentPulse 1s infinite; }
+        .nav-badge.new { background: var(--gradient-ai); }
+        .sidebar.collapsed .nav-badge { opacity: 0; width: 0; }
+
+        /* MODERN USER PROFILE */
+        .sidebar-user {
+            padding: 2rem; border-top: 1px solid var(--border); display: flex;
+            align-items: center; gap: 1.25rem; transition: var(--transition); flex-shrink: 0; min-height: 95px;
+            background: var(--bg-glass);
+        }
+        .user-avatar {
+            width: 45px; height: 45px; background: var(--gradient-analytics); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-weight: 700; font-size: 1rem; flex-shrink: 0; box-shadow: var(--shadow-glow);
+        }
+        .user-info { flex: 1; transition: var(--transition); overflow: hidden; }
+        .user-name {
+            font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .user-role {
+            font-size: 0.85rem; color: var(--text-muted);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar.collapsed .user-info { opacity: 0; width: 0; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column;
+            transition: var(--transition); min-height: 100vh; overflow: hidden;
+        }
+        .sidebar.collapsed + .main-content { margin-left: var(--sidebar-collapsed-width); }
+        @media (max-width: 1024px) { .main-content { margin-left: 0; } }
+
+        /* MODERN TOPBAR */
+        .topbar {
+            background: var(--topbar-bg); border-bottom: 1px solid var(--border); padding: 1.25rem 2.5rem;
+            display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 999; min-height: var(--topbar-height); flex-shrink: 0;
+        }
+        @media (max-width: 768px) { .topbar { padding: 1rem; min-height: var(--mobile-topbar-height); } }
+        .topbar-left { display: flex; align-items: center; gap: 1.5rem; flex: 1; min-width: 0; }
+        .sidebar-toggle {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.6rem; border-radius: 12px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; flex-shrink: 0;
+        }
+        .sidebar-toggle:hover { 
+            background: var(--bg-glass-hover); color: var(--text-primary); 
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .page-title {
+            font-size: 1.6rem; font-weight: 800; color: var(--text-primary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        @media (max-width: 768px) { .page-title { font-size: 1.4rem; } }
+        @media (max-width: 480px) { .page-title { font-size: 1.2rem; } }
+        .time-filter {
+            background: var(--bg-glass); border: 1px solid var(--border); border-radius: 12px;
+            padding: 0.6rem 1rem; color: var(--text-primary); font-size: 0.9rem;
+            transition: var(--transition); outline: none;
+        }
+        .time-filter:focus { border-color: var(--border-focus); box-shadow: var(--shadow-focus); }
+        .topbar-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .topbar-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        @media (max-width: 480px) { .topbar-actions { gap: 0.5rem; } }
+        .action-btn {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.7rem; border-radius: 12px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            position: relative; outline: none; display: flex; align-items: center; justify-content: center;
+            width: 45px; height: 45px;
+        }
+        @media (max-width: 480px) { .action-btn { width: 40px; height: 40px; padding: 0.6rem; font-size: 0.9rem; } }
+        .action-btn:hover { 
+            background: var(--bg-glass-hover); color: var(--text-primary); 
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .action-btn.ai { background: var(--gradient-ai); color: white; }
+        .theme-toggle {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.7rem; border-radius: 12px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            outline: none; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px;
+        }
+        @media (max-width: 480px) { .theme-toggle { width: 40px; height: 40px; padding: 0.6rem; font-size: 0.9rem; } }
+        .theme-toggle:hover { 
+            background: var(--bg-glass-hover); color: var(--text-primary); 
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+
+        /* CONTENT */
+        .content { flex: 1; padding: var(--content-padding); overflow-y: auto; overflow-x: hidden; }
+        @media (max-width: 768px) { .content { padding: var(--mobile-content-padding); } }
+
+        /* MODERN ANALYTICS HEADER */
+        .analytics-header {
+            background: var(--gradient-analytics); border-radius: 25px; padding: 3.5rem 2.5rem; margin-bottom: 2.5rem;
+            color: white; position: relative; overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .analytics-header { padding: 2.5rem 1.5rem; margin-bottom: 2rem; border-radius: 20px; }
+        }
+        @media (max-width: 480px) {
+            .analytics-header { padding: 2rem 1.25rem; margin-bottom: 1.5rem; border-radius: 18px; }
+        }
+        .analytics-header::before {
+            content: ''; position: absolute; top: 0; right: 0; width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+            border-radius: 50%; transform: translate(50%, -50%);
+        }
+        @media (max-width: 768px) { .analytics-header::before { width: 250px; height: 250px; } }
+        .analytics-header-content { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .analytics-title {
+            font-size: 2.8rem; font-weight: 900; margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) { .analytics-title { font-size: 2.3rem; } }
+        @media (max-width: 480px) { .analytics-title { font-size: 2rem; } }
+        .analytics-subtitle {
+            font-size: 1.2rem; opacity: 0.9; margin-bottom: 2.5rem; line-height: 1.5;
+        }
+        @media (max-width: 768px) { .analytics-subtitle { font-size: 1.1rem; margin-bottom: 2rem; } }
+        @media (max-width: 480px) { .analytics-subtitle { font-size: 1rem; margin-bottom: 1.5rem; } }
+
+        /* MODERN KPI GRID */
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;
+        }
+        @media (max-width: 768px) { .kpi-grid { gap: 1.5rem; margin-bottom: 2rem; } }
+        @media (max-width: 480px) { .kpi-grid { grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.5rem; } }
+        .kpi-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; transition: var(--transition); position: relative; overflow: hidden; cursor: pointer;
+        }
+        @media (max-width: 480px) { .kpi-card { padding: 1.5rem; border-radius: 16px; } }
+        .kpi-card:hover { 
+            transform: translateY(-8px); box-shadow: var(--shadow-lg); 
+            border-color: var(--border-accent);
+        }
+        .kpi-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; border-radius: 20px 20px 0 0;
+        }
+        .kpi-card.engagement::before { background: var(--gradient-analytics); }
+        .kpi-card.performance::before { background: var(--gradient-success); }
+        .kpi-card.growth::before { background: var(--gradient-warning); }
+        .kpi-card.quality::before { background: var(--gradient-organizer); }
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+        .kpi-card:hover::after {
+            transform: translateX(100%);
+        }
+        .kpi-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
+        }
+        .kpi-icon {
+            width: 50px; height: 50px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1.2rem; box-shadow: var(--shadow-glow);
+        }
+        .kpi-icon.engagement { background: var(--gradient-analytics); }
+        .kpi-icon.performance { background: var(--gradient-success); }
+        .kpi-icon.growth { background: var(--gradient-warning); }
+        .kpi-icon.quality { background: var(--gradient-organizer); }
+        .kpi-trend {
+            font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem;
+            padding: 0.4rem 0.8rem; border-radius: 20px; font-weight: 600;
+        }
+        .kpi-trend.positive { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .kpi-trend.negative { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .kpi-trend.neutral { background: rgba(107, 114, 128, 0.15); color: var(--text-muted); }
+        .kpi-value {
+            font-size: 2.5rem; font-weight: 900; color: var(--text-primary); margin-bottom: 0.5rem;
+            background: var(--gradient-analytics);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            position: relative;
+        }
+        .kpi-value.updating::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @media (max-width: 768px) { .kpi-value { font-size: 2.2rem; } }
+        @media (max-width: 480px) { .kpi-value { font-size: 2rem; } }
+        .kpi-title { color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .kpi-description { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
+
+        /* MODERN CHART GRID */
+        .chart-grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem;
+        }
+        @media (max-width: 1200px) { .chart-grid { grid-template-columns: 1fr; gap: 2rem; } }
+        @media (max-width: 768px) { .chart-grid { gap: 1.5rem; margin-bottom: 2rem; } }
+
+        /* MODERN CHART CONTAINER */
+        .chart-container {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 25px;
+            padding: 2.5rem; transition: var(--transition); box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        .chart-container:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+        .chart-container:hover .chart-title {
+            color: var(--primary);
+        }
+        @media (max-width: 768px) { .chart-container { padding: 2rem; border-radius: 20px; } }
+        @media (max-width: 480px) { .chart-container { padding: 1.5rem; border-radius: 18px; } }
+        .chart-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .chart-title {
+            font-size: 1.4rem; font-weight: 800; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        @media (max-width: 480px) { .chart-title { font-size: 1.2rem; } }
+        .chart-stats {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+        @media (max-width: 768px) {
+            .chart-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        .chart-stat {
+            text-align: center;
+        }
+        .chart-stat-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        .chart-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .chart-canvas {
+            height: 350px; position: relative;
+        }
+        .chart-canvas.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 1s linear infinite;
+        }
+        @media (max-width: 768px) {
+            .chart-canvas {
+                height: 280px !important;
+            }
+        }
+        @media (max-width: 480px) { .chart-canvas { height: 300px; } }
+
+        /* MODERN INSIGHTS SIDEBAR */
+        .insights-sidebar {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 25px;
+            padding: 2rem; height: fit-content; position: sticky; top: 2rem; box-shadow: var(--shadow-md);
+        }
+        @media (max-width: 1200px) { .insights-sidebar { position: static; } }
+        @media (max-width: 768px) { .insights-sidebar { padding: 1.5rem; border-radius: 20px; } }
+        @media (max-width: 480px) { .insights-sidebar { padding: 1.25rem; border-radius: 18px; } }
+        .sidebar-title {
+            font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        @media (max-width: 480px) { .sidebar-title { font-size: 1.1rem; margin-bottom: 1.25rem; } }
+
+        /* MODERN AI INSIGHTS */
+        .ai-insights { margin-bottom: 2.5rem; }
+        .insight-list {
+            display: flex; flex-direction: column; gap: 1.25rem;
+        }
+        .insight-item {
+            background: var(--bg-glass); border-radius: 14px; padding: 1.25rem;
+            border-left: 4px solid transparent; transition: var(--transition);
+            position: relative;
+        }
+        .insight-item:hover { 
+            background: var(--bg-glass-hover); transform: translateX(4px);
+        }
+        .insight-item.critical { border-left-color: var(--danger); }
+        .insight-item.opportunity { border-left-color: var(--success); }
+        .insight-item.prediction { border-left-color: var(--organizer-purple); }
+        .insight-item.trend { border-left-color: var(--warning); }
+        .insight-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            transition: var(--transition);
+        }
+        .insight-header {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;
+        }
+        .insight-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 0.9rem; flex-shrink: 0;
+        }
+        .insight-icon.critical { background: var(--gradient-danger); }
+        .insight-icon.opportunity { background: var(--gradient-success); }
+        .insight-icon.prediction { background: var(--gradient-ai); }
+        .insight-icon.trend { background: var(--gradient-warning); }
+        .insight-title { font-weight: 700; font-size: 0.9rem; }
+        .insight-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* MODERN DETAILED ANALYTICS */
+        .detailed-analytics {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem;
+        }
+        @media (max-width: 1024px) { .detailed-analytics { grid-template-columns: 1fr; gap: 2rem; } }
+        @media (max-width: 768px) { .detailed-analytics { gap: 1.5rem; margin-bottom: 2rem; } }
+
+        /* MODERN DEMOGRAPHIC BREAKDOWN */
+        .demographic-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; transition: var(--transition); box-shadow: var(--shadow-md);
+        }
+        @media (max-width: 480px) { .demographic-card { padding: 1.5rem; border-radius: 16px; } }
+        .demographic-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .demographic-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) { 
+            .demographic-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1rem; 
+            } 
+        }
+        .demographic-item {
+            background: var(--bg-glass); 
+            border-radius: 16px; 
+            padding: 1.5rem; 
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .demographic-item:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+        .demographic-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-analytics);
+            border-radius: 16px 16px 0 0;
+        }
+        .demographic-value {
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 0.25rem;
+            background: var(--gradient-analytics);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .demographic-label { font-size: 0.8rem; color: var(--text-muted); }
+        .demographic-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0.25rem 0;
+        }
+        .demographic-trend {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+        .demographic-trend.positive {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        .demographic-trend.neutral {
+            background: rgba(107, 114, 128, 0.15);
+            color: var(--text-muted);
+        }
+
+        /* Team Formation Enhancements */
+        .team-insights {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+        .team-insights-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .team-insights-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: var(--gradient-analytics);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Skills Chart Enhancements */
+        .skill-level-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .skill-level-indicator {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 1rem;
+                flex-wrap: wrap;
+            }
+        }
+        .skill-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .skill-level-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .skill-level-dot.high { background: #667eea; }
+        .skill-level-dot.popular { background: #10b981; }
+        .skill-level-dot.emerging { background: #f59e0b; }
+        .skill-level-dot.growing { background: #8b5cf6; }
+        .skill-level-dot.niche { background: #ef4444; }
+
+        /* Participant Engagement Indicators */
+        .engagement-indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: var(--bg-glass);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+        .engagement-stat {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .engagement-stat:last-child {
+            margin-bottom: 0;
+        }
+        .engagement-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .engagement-dot.high { background: #10b981; }
+        .engagement-dot.medium { background: #f59e0b; }
+        .engagement-dot.low { background: #ef4444; }
+
+        /* MODERN BUTTONS */
+        .btn {
+            padding: 1rem 2rem; border: none; border-radius: 14px; font-weight: 700;
+            font-size: 0.95rem; cursor: pointer; transition: var(--transition);
+            text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.75rem; position: relative; overflow: hidden; outline: none; white-space: nowrap;
+        }
+        @media (max-width: 480px) { .btn { padding: 0.875rem 1.75rem; font-size: 0.9rem; border-radius: 12px; } }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+        .btn:hover::before { left: 100%; }
+        .btn-primary { background: var(--gradient-analytics); color: white; box-shadow: var(--shadow-analytics); }
+        .btn-primary:hover { 
+            background: var(--gradient-hover); transform: translateY(-3px); 
+            box-shadow: var(--shadow-glow-strong);
+        }
+        .btn-secondary { background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-primary); }
+        .btn-secondary:hover { 
+            background: var(--bg-glass-hover); border-color: var(--border-accent);
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .btn-success { background: var(--gradient-success); color: white; }
+        .btn-success:hover { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+        .btn-small { padding: 0.6rem 1.25rem; font-size: 0.85rem; }
+        .btn-ai { background: var(--gradient-ai); color: white; }
+        .btn-ai:hover { transform: translateY(-3px) scale(1.02); }
+
+        /* ANIMATIONS */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        @keyframes urgentPulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.8); }
+        }
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* RESPONSIVE MOBILE FIXES */
+        @media (max-width: 640px) { .topbar-actions .action-btn:nth-child(2) { display: none; } }
+        @media (max-width: 360px) {
+            .topbar { padding: 1rem; }
+            .page-title { font-size: 1.1rem; }
+            .analytics-title { font-size: 1.8rem; }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+            .analytics-header { padding: 2rem 1.5rem; }
+            .analytics-title { font-size: 2rem; }
+            .content { padding: 1rem; }
+        }
+
+        /* ACCESSIBILITY & PERFORMANCE */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+        .nav-link:focus, .action-btn:focus, .btn:focus, .theme-toggle:focus, .sidebar-toggle:focus,
+        .kpi-card:focus, .insight-item:focus, .time-filter:focus {
+            outline: 2px solid var(--primary); outline-offset: 2px;
+        }
+        @media (pointer: coarse) {
+            .nav-link, .action-btn, .theme-toggle, .sidebar-toggle, .btn,
+            .kpi-card, .time-filter { min-height: 44px; }
+        }
+        @media print {
+            .sidebar, .topbar, .mobile-overlay, .topbar-actions { display: none !important; }
+            .main-content { margin-left: 0 !important; }
+            .content { padding: 1rem !important; }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Modern Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="logo-text">NexusHack</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main Control</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="event-management.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-plus"></i></div>
+                        <div class="nav-text">Event Management</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Participant Management</div>
+                    <a href="participant-dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-users"></i></div>
+                        <div class="nav-text">Participants</div>
+                        <div class="nav-badge">1,247</div>
+                    </a>
+                    <a href="judge-management.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="nav-text">Judge Management</div>
+                        <div class="nav-badge active">15</div>
+                    </a>
+                    <a href="submission-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="nav-text">Submissions</div>
+                        <div class="nav-badge urgent">127</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Advanced Features</div>
+                    <a href="leaderboard-control.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="nav-text">Live Leaderboard</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="plagiarism-control.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="nav-text">AI Plagiarism</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="payment-center.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+                        <div class="nav-text">Payment Center</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="web3-management.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-coins"></i></div>
+                        <div class="nav-text">Web3 & NFTs</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Event Operations</div>
+                    <a href="event-setup.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Event Setup</div>
+                    </a>
+                    <a href="messaging-center.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-bullhorn"></i></div>
+                        <div class="nav-text">Messaging</div>
+                        <div class="nav-badge urgent">5</div>
+                    </a>
+                    <a href="live-event-control.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-broadcast-tower"></i></div>
+                        <div class="nav-text">Live Control</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Content & Sponsors</div>
+                    <a href="sponsor-showcase.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="nav-text">Sponsor Showcase</div>
+                        <div class="nav-badge">8</div>
+                    </a>
+                    <a href="certificate-generator.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-certificate"></i></div>
+                        <div class="nav-text">Certificates</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">AC</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Alex Chen</div>
+                    <div class="user-role">Lead Organizer</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Modern Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Advanced Analytics</h1>
+                    <select class="time-filter" id="timeFilter">
+                        <option value="24h">Last 24 Hours</option>
+                        <option value="7d" selected>Last 7 Days</option>
+                        <option value="30d">Last 30 Days</option>
+                        <option value="90d">Last 3 Months</option>
+                    </select>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn ai" title="AI Analytics" onclick="getAIAnalytics()">
+                            <i class="fas fa-brain"></i>
+                        </button>
+                        <button class="action-btn" title="Export Report" onclick="exportAnalytics()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn" title="Real-time Data" onclick="toggleRealTime()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Modern Analytics Header -->
+                <div class="analytics-header">
+                    <div class="analytics-header-content">
+                        <h1 class="analytics-title">Advanced Analytics Intelligence</h1>
+                        <p class="analytics-subtitle">
+                            Comprehensive data insights powered by AI to optimize your hackathon performance, 
+                            participant engagement, and event success with real-time predictive analytics.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Modern KPI Grid -->
+                <div class="kpi-grid">
+                    <div class="kpi-card engagement" onclick="drillDown('engagement')">
+                        <div class="kpi-header">
+                            <div class="kpi-icon engagement">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+23%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="engagementScore">87.4%</div>
+                        <div class="kpi-title">Engagement Score</div>
+                        <div class="kpi-description">Average participant engagement across all event activities</div>
+                    </div>
+
+                    <div class="kpi-card performance" onclick="drillDown('performance')">
+                        <div class="kpi-header">
+                            <div class="kpi-icon performance">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+15%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="performanceIndex">94.2</div>
+                        <div class="kpi-title">Performance Index</div>
+                        <div class="kpi-description">Overall event performance based on multiple metrics</div>
+                    </div>
+
+                    <div class="kpi-card growth" onclick="drillDown('growth')">
+                        <div class="kpi-header">
+                            <div class="kpi-icon growth">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+34%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="growthRate">34.7%</div>
+                        <div class="kpi-title">Growth Rate</div>
+                        <div class="kpi-description">Week-over-week participant registration growth</div>
+                    </div>
+
+                    <div class="kpi-card quality" onclick="drillDown('quality')">
+                        <div class="kpi-header">
+                            <div class="kpi-icon quality">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="qualityScore">4.8</div>
+                        <div class="kpi-title">Quality Score</div>
+                        <div class="kpi-description">Average submission quality and judge satisfaction rating</div>
+                    </div>
+                </div>
+
+                <!-- Modern Chart Grid -->
+                <div class="chart-grid">
+                    <!-- Main Analytics Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2 class="chart-title">
+                                <i class="fas fa-chart-area"></i>
+                                Participant Analytics Trends
+                            </h2>
+                            <div>
+                                <button class="btn btn-small btn-secondary" onclick="changeChartType('line')">Line</button>
+                                <button class="btn btn-small btn-secondary" onclick="changeChartType('bar')">Bar</button>
+                                <button class="btn btn-small btn-ai" onclick="getAIPredictions()">
+                                    <i class="fas fa-magic"></i>
+                                    AI Predict
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="mainChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- AI Insights Sidebar -->
+                    <div class="insights-sidebar">
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-brain"></i>
+                            AI Insights
+                        </h3>
+
+                        <div class="ai-insights">
+                            <div class="insight-list" id="insightsList">
+                                <!-- AI insights will be loaded here -->
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="generateReport()">
+                            <i class="fas fa-file-alt"></i>
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modern Detailed Analytics -->
+                <div class="detailed-analytics">
+                    <!-- Geographic Distribution -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2 class="chart-title">
+                                <i class="fas fa-globe"></i>
+                                Geographic Distribution
+                            </h2>
+                            <button class="btn btn-small btn-secondary" onclick="toggleMapView()">
+                                <i class="fas fa-map"></i>
+                                Map View
+                            </button>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="geoChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Demographic Breakdown -->
+                    <div class="demographic-card">
+                        <div class="chart-header">
+                            <h2 class="chart-title">
+                                <i class="fas fa-users-cog"></i>
+                                Participant Demographics
+                            </h2>
+                            <button class="btn btn-small btn-secondary" onclick="exportDemographics()">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                        <div class="demographic-grid" id="demographicGrid">
+                            <!-- Demographics will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Charts Row -->
+                <div class="chart-grid">
+                    <!-- Skills Distribution -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2 class="chart-title">
+                                <i class="fas fa-code"></i>
+                                Skills & Technology Stack
+                            </h2>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Team Formation Analytics -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2 class="chart-title">
+                                <i class="fas fa-project-diagram"></i>
+                                Team Formation Patterns
+                            </h2>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="teamChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ADVANCED MODERN ANALYTICS SYSTEM - COMPLETE VERSION
+        class ModernAnalyticsManager {
+            constructor() {
+                this.charts = {};
+                this.realTimeEnabled = true;
+                this.currentTimeFilter = '7d';
+                this.aiInsights = [];
+                this.isMobile = window.innerWidth <= 1024;
+                this.currentUser = { name: 'Alex Chen', initials: 'AC', role: 'Lead Organizer', id: 'org_001' };
+                this.teamFormationData = {};
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.loadAnalyticsData();
+                this.initializeCharts();
+                this.addTeamInsightsOverlay();
+                this.addSkillsLevelIndicator();
+                this.loadAIInsights();
+                this.renderInsights();
+                this.renderDemographics();
+                this.initializeUser();
+                this.handleResize();
+                this.startRealTimeUpdates();
+                this.initializeAnimations();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                const themeToggle = document.getElementById('themeToggle');
+                themeToggle.querySelector('i').className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            initializeUser() {
+                const userSession = localStorage.getItem('modernOrganizerSession');
+                if (userSession) {
+                    const session = JSON.parse(userSession);
+                    this.currentUser.name = session.name || this.currentUser.name;
+                    this.currentUser.initials = session.initials || this.currentUser.initials;
+                }
+                document.getElementById('userName').textContent = this.currentUser.name;
+                document.getElementById('userAvatar').textContent = this.currentUser.initials;
+            }
+
+            setupEventListeners() {
+                document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
+                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
+                document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
+                document.getElementById('timeFilter').addEventListener('change', (e) => this.changeTimeFilter(e.target.value));
+                window.addEventListener('resize', () => this.handleResize());
+                this.setupTouchGestures();
+            }
+
+            setupTouchGestures() {
+                let startX;
+                document.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+                document.addEventListener('touchend', (e) => {
+                    if (!startX) return;
+                    const endX = e.changedTouches[0].clientX;
+                    const diffX = startX - endX;
+                    if (Math.abs(diffX) > 50) {
+                        if (diffX > 0) this.closeMobileSidebar();
+                        else if (this.isMobile) this.openMobileSidebar();
+                    }
+                    startX = null;
+                });
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 1024;
+                if (!this.isMobile) this.closeMobileSidebar();
+                
+                // Resize all charts
+                Object.values(this.charts).forEach(chart => {
+                    if (chart) chart.resize();
+                });
+            }
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                if (this.isMobile) {
+                    sidebar.classList.toggle('open');
+                    this.toggleMobileOverlay();
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            }
+
+            openMobileSidebar() {
+                if (this.isMobile) {
+                    document.getElementById('sidebar').classList.add('open');
+                    this.showMobileOverlay();
+                }
+            }
+
+            closeMobileSidebar() {
+                document.getElementById('sidebar').classList.remove('open');
+                this.hideMobileOverlay();
+            }
+
+            toggleMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.toggle('active');
+            }
+
+            showMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.add('active');
+            }
+
+            hideMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.remove('active');
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                // Update all chart themes
+                this.updateAllChartThemes(newTheme);
+                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+            }
+
+            loadAnalyticsData() {
+                // Generate comprehensive analytics data
+                this.analyticsData = {
+                    participants: {
+                        total: 1247,
+                        daily: [45, 67, 89, 123, 145, 178, 201],
+                        growth: 34.7,
+                        engagement: 87.4,
+                        // Enhanced participant data
+                        byExperience: {
+                            beginner: 423,
+                            intermediate: 567,
+                            advanced: 234,
+                            expert: 23
+                        },
+                        byTrack: {
+                            web3: 298,
+                            ai: 267,
+                            mobile: 198,
+                            sustainability: 156,
+                            fintech: 134,
+                            healthcare: 89,
+                            gaming: 78,
+                            other: 27
+                        },
+                        engagement: {
+                            highlyEngaged: 89.2, // participants with >80% activity
+                            moderatelyEngaged: 8.7,
+                            lowEngaged: 2.1
+                        }
+                    },
+                    submissions: {
+                        total: 127,
+                        quality: 4.8,
+                        completion: 94.2,
+                        // Enhanced submission data
+                        byTrack: {
+                            web3: 32,
+                            ai: 28,
+                            mobile: 21,
+                            sustainability: 18,
+                            fintech: 15,
+                            healthcare: 8,
+                            gaming: 5
+                        },
+                        qualityDistribution: {
+                            excellent: 45,
+                            good: 52,
+                            average: 24,
+                            needsWork: 6
+                        }
+                    },
+                    geographic: [
+                        { country: 'United States', participants: 387, percentage: 31.0, cities: ['San Francisco', 'New York', 'Austin'] },
+                        { country: 'India', participants: 298, percentage: 23.9, cities: ['Bangalore', 'Mumbai', 'Delhi'] },
+                        { country: 'Canada', participants: 156, percentage: 12.5, cities: ['Toronto', 'Vancouver', 'Montreal'] },
+                        { country: 'United Kingdom', participants: 134, percentage: 10.7, cities: ['London', 'Manchester', 'Edinburgh'] },
+                        { country: 'Germany', participants: 98, percentage: 7.9, cities: ['Berlin', 'Munich', 'Hamburg'] },
+                        { country: 'Others', participants: 174, percentage: 14.0, cities: ['Various'] }
+                    ],
+                    skills: [
+                        { skill: 'JavaScript', count: 456, percentage: 36.6, level: 'High Demand' },
+                        { skill: 'Python', count: 398, percentage: 31.9, level: 'High Demand' },
+                        { skill: 'React', count: 345, percentage: 27.7, level: 'Popular' },
+                        { skill: 'Node.js', count: 289, percentage: 23.2, level: 'Popular' },
+                        { skill: 'Blockchain', count: 234, percentage: 18.8, level: 'Emerging' },
+                        { skill: 'AI/ML', count: 198, percentage: 15.9, level: 'Emerging' },
+                        { skill: 'Flutter', count: 167, percentage: 13.4, level: 'Growing' },
+                        { skill: 'Rust', count: 89, percentage: 7.1, level: 'Niche' },
+                        { skill: 'Solidity', count: 76, percentage: 6.1, level: 'Specialized' },
+                        { skill: 'Go', count: 54, percentage: 4.3, level: 'Niche' }
+                    ],
+                    demographics: {
+                        students: 67.8,
+                        professionals: 28.9,
+                        others: 3.3,
+                        avgAge: 24.5,
+                        maleRatio: 58.2,
+                        femaleRatio: 39.1,
+                        otherRatio: 2.7,
+                        // Enhanced demographics
+                        education: {
+                            undergraduate: 45.2,
+                            graduate: 22.6,
+                            doctorate: 4.8,
+                            bootcamp: 18.7,
+                            selfTaught: 8.7
+                        },
+                        workExperience: {
+                            '0-1years': 34.5,
+                            '2-3years': 28.9,
+                            '4-7years': 21.3,
+                            '8-15years': 12.1,
+                            '15+years': 3.2
+                        }
+                    },
+                    // NEW: Team Formation Analytics
+                    teamFormation: {
+                        totalTeams: 312,
+                        soloParticipants: 89,
+                        averageTeamSize: 3.2,
+                        formationSuccess: 89.7,
+                        teamsBySize: {
+                            solo: { count: 89, successRate: 67.4 },
+                            duo: { count: 67, successRate: 78.2 },
+                            trio: { count: 78, successRate: 92.3 },
+                            quad: { count: 58, successRate: 89.7 },
+                            larger: { count: 20, successRate: 75.0 }
+                        },
+                        skillDiversityImpact: {
+                            highDiversity: { teams: 67, avgScore: 4.7 },
+                            mediumDiversity: { teams: 123, avgScore: 4.2 },
+                            lowDiversity: { teams: 122, avgScore: 3.8 }
+                        }
+                    }
+                };
+            }
+
+            initializeCharts() {
+                this.initMainChart();
+                this.initGeoChart();
+                this.initSkillsChart();
+                this.initTeamChart();
+            }
+
+            initMainChart() {
+                const ctx = document.getElementById('mainChart').getContext('2d');
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                
+                this.charts.main = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [
+                            {
+                                label: 'Registrations',
+                                data: this.analyticsData.participants.daily,
+                                borderColor: '#667eea',
+                                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Check-ins',
+                                data: [34, 52, 67, 89, 112, 134, 156],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Submissions',
+                                data: [0, 0, 2, 8, 23, 45, 89],
+                                borderColor: '#f59e0b',
+                                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    color: isDark ? '#e2e8f0' : '#64748b',
+                                    usePointStyle: true,
+                                    padding: 20
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: isDark ? '#e2e8f0' : '#64748b'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: isDark ? '#e2e8f0' : '#64748b'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            initGeoChart() {
+                const ctx = document.getElementById('geoChart').getContext('2d');
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                
+                this.charts.geo = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: this.analyticsData.geographic.map(item => item.country),
+                        datasets: [{
+                            data: this.analyticsData.geographic.map(item => item.participants),
+                            backgroundColor: [
+                                '#667eea', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'
+                            ],
+                            borderWidth: 2,
+                            borderColor: isDark ? '#1a1a2e' : '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: isDark ? '#e2e8f0' : '#64748b',
+                                    padding: 15
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            initSkillsChart() {
+                const ctx = document.getElementById('skillsChart').getContext('2d');
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                
+                this.charts.skills = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: this.analyticsData.skills.map(item => item.skill),
+                        datasets: [{
+                            label: 'Participants',
+                            data: this.analyticsData.skills.map(item => item.count),
+                            backgroundColor: [
+                                'rgba(102, 126, 234, 0.8)',
+                                'rgba(102, 126, 234, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(139, 92, 246, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(239, 68, 68, 0.8)'
+                            ],
+                            borderColor: [
+                                '#667eea', '#667eea', '#10b981', '#10b981', '#f59e0b', 
+                                '#f59e0b', '#8b5cf6', '#ef4444', '#ef4444', '#ef4444'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: isDark ? '#e2e8f0' : '#64748b'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: isDark ? '#e2e8f0' : '#64748b'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            initTeamChart() {
+                const ctx = document.getElementById('teamChart').getContext('2d');
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                
+                // Team formation data with actual statistics
+                const teamFormationData = {
+                    teamSizes: [
+                        { size: '1 (Solo)', count: 89, percentage: 28.5 },
+                        { size: '2 members', count: 67, percentage: 21.5 },
+                        { size: '3 members', count: 78, percentage: 25.0 },
+                        { size: '4 members', count: 58, percentage: 18.6 },
+                        { size: '5+ members', count: 20, percentage: 6.4 }
+                    ],
+                    skillDiversity: {
+                        highDiversity: 67,  // teams with 4+ different skill areas
+                        mediumDiversity: 123, // teams with 2-3 skill areas
+                        lowDiversity: 122    // teams with 1-2 skill areas
+                    },
+                    formationSuccess: {
+                        successful: 89.7,
+                        struggling: 10.3
+                    }
+                };
+
+                // Create a mixed chart with team formation patterns
+                this.charts.team = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: teamFormationData.teamSizes.map(item => item.size),
+                        datasets: [{
+                            label: 'Team Formation Distribution',
+                            data: teamFormationData.teamSizes.map(item => item.count),
+                            backgroundColor: [
+                                'rgba(102, 126, 234, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(139, 92, 246, 0.8)',
+                                'rgba(239, 68, 68, 0.8)'
+                            ],
+                            borderColor: [
+                                '#667eea', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'
+                            ],
+                            borderWidth: 3,
+                            cutout: '50%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: isDark ? '#e2e8f0' : '#64748b',
+                                    padding: 15,
+                                    usePointStyle: true,
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const item = teamFormationData.teamSizes[context.dataIndex];
+                                        return `${item.size}: ${item.count} teams (${item.percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Store team formation data for access
+                this.teamFormationData = teamFormationData;
+            }
+
+            addTeamInsightsOverlay() {
+                const chartContainer = document.querySelector('#teamChart').parentElement;
+                
+                // Create insights overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'team-insights';
+                overlay.innerHTML = `
+                    <div class="team-insights-title">Success Rate</div>
+                    <div class="team-insights-value">89.7%</div>
+                `;
+                
+                chartContainer.style.position = 'relative';
+                chartContainer.appendChild(overlay);
+            }
+
+            addSkillsLevelIndicator() {
+                const skillsContainer = document.querySelector('#skillsChart').parentElement;
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'skill-level-indicator';
+                indicator.innerHTML = `
+                    <div class="skill-level">
+                        <div class="skill-level-dot high"></div>
+                        <span>High Demand</span>
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-level-dot popular"></div>
+                        <span>Popular</span>
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-level-dot emerging"></div>
+                        <span>Emerging</span>
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-level-dot growing"></div>
+                        <span>Growing</span>
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-level-dot niche"></div>
+                        <span>Niche</span>
+                    </div>
+                `;
+                
+                skillsContainer.style.position = 'relative';
+                skillsContainer.appendChild(indicator);
+            }
+
+            renderTeamFormationInsights() {
+                // This will be called to show detailed team insights
+                const insights = [
+                    `🎯 Most successful team size: 3 members (${this.teamFormationData.teamSizes[2].percentage}%)`,
+                    `👥 Solo participants: ${this.teamFormationData.teamSizes.count} (${this.teamFormationData.teamSizes.percentage}%)`,
+                    `🏆 High skill diversity teams: ${this.teamFormationData.skillDiversity.highDiversity} teams`,
+                    `⚡ Team formation success rate: ${this.teamFormationData.formationSuccess.successful}%`
+                ];
+                
+                return insights;
+            }
+
+            updateAllChartThemes(theme) {
+                const isDark = theme === 'dark';
+                const textColor = isDark ? '#e2e8f0' : '#64748b';
+                const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+                Object.values(this.charts).forEach(chart => {
+                    if (chart && chart.options) {
+                        // Update grid colors
+                        if (chart.options.scales) {
+                            Object.values(chart.options.scales).forEach(scale => {
+                                if (scale.grid) scale.grid.color = gridColor;
+                                if (scale.ticks) scale.ticks.color = textColor;
+                                if (scale.angleLines) scale.angleLines.color = gridColor;
+                                if (scale.pointLabels) scale.pointLabels.color = textColor;
+                            });
+                        }
+
+                        // Update legend colors
+                        if (chart.options.plugins && chart.options.plugins.legend) {
+                            chart.options.plugins.legend.labels.color = textColor;
+                        }
+
+                        chart.update();
+                    }
+                });
+            }
+
+            loadAIInsights() {
+                this.aiInsights = [
+                    {
+                        type: 'critical',
+                        title: 'Peak Registration Alert',
+                        text: 'Registration spike detected! Current rate is 340% above average. Consider scaling server capacity.'
+                    },
+                    {
+                        type: 'opportunity',
+                        title: 'High Engagement Opportunity',
+                        text: 'AI/ML track shows 89% higher engagement. Consider adding more AI-focused workshops.'
+                    },
+                    {
+                        type: 'prediction',
+                        title: 'Submission Forecast',
+                        text: 'Predicted 156 submissions by deadline based on current participation patterns.'
+                    },
+                    {
+                        type: 'trend',
+                        title: 'Geographic Growth',
+                        text: 'European participants increased 67% this week. Consider timezone-specific events.'
+                    },
+                    {
+                        type: 'opportunity',
+                        title: 'Team Formation Pattern',
+                        text: 'Students + professionals teams show 23% higher success rate. Promote mixed experience teams.'
+                    },
+                    {
+                        type: 'critical',
+                        title: 'Judge Workload Warning',
+                        text: 'Current judge-to-submission ratio may cause evaluation delays. Consider adding 2-3 more judges.'
+                    }
+                ];
+            }
+
+            renderInsights() {
+                const container = document.getElementById('insightsList');
+                container.innerHTML = '';
+
+                this.aiInsights.forEach((insight, index) => {
+                    const insightDiv = document.createElement('div');
+                    insightDiv.className = `insight-item ${insight.type}`;
+                    insightDiv.style.opacity = '0';
+                    insightDiv.style.transform = 'translateX(20px)';
+                    insightDiv.innerHTML = `
+                        <div class="insight-header">
+                            <div class="insight-icon ${insight.type}">
+                                <i class="fas ${this.getInsightIcon(insight.type)}"></i>
+                            </div>
+                            <div class="insight-title">${insight.title}</div>
+                        </div>
+                        <div class="insight-text">${insight.text}</div>
+                    `;
+                    container.appendChild(insightDiv);
+
+                    // Animate in
+                    setTimeout(() => {
+                        insightDiv.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        insightDiv.style.opacity = '1';
+                        insightDiv.style.transform = 'translateX(0)';
+                    }, index * 150);
+                });
+            }
+
+            renderDemographics() {
+                const container = document.getElementById('demographicGrid');
+                
+                // Enhanced demographics with more detailed data
+                const demographics = [
+                    { 
+                        label: 'Students', 
+                        value: `${this.analyticsData.demographics.students}%`,
+                        detail: '845 participants',
+                        trend: '+12%'
+                    },
+                    { 
+                        label: 'Professionals', 
+                        value: `${this.analyticsData.demographics.professionals}%`,
+                        detail: '361 participants', 
+                        trend: '+8%'
+                    },
+                    { 
+                        label: 'Average Age', 
+                        value: `${this.analyticsData.demographics.avgAge} yrs`,
+                        detail: 'Range: 16-54',
+                        trend: 'Stable'
+                    },
+                    { 
+                        label: 'Female Ratio', 
+                        value: `${this.analyticsData.demographics.femaleRatio}%`,
+                        detail: '488 participants',
+                        trend: '+15%'
+                    },
+                    {
+                        label: 'International',
+                        value: '34.2%',
+                        detail: '427 participants',
+                        trend: '+23%'
+                    },
+                    {
+                        label: 'First-time',
+                        value: '67.8%',
+                        detail: '846 participants',
+                        trend: '+19%'
+                    },
+                    {
+                        label: 'Team Leaders',
+                        value: '24.1%',
+                        detail: '301 participants',
+                        trend: '+11%'
+                    },
+                    {
+                        label: 'Returning',
+                        value: '32.2%',
+                        detail: '401 participants',
+                        trend: '+5%'
+                    }
+                ];
+
+                container.innerHTML = '';
+                demographics.forEach((demo, index) => {
+                    const demoDiv = document.createElement('div');
+                    demoDiv.className = 'demographic-item';
+                    demoDiv.style.opacity = '0';
+                    demoDiv.style.transform = 'scale(0.9)';
+                    demoDiv.innerHTML = `
+                        <div class="demographic-value">${demo.value}</div>
+                        <div class="demographic-label">${demo.label}</div>
+                        <div class="demographic-detail">${demo.detail}</div>
+                        <div class="demographic-trend ${demo.trend.includes('+') ? 'positive' : 'neutral'}">${demo.trend}</div>
+                    `;
+                    container.appendChild(demoDiv);
+
+                    // Animate in
+                    setTimeout(() => {
+                        demoDiv.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        demoDiv.style.opacity = '1';
+                        demoDiv.style.transform = 'scale(1)';
+                    }, index * 100);
+                });
+            }
+
+            getInsightIcon(type) {
+                const icons = {
+                    critical: 'fa-exclamation-triangle',
+                    opportunity: 'fa-lightbulb',
+                    prediction: 'fa-crystal-ball',
+                    trend: 'fa-chart-line'
+                };
+                return icons[type] || 'fa-info-circle';
+            }
+
+            startRealTimeUpdates() {
+                if (!this.realTimeEnabled) return;
+
+                setInterval(() => {
+                    this.updateLiveKPIs();
+                    this.addRandomInsight();
+                }, 15000); // Update every 15 seconds
+            }
+
+            updateLiveKPIs() {
+                const kpis = [
+                    { id: 'engagementScore', change: Math.random() * 2 - 1 },
+                    { id: 'performanceIndex', change: Math.random() * 1 - 0.5 },
+                    { id: 'growthRate', change: Math.random() * 3 - 1.5 },
+                    { id: 'qualityScore', change: Math.random() * 0.2 - 0.1 }
+                ];
+
+                kpis.forEach(kpi => {
+                    const element = document.getElementById(kpi.id);
+                    if (element && Math.random() > 0.7) {
+                        const currentValue = parseFloat(element.textContent.replace('%', ''));
+                        const newValue = Math.max(0, currentValue + kpi.change);
+                        
+                        if (kpi.id === 'qualityScore') {
+                            element.textContent = newValue.toFixed(1);
+                        } else if (kpi.id.includes('Score') || kpi.id.includes('Rate')) {
+                            element.textContent = `${newValue.toFixed(1)}%`;
+                        } else {
+                            element.textContent = newValue.toFixed(1);
+                        }
+                        
+                        this.animateKPIChange(element);
+                    }
+                });
+            }
+
+            addRandomInsight() {
+                const randomInsights = [
+                    {
+                        type: 'trend',
+                        title: 'New Skill Trend',
+                        text: 'Rust programming language gaining popularity - 45% increase in mentions.'
+                    },
+                    {
+                        type: 'opportunity',
+                        title: 'Mentor Engagement',
+                        text: 'Participants with mentor interaction show 78% higher completion rates.'
+                    },
+                    {
+                        type: 'prediction',
+                        title: 'Quality Forecast',
+                        text: 'AI predicts 12% increase in high-quality submissions based on current trends.'
+                    }
+                ];
+
+                if (Math.random() > 0.6) {
+                    const newInsight = randomInsights[Math.floor(Math.random() * randomInsights.length)];
+                    this.aiInsights.unshift(newInsight);
+                    this.aiInsights = this.aiInsights.slice(0, 6); // Keep only 6 latest
+                    this.renderInsights();
+                }
+            }
+
+            animateKPIChange(element) {
+                element.classList.add('updating');
+                element.style.transform = 'scale(1.1)';
+                element.style.filter = 'brightness(1.3)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                    element.style.filter = 'brightness(1)';
+                    element.classList.remove('updating');
+                }, 600);
+            }
+
+            initializeAnimations() {
+                // Enhanced entrance animations
+                setTimeout(() => {
+                    document.querySelectorAll('.kpi-card').forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(30px) scale(0.95)';
+                            setTimeout(() => {
+                                card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0) scale(1)';
+                            }, 100);
+                        }, index * 150);
+                    });
+                }, 500);
+
+                // Chart containers animation
+                setTimeout(() => {
+                    document.querySelectorAll('.chart-container').forEach((container, index) => {
+                        setTimeout(() => {
+                            container.style.opacity = '0';
+                            container.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                container.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                                container.style.opacity = '1';
+                                container.style.transform = 'translateY(0)';
+                            }, 100);
+                        }, index * 200);
+                    });
+                }, 1000);
+            }
+
+            // Time Filter Functions
+            changeTimeFilter(period) {
+                this.currentTimeFilter = period;
+                this.showToast(`Analytics updated for ${this.formatPeriod(period)}`, 'info');
+                
+                // Simulate data update
+                this.updateChartsForPeriod(period);
+            }
+
+            formatPeriod(period) {
+                const periods = {
+                    '24h': 'last 24 hours',
+                    '7d': 'last 7 days',
+                    '30d': 'last 30 days',
+                    '90d': 'last 3 months'
+                };
+                return periods[period] || period;
+            }
+
+                       updateChartsForPeriod(period) {
+                // Simulate data changes based on time period
+                const multipliers = {
+                    '24h': 0.1,
+                    '7d': 1,
+                    '30d': 4.2,
+                    '90d': 12.6
+                };
+                
+                const multiplier = multipliers[period] || 1;
+                const newData = this.analyticsData.participants.daily.map(val => Math.floor(val * multiplier));
+                
+                if (this.charts.main) {
+                    this.charts.main.data.datasets[0].data = newData;
+                    this.charts.main.update();
+                }
+            }
+
+            // KPI Functions
+            drillDown(metric) {
+                this.showToast(`Opening detailed ${metric} analytics...`, 'info');
+            }
+
+            // Chart Type Functions
+            changeChartType(type) {
+                if (this.charts.main) {
+                    this.charts.main.config.type = type;
+                    this.charts.main.update();
+                    this.showToast(`Chart changed to ${type} view`, 'success');
+                }
+            }
+
+            // AI Functions
+            getAIAnalytics() {
+                this.showToast('Generating advanced AI analytics insights...', 'info');
+                
+                setTimeout(() => {
+                    const insights = [
+                        '🎯 Optimal team size identified: 3-4 members show 34% higher success rate',
+                        '📊 Peak engagement time: 2-4 PM EST with 67% higher activity',
+                        '⚡ JavaScript + AI/ML combination shows 89% project completion rate',
+                        '🏆 Student-professional mixed teams outperform by 28%',
+                        '🤖 AI predicts 23% increase in submissions by tomorrow'
+                    ];
+                    
+                    const randomInsight = insights[Math.floor(Math.random() * insights.length)];
+                    this.showToast(randomInsight, 'success');
+                }, 2000);
+            }
+
+            getAIPredictions() {
+                this.showToast('Analyzing data patterns for predictions...', 'info');
+                
+                setTimeout(() => {
+                    // Add prediction data to main chart
+                    if (this.charts.main) {
+                        const predictions = [210, 225, 240];
+                        this.charts.main.data.labels.push('Mon+1', 'Tue+1', 'Wed+1');
+                        this.charts.main.data.datasets[0].data.push(...predictions);
+                        this.charts.main.update();
+                    }
+                    
+                    this.showToast('AI predictions added to chart - 3-day forecast generated!', 'success');
+                }, 3000);
+            }
+
+            // Export Functions
+            exportAnalytics() {
+                this.showToast('Generating comprehensive analytics report...', 'info');
+                
+                setTimeout(() => {
+                    const reportData = {
+                        generated: new Date().toISOString(),
+                        timeFilter: this.currentTimeFilter,
+                        kpis: {
+                            engagement: document.getElementById('engagementScore').textContent,
+                            performance: document.getElementById('performanceIndex').textContent,
+                            growth: document.getElementById('growthRate').textContent,
+                            quality: document.getElementById('qualityScore').textContent
+                        },
+                        analytics: this.analyticsData,
+                        insights: this.aiInsights,
+                        teamFormation: this.teamFormationData
+                    };
+
+                    const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `analytics-report-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    
+                    this.showToast('Advanced analytics report exported successfully!', 'success');
+                }, 2500);
+            }
+
+            exportDemographics() {
+                const csvContent = this.generateDemographicsCSV();
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `demographics-${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.showToast('Demographics data exported to CSV!', 'success');
+            }
+
+            generateDemographicsCSV() {
+                let csvContent = 'Category,Value,Percentage,Details,Trend\n';
+                
+                const demographics = this.analyticsData.demographics;
+                csvContent += `Students,${demographics.students}%,${demographics.students},845 participants,+12%\n`;
+                csvContent += `Professionals,${demographics.professionals}%,${demographics.professionals},361 participants,+8%\n`;
+                csvContent += `Others,${demographics.others}%,${demographics.others},41 participants,+3%\n`;
+                csvContent += `Average Age,${demographics.avgAge} years,N/A,Range: 16-54,Stable\n`;
+                csvContent += `Male Ratio,${demographics.maleRatio}%,${demographics.maleRatio},726 participants,+2%\n`;
+                csvContent += `Female Ratio,${demographics.femaleRatio}%,${demographics.femaleRatio},488 participants,+15%\n`;
+                csvContent += `Other Gender,${demographics.otherRatio}%,${demographics.otherRatio},33 participants,+8%\n`;
+                csvContent += `International,34.2%,34.2,427 participants,+23%\n`;
+                csvContent += `First-time,67.8%,67.8,846 participants,+19%\n`;
+                csvContent += `Team Leaders,24.1%,24.1,301 participants,+11%\n`;
+                csvContent += `Returning,32.2%,32.2,401 participants,+5%\n`;
+                
+                return csvContent;
+            }
+
+            generateReport() {
+                this.showToast('Generating comprehensive analytics report with AI insights...', 'info');
+                
+                setTimeout(() => {
+                    this.showToast('📊 Full analytics report generated with predictive insights!', 'success');
+                }, 3000);
+            }
+
+            // View Functions
+            toggleMapView() {
+                this.showToast('Switching to interactive geographic map view...', 'info');
+            }
+
+            toggleRealTime() {
+                this.realTimeEnabled = !this.realTimeEnabled;
+                const status = this.realTimeEnabled ? 'enabled' : 'disabled';
+                this.showToast(`Real-time data updates ${status}`, this.realTimeEnabled ? 'success' : 'warning');
+            }
+
+            backToDashboard() {
+                window.location.href = 'dashboard.html';
+            }
+
+            showToast(message, type = 'success') {
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) existingToast.remove();
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed; top: 2rem; right: 2rem; padding: 1rem 1.5rem;
+                    border-radius: 12px; color: white; font-weight: 500; z-index: 10001;
+                    animation: slideInToast 0.3s ease-out; max-width: 400px;
+                    box-shadow: var(--shadow-lg); background: var(--gradient-${type});
+                `;
+                
+                if (window.innerWidth <= 768) {
+                    toast.style.top = '1rem'; toast.style.right = '1rem';
+                    toast.style.left = '1rem'; toast.style.maxWidth = 'none';
+                }
+                
+                toast.innerHTML = `<i class="fas ${this.getToastIcon(type)}"></i><span style="margin-left: 0.5rem;">${message}</span>`;
+                document.body.appendChild(toast);
+                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 5000);
+            }
+
+            getToastIcon(type) {
+                const icons = {
+                    success: 'fa-check-circle', error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle', warning: 'fa-exclamation-triangle'
+                };
+                return icons[type] || 'fa-check-circle';
+            }
+        }
+
+        // Global functions and initialization
+        let modernAnalyticsManager;
+
+        function drillDown(metric) { modernAnalyticsManager.drillDown(metric); }
+        function changeChartType(type) { modernAnalyticsManager.changeChartType(type); }
+        function getAIAnalytics() { modernAnalyticsManager.getAIAnalytics(); }
+        function getAIPredictions() { modernAnalyticsManager.getAIPredictions(); }
+        function exportAnalytics() { modernAnalyticsManager.exportAnalytics(); }
+        function exportDemographics() { modernAnalyticsManager.exportDemographics(); }
+        function generateReport() { modernAnalyticsManager.generateReport(); }
+        function toggleMapView() { modernAnalyticsManager.toggleMapView(); }
+        function toggleRealTime() { modernAnalyticsManager.toggleRealTime(); }
+        function backToDashboard() { modernAnalyticsManager.backToDashboard(); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            modernAnalyticsManager = new ModernAnalyticsManager();
+            
+            // Performance optimization for mobile
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+                const style = document.createElement('style');
+                style.textContent = `.mobile-device * { animation-duration: 0.2s !important; transition-duration: 0.2s !important; }`;
+                document.head.appendChild(style);
+            }
+
+            // Auto-save user session
+            setInterval(() => {
+                const sessionData = {
+                    name: modernAnalyticsManager.currentUser.name,
+                    initials: modernAnalyticsManager.currentUser.initials,
+                    role: modernAnalyticsManager.currentUser.role,
+                    lastActive: Date.now()
+                };
+                localStorage.setItem('modernOrganizerSession', JSON.stringify(sessionData));
+            }, 60000); // Save every minute
+
+            // Add enhanced keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'e':
+                            e.preventDefault();
+                            exportAnalytics();
+                            break;
+                        case 'r':
+                            e.preventDefault();
+                            generateReport();
+                            break;
+                        case 'i':
+                            e.preventDefault();
+                            getAIAnalytics();
+                            break;
+                        case 'p':
+                            e.preventDefault();
+                            getAIPredictions();
+                            break;
+                        case 't':
+                            e.preventDefault();
+                            modernAnalyticsManager.toggleTheme();
+                            break;
+                    }
+                }
+            });
+
+            // Enhanced performance monitoring
+            if (window.performance && window.performance.mark) {
+                window.performance.mark('analytics-start');
+                window.addEventListener('load', () => {
+                    window.performance.mark('analytics-end');
+                    window.performance.measure('analytics-load-time', 'analytics-start', 'analytics-end');
+                });
+            }
+
+            // Add enhanced error handling
+            window.addEventListener('error', (e) => {
+                console.error('Analytics Error:', e.error);
+                modernAnalyticsManager.showToast('An error occurred. Please refresh the page.', 'error');
+            });
+
+            // Enhanced accessibility features
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+
+            document.addEventListener('mousedown', () => {
+                document.body.classList.remove('keyboard-navigation');
+            });
+        });
+
+        // Enhanced animations and performance styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @media (max-width: 768px) {
+                @keyframes slideInToast {
+                    from { transform: translateY(-100%); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            }
+            
+            /* Enhanced hover effects */
+            .kpi-card, .insight-item, .chart-container, .demographic-item { transition: var(--transition) !important; }
+            @media (hover: hover) and (pointer: fine) {
+                .kpi-card:hover { 
+                    transform: translateY(-8px) scale(1.02) !important;
+                    box-shadow: var(--shadow-lg) !important;
+                }
+                .insight-item:hover { transform: translateX(6px) !important; }
+                .chart-container:hover { transform: translateY(-6px) !important; }
+                .demographic-item:hover { transform: translateY(-4px) scale(1.02) !important; }
+            }
+            
+            /* Keyboard navigation styles */
+            .keyboard-navigation *:focus {
+                outline: 2px solid var(--primary) !important; 
+                outline-offset: 2px !important;
+                box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.25) !important;
+            }
+            
+            /* Enhanced loading states */
+            .chart-canvas.loading::before {
+                content: 'Loading advanced analytics...';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: var(--text-muted);
+                font-size: 0.9rem;
+                opacity: 0.7;
+            }
+            
+            /* Real-time update animations */
+            .kpi-value.updating {
+                animation: kpiUpdate 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            @keyframes kpiUpdate {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); filter: brightness(1.3); }
+                100% { transform: scale(1); filter: brightness(1); }
+            }
+            
+            /* Enhanced chart responsiveness */
+            @media (max-width: 1200px) {
+                .chart-stats {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    align-items: flex-start;
+                }
+            }
+            
+            /* Print optimizations */
+            @media print {
+                .sidebar, .topbar, .mobile-overlay, .topbar-actions, 
+                .btn, .action-btn, .theme-toggle, .sidebar-toggle { 
+                    display: none !important; 
+                }
+                .main-content { margin-left: 0 !important; }
+                .content { padding: 1rem !important; }
+                .chart-container, .kpi-card, .demographic-card { 
+                    break-inside: avoid; 
+                    page-break-inside: avoid;
+                }
+            }
+            
+            /* Enhanced mobile optimizations */
+            @media (max-width: 480px) {
+                .chart-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 1rem;
+                }
+                
+                .chart-stats {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+                
+                .demographic-grid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 0.75rem;
+                }
+                
+                .kpi-grid {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+                }
+            }
+            
+            /* Performance optimizations */
+            .chart-container {
+                contain: layout style paint;
+            }
+            
+            .kpi-card {
+                contain: layout style;
+            }
+            
+            /* Enhanced focus indicators */
+            .time-filter:focus,
+            .chart-container:focus-within {
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+                border-color: var(--primary);
+            }
+            
+            /* Smooth transitions for theme changes */
+            * {
+                transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            }
+            
+            /* Enhanced tooltip styles */
+            [title] {
+                position: relative;
+            }
+            
+            [title]:hover::after {
+                content: attr(title);
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--bg-modal);
+                color: var(--text-primary);
+                padding: 0.5rem;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                z-index: 1000;
+                margin-top: 0.5rem;
+                border: 1px solid var(--border);
+                backdrop-filter: blur(10px);
+            }
+            
+            /* Enhanced scroll behavior */
+            .content {
+                scroll-behavior: smooth;
+                scrollbar-width: thin;
+                scrollbar-color: var(--border-accent) var(--bg-glass);
+            }
+            
+            /* Enhanced chart legends */
+            .chart-container canvas {
+                border-radius: 8px;
+            }
+            
+            /* Real-time indicator */
+            .action-btn.realtime-active {
+                background: var(--gradient-success) !important;
+                color: white !important;
+            }
+            
+            .action-btn.realtime-active::after {
+                content: '';
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                width: 6px;
+                height: 6px;
+                background: #10b981;
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
