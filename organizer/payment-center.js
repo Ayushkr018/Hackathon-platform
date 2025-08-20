@@ -595,9 +595,7 @@
                 }, 2500);
             }
 
-            backToDashboard() {
-                window.location.href = 'dashboard.html';
-            }
+           
 
             showToast(message, type = 'success') {
                 const existingToast = document.querySelector('.toast');
@@ -671,6 +669,7 @@
                 };
                 localStorage.setItem('modernOrganizerSession', JSON.stringify(sessionData));
             }, 60000);
+           
 
             // Keyboard shortcuts for payment management
             document.addEventListener('keydown', (e) => {
@@ -696,6 +695,16 @@
                 }
             });
         });
+         function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('modernOrganizerSession');
+                    // Use the global instance to show toast
+                    modernPaymentManager.showToast('Logging out...', 'info');
+                    setTimeout(() => {
+                        window.location.href = '../auth/login.html';
+                    }, 1000);
+                }
+            }
 
         // Enhanced animations and performance styles
         const style = document.createElement('style');
