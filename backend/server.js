@@ -1,5 +1,8 @@
 const app = require('./app');
-const connectDB = require('./config/database');
+const { connectDB } = require("./config/database");
+
+// Connect to both databases
+connectDB();
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {

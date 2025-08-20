@@ -1,17 +1,31 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+
+let structuredConnection;
+let unstructuredConnection;
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DATABASE_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // Structured DB connection
+    structuredConnection = await mongoose.createConnection(
+      process.env.MONGO_URI_STRUCTURED,
+      { useNewUrlParser: true, useUnifiedTopology: true }
+    );
+    console.log("✅ Connected to Structured DB");
 
-    console.log(`🍃 MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error('❌ Database connection failed:', error.message);
+    // Unstructured DB connection
+    unstructuredConnection = await mongoose.createConnection(
+      process.env.MONGO_URI_UNSTRUCTURED,
+      { useNewUrlParser: true, useUnifiedTopology: true }
+    );
+    console.log("✅ Connected to Unstructured DB");
+  } catch (err) {
+    console.error("❌ Database connection error:", err);
     process.exit(1);
   }
 };
 
-module.exports = connectDB;
+module.exports = {
+  connectDB,
+  getStructuredDB: () => structuredConnection,
+  getUnstructuredDB: () => unstructuredConnection,
+};
