@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// Import the function to get the structured database connection
+const { getStructuredDB } = require('../config/database');
 
 const projectSchema = new mongoose.Schema({
   teamId: {
@@ -71,4 +73,9 @@ const projectSchema = new mongoose.Schema({
 // Compound index for team-event-round uniqueness
 projectSchema.index({ teamId: 1, eventId: 1, round: 1 }, { unique: true });
 
-module.exports = mongoose.model('Project', projectSchema);
+const db = getStructuredDB();
+
+// Create and export the model on that specific connection
+const Project = db.model('Project', projectSchema);
+
+module.exports = Project;

@@ -12,7 +12,7 @@ const eventRoutes = require('./routes/events');
 const teamRoutes = require('./routes/teams');
 const projectRoutes = require('./routes/projects');
 const judgeRoutes = require('./routes/judge');
-const organizerRoutes = require('./routes/organizer');
+const organizerRoutes = require('./routes/organise');
 const announcementRoutes = require('./routes/announcements');
 
 // Import middleware

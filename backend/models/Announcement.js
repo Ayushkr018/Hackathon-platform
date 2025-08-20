@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 
+const { getUnstructuredDB } = require('../config/database');
+
 const announcementSchema = new mongoose.Schema({
   eventId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Event',
+    ref: 'Event', // This will reference an Event in the 'structured' DB
     required: true
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User', // This will reference a User in the 'structured' DB
     required: true
   },
   title: {
@@ -48,4 +50,8 @@ const announcementSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Announcement', announcementSchema);
+const db = getUnstructuredDB();
+
+const Announcement = db.model('Announcement', announcementSchema);
+
+module.exports = Announcement;

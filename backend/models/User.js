@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { getStructuredDB } = require('../config/database'); 
 
 const userSchema = new mongoose.Schema({
+  
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -48,7 +50,7 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Encrypt password before saving
+
 userSchema.pre('save', async function(next) {
   if (!this.isModified('passwordHash') || !this.passwordHash) return next();
   
@@ -56,12 +58,10 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// Compare password method
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.passwordHash);
 };
 
-// Transform output
 userSchema.methods.toJSON = function() {
   const user = this.toObject();
   delete user.passwordHash;
@@ -70,4 +70,8 @@ userSchema.methods.toJSON = function() {
   return user;
 };
 
-module.exports = mongoose.model('User', userSchema);
+const db = getStructuredDB();
+
+const User = db.model('User', userSchema);
+
+module.exports = User;

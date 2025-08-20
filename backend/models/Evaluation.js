@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// Import the function to get the structured database connection
+const { getStructuredDB } = require('../config/database');
 
 const evaluationSchema = new mongoose.Schema({
   projectId: {
@@ -75,13 +77,15 @@ const evaluationSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Calculate total score before saving
 evaluationSchema.pre('save', function(next) {
   this.totalScore = Object.values(this.scores).reduce((sum, score) => sum + score, 0);
   next();
 });
 
-// Compound index for judge-project uniqueness per round
 evaluationSchema.index({ judgeId: 1, projectId: 1, round: 1 }, { unique: true });
 
-module.exports = mongoose.model('Evaluation', evaluationSchema);
+const db = getStructuredDB();
+
+const Evaluation = db.model('Evaluation', evaluationSchema);
+
+module.exports = Evaluation;

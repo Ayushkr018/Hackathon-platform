@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { getStructuredDB } = require('../config/database');
 
 const teamSchema = new mongoose.Schema({
   name: {
@@ -35,8 +36,7 @@ const teamSchema = new mongoose.Schema({
   },
   inviteCode: {
     type: String,
-    unique: true,
-    required: true
+    unique: true
   },
   description: {
     type: String,
@@ -58,26 +58,39 @@ const teamSchema = new mongoose.Schema({
 
 // Generate unique invite code before saving
 teamSchema.pre('save', function(next) {
-  if (!this.inviteCode) {
-    this.inviteCode = Math.random().toString(36).substring(2, 15) + 
-                     Math.random().toString(36).substring(2, 15);
+  if (this.isNew && !this.inviteCode) {
+    this.inviteCode = Math.random().toString(36).substring(2, 10) +
+                      Math.random().toString(36).substring(2, 10);
   }
   next();
 });
 
 // Ensure team leader is in members array
 teamSchema.pre('save', function(next) {
-  const leaderInMembers = this.members.some(member => 
-    member.user.toString() === this.leaderId.toString()
-  );
-  
-  if (!leaderInMembers) {
-    this.members.push({
-      user: this.leaderId,
-      role: 'leader'
-    });
+  if (this.isModified('leaderId') || this.isNew) {
+    const leaderInMembers = this.members.some(member =>
+      member.user.equals(this.leaderId)
+    );
+
+    if (!leaderInMembers) {
+      // Remove any old leader roles
+      this.members.forEach(member => {
+        if (member.role === 'leader') {
+          member.role = 'member';
+        }
+      });
+      // Add the new leader
+      this.members.push({
+        user: this.leaderId,
+        role: 'leader'
+      });
+    }
   }
   next();
 });
 
-module.exports = mongoose.model('Team', teamSchema);
+const db = getStructuredDB();
+
+const Team = db.model('Team', teamSchema);
+
+module.exports = Team;

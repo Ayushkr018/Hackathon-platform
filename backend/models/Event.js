@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const { getStructuredDB } = require('../config/database');
+
 const roundSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -98,12 +100,16 @@ const eventSchema = new mongoose.Schema({
 // Validation: endDate should be after startDate
 eventSchema.pre('save', function(next) {
   if (this.endDate <= this.startDate) {
-    next(new Error('End date must be after start date'));
+    return next(new Error('End date must be after start date'));
   }
   if (this.registrationDeadline >= this.startDate) {
-    next(new Error('Registration deadline must be before start date'));
+    return next(new Error('Registration deadline must be before start date'));
   }
   next();
 });
 
-module.exports = mongoose.model('Event', eventSchema);
+const db = getStructuredDB();
+
+const Event = db.model('Event', eventSchema);
+
+module.exports = Event;
