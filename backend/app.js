@@ -51,13 +51,13 @@ app.use(passport.initialize());
 // API routes - DEBUGGING STEP
 // We will uncomment these one by one to find the broken file.
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
-// app.use('/api/events', eventRoutes);
-// app.use('/api/teams', teamRoutes);
-// app.use('/api/projects', projectRoutes);
-// app.use('/api/judge', judgeRoutes);
-// app.use('/api/organizer', organizerRoutes);
-// app.use('/api/announcements', announcementRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/judge', judgeRoutes);
+app.use('/api/organizer', organizerRoutes);
+app.use('/api/announcements', announcementRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static('uploads'));
