@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusHack - AI-Powered Hackathon Ecosystem</title>
+    <meta name="description" content="Next-generation hackathon platform with AI-driven team matching, real-time analytics, and enterprise-grade security.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo" onclick="scrollToTop()">
+                    <div class="logo-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    NexusHack
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                    <li><a href="#features" class="nav-link" data-section="features">Features</a></li>
+                    <li><a href="#how-it-works" class="nav-link" data-section="how-it-works">How It Works</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                    <li><a href="#roles" class="nav-link" data-section="roles">Roles</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="auth/login.html" class="btn btn-outline" onclick="handlePageTransition(event, this.href)">Login</a>
+                    <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">Get Started</a>
+                </div>
+
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#home" class="nav-link" data-section="home">Home</a>
+        <a href="#features" class="nav-link" data-section="features">Features</a>
+        <a href="#how-it-works" class="nav-link" data-section="how-it-works">How It Works</a>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#roles" class="nav-link" data-section="roles">Roles</a>
+        <a href="auth/login.html" class="btn btn-outline" onclick="handlePageTransition(event, this.href)">Login</a>
+        <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">Get Started</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <div class="badge-icon"></div>
+                    <span>🚀 AI-Powered Hackathon Platform</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Next-Gen Hackathon<br>Ecosystem
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Experience the future of hackathons with AI-driven team matching, 
+                    real-time analytics, and enterprise-grade security. Built for developers, 
+                    organizers, and judges who demand excellence.
+                </p>
+                
+                <div class="hero-cta">
+                    <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        <i class="fas fa-rocket"></i>
+                        Start Your Journey
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline">
+                        <i class="fas fa-play"></i>
+                        See How It Works
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="statUsers">5,000+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statEvents">150+</span>
+                        <span class="stat-label">Events Hosted</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statProjects">1,200+</span>
+                        <span class="stat-label">Projects Built</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statSuccess">95%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🎯 How It Works</span>
+                <h2 class="section-title">Simple Process for Every Role</h2>
+                <p class="section-subtitle">
+                    Our platform streamlines the hackathon experience with intuitive workflows 
+                    tailored for participants, organizers, and judges.
+                </p>
+            </div>
+            
+            <div class="works-grid">
+                <div class="works-card">
+                    <div class="works-number">1</div>
+                    <h3 class="works-title">For Participants</h3>
+                    <p class="works-desc">
+                        Join hackathons, find perfect teammates, and showcase your skills 
+                        with our intelligent matching system.
+                    </p>
+                    <ul class="works-features">
+                        <li>Sign up and complete your skill profile</li>
+                        <li>Browse AI-recommended events</li>
+                        <li>Get matched with ideal teammates</li>
+                        <li>Submit projects through guided wizard</li>
+                        <li>Track progress on live leaderboards</li>
+                    </ul>
+                    <a href="auth/register.html?role=participant" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Participant
+                    </a>
+                </div>
+                
+                <div class="works-card">
+                    <div class="works-number">2</div>
+                    <h3 class="works-title">For Organizers</h3>
+                    <p class="works-desc">
+                        Create and manage hackathons effortlessly with comprehensive 
+                        tools and real-time analytics.
+                    </p>
+                    <ul class="works-features">
+                        <li>Set up events with step-by-step wizard</li>
+                        <li>Configure judging criteria and rubrics</li>
+                        <li>Manage participants with AI insights</li>
+                        <li>Monitor engagement through analytics</li>
+                        <li>Automate result compilation and sharing</li>
+                    </ul>
+                    <a href="auth/register.html?role=organizer" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Become Organizer
+                    </a>
+                </div>
+                
+                <div class="works-card">
+                    <div class="works-number">3</div>
+                    <h3 class="works-title">For Judges</h3>
+                    <p class="works-desc">
+                        Evaluate projects fairly and efficiently with AI-assisted 
+                        tools and bias-free scoring systems.
+                    </p>
+                    <ul class="works-features">
+                        <li>Receive optimal project assignments</li>
+                        <li>Use bias-mitigation evaluation tools</li>
+                        <li>Collaborate with other judges seamlessly</li>
+                        <li>Provide structured, actionable feedback</li>
+                        <li>Generate comprehensive evaluation reports</li>
+                    </ul>
+                    <a href="auth/register.html?role=judge" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Judge
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">⚡ Core Features</span>
+                <h2 class="section-title">Powerful Tools for Every Need</h2>
+                <p class="section-subtitle">
+                    Our platform provides cutting-edge features designed to streamline 
+                    the entire hackathon experience from registration to results.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Matching</h3>
+                    <p class="feature-desc">
+                        Advanced machine learning algorithms analyze skills, experience, and preferences 
+                        to create optimal team compositions and personalized event recommendations.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Analytics</h3>
+                    <p class="feature-desc">
+                        Comprehensive dashboards provide instant insights into participation patterns, 
+                        engagement metrics, and performance data for informed decision-making.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Enterprise Security</h3>
+                    <p class="feature-desc">
+                        Bank-grade encryption, GDPR compliance, multi-factor authentication, 
+                        and comprehensive audit trails ensure your data is always protected.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Progressive Web App</h3>
+                    <p class="feature-desc">
+                        Native app experience with offline capabilities, push notifications, 
+                        and seamless performance across all devices and screen sizes.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Integrated Communication</h3>
+                    <p class="feature-desc">
+                        Built-in messaging, video conferencing, file sharing, and collaborative 
+                        whiteboards keep teams connected throughout their hackathon journey.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Judging System</h3>
+                    <p class="feature-desc">
+                        AI-assisted evaluation with bias mitigation, collaborative scoring interfaces, 
+                        and automated result compilation ensures fair and efficient judging.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Enhanced Visual -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🌟 About NexusHack</span>
+                <h2 class="section-title">Revolutionizing Hackathon Experiences</h2>
+                <p class="section-subtitle">
+                    Born from the need to solve real problems in the hackathon ecosystem, 
+                    NexusHack represents the next evolution of collaborative innovation platforms.
+                </p>
+            </div>
+            
+            <div class="about-content">
+                <div>
+                    <p class="about-text">
+                        Traditional hackathon platforms force organizers to juggle multiple tools, 
+                        participants to waste time finding compatible teammates, and judges to 
+                        navigate biased evaluation processes. We saw these pain points and built 
+                        a comprehensive solution.
+                    </p>
+                    <p class="about-text">
+                        NexusHack leverages artificial intelligence, modern web technologies, 
+                        and user-centered design to create an ecosystem where innovation thrives. 
+                        Our platform eliminates friction, promotes fairness, and amplifies creativity.
+                    </p>
+                    <p class="about-text">
+                        From Fortune 500 companies running internal innovation challenges to 
+                        universities hosting student competitions, NexusHack scales to meet 
+                        any hackathon need while maintaining the highest standards of security and performance.
+                    </p>
+                    
+                    <div class="about-stats">
+                        <div class="about-stat">
+                            <span class="about-stat-number">99.9%</span>
+                            <span class="about-stat-label">Uptime</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">< 2s</span>
+                            <span class="about-stat-label">Load Time</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">SOC 2</span>
+                            <span class="about-stat-label">Certified</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">24/7</span>
+                            <span class="about-stat-label">Support</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div class="visual-content">
+                        <div class="visual-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="visual-title">Powering Innovation</h3>
+                        <p class="visual-desc">Trusted by leading organizations worldwide</p>
+                        
+                        <div class="visual-stats">
+                            <div class="visual-stat">
+                                <span class="visual-stat-number">50+</span>
+                                <span class="visual-stat-label">Countries</span>
+                            </div>
+                            <div class="visual-stat">
+                                <span class="visual-stat-number">1M+</span>
+                                <span class="visual-stat-label">Developers</span>
+                            </div>
+                            <div class="visual-stat">
+                                <span class="visual-stat-number">500+</span>
+                                <span class="visual-stat-label">Companies</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roles Section -->
+    <section class="roles" id="roles">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">👥 Choose Your Role</span>
+                <h2 class="section-title">Built for Every Stakeholder</h2>
+                <p class="section-subtitle">
+                    Whether you're a participant, organizer, or judge, our platform 
+                    provides tailored experiences that maximize value and efficiency.
+                </p>
+            </div>
+            
+            <div class="roles-grid">
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="role-title">Participants</h3>
+                    <p class="role-desc">
+                        Join hackathons, discover teammates who complement your skills, 
+                        and showcase your projects with our intelligent platform designed for creators.
+                    </p>
+                    <ul class="role-features">
+                        <li>AI-powered team matching algorithms</li>
+                        <li>Personalized event discovery engine</li>
+                        <li>Intuitive project submission wizard</li>
+                        <li>Real-time leaderboard tracking</li>
+                        <li>Portfolio and GitHub integration</li>
+                        <li>Skill verification and badges</li>
+                    </ul>
+                    <a href="auth/register.html?role=participant" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Participant
+                    </a>
+                </div>
+                
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="role-title">Organizers</h3>
+                    <p class="role-desc">
+                        Create and manage world-class hackathons with enterprise-grade tools 
+                        for participant management, analytics, and seamless event execution.
+                    </p>
+                    <ul class="role-features">
+                        <li>Step-by-step event creation wizard</li>
+                        <li>Advanced participant management</li>
+                        <li>Real-time analytics and insights</li>
+                        <li>Automated judge assignment system</li>
+                        <li>Sponsor integration and branding</li>
+                        <li>Custom registration workflows</li>
+                    </ul>
+                    <a href="auth/register.html?role=organizer" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Become Organizer
+                    </a>
+                </div>
+                
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="role-title">Judges</h3>
+                    <p class="role-desc">
+                        Evaluate projects with confidence using AI-assisted tools that ensure 
+                        fair assessment, reduce bias, and streamline the judging process.
+                    </p>
+                    <ul class="role-features">
+                        <li>Intelligent project assignment</li>
+                        <li>Bias mitigation and fairness tools</li>
+                        <li>Collaborative scoring interfaces</li>
+                        <li>Automated result compilation</li>
+                        <li>Structured feedback systems</li>
+                        <li>Conflict of interest detection</li>
+                    </ul>
+                    <a href="auth/register.html?role=judge" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        Join as Judge
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Transform Your Hackathon Experience?</h2>
+                <p class="cta-subtitle">
+                    Join thousands of developers, organizers, and judges who are already 
+                    using NexusHack to create extraordinary hackathon experiences that drive innovation.
+                </p>
+                <div class="hero-cta">
+                    <a href="auth/register.html" class="btn btn-primary" onclick="handlePageTransition(event, this.href)">
+                        <i class="fas fa-rocket"></i>
+                        Get Started Now
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-envelope"></i>
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer with Social Media -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        NexusHack
+                    </div>
+                    <p style="margin-top: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
+                        The next-generation hackathon platform powered by AI and 
+                        designed for the modern developer ecosystem. Building the future of collaborative innovation.
+                    </p>
+                    
+                    <!-- Social Media Links -->
+                    <div class="social-links">
+                        <a href="https://twitter.com/nexushack" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://github.com/nexushack" class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/nexushack" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://discord.gg/nexushack" class="social-link" title="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="https://youtube.com/c/nexushack" class="social-link" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#security">Security</a></li>
+                        <li><a href="#api">API Documentation</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#guides">Best Practices</a></li>
+                        <li><a href="#support">Support Center</a></li>
+                        <li><a href="#community">Community</a></li>
+                        <li><a href="#webinars">Webinars</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#press">Press Kit</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 NexusHack Platform. All rights reserved. Built with 💜 for the global developer community.</p>
+                
+                <div class="footer-social">
+                    <a href="mailto:hello@nexushack.com" class="social-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="tel:+1-555-NEXUS" class="social-link" title="Phone">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="#newsletter" class="social-link" title="Newsletter">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
