@@ -1,37 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Participant Management - NexusHack Platform</title>
-    <meta name="description" content="Advanced participant management system for hackathon organizers. Manage registrations, track participation, analyze demographics, and coordinate with AI-powered insights.">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCdncmFkaWVudDApJy8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
-
+    <title>Participant Intelligence Hub</title>
     <link rel="stylesheet" href="participant-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 </head>
 
-<body data-theme="dark">
-    <!-- Mobile Overlay -->
+<body>
     <div class="mobile-overlay" id="mobileOverlay"></div>
-
-    <!-- Dashboard Container -->
     <div class="dashboard-container">
-        <!-- Modern Sidebar -->
-        <div class="sidebar" id="sidebar">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">
-                <div class="logo-icon"><i class="fas fa-users"></i></div>
-                <div class="logo-text">NexusHack</div>
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <div class="logo-text">HackHub</div>
             </div>
-
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Main Control</div>
@@ -48,7 +35,7 @@
                         <div class="nav-text">Analytics</div>
                     </a>
                 </div>
-
+            
                 <div class="nav-section">
                     <div class="nav-section-title">Participant Management</div>
                     <a href="participant-dashboard.html" class="nav-link active">
@@ -67,7 +54,7 @@
                         <div class="nav-badge urgent">127</div>
                     </a>
                 </div>
-
+            
                 <div class="nav-section">
                     <div class="nav-section-title">Advanced Features</div>
                     <a href="leaderboard-control.html" class="nav-link">
@@ -91,7 +78,7 @@
                         <div class="nav-badge new">NEW</div>
                     </a>
                 </div>
-
+            
                 <div class="nav-section">
                     <div class="nav-section-title">Event Operations</div>
                     <a href="event-setup.html" class="nav-link">
@@ -108,7 +95,7 @@
                         <div class="nav-text">Live Control</div>
                     </a>
                 </div>
-
+            
                 <div class="nav-section">
                     <div class="nav-section-title">Content & Sponsors</div>
                     <a href="sponsor-showcase.html" class="nav-link">
@@ -123,7 +110,6 @@
                     </a>
                 </div>
             </nav>
-
             <div class="sidebar-user">
                 <div class="user-avatar" id="userAvatar">AC</div>
                 <div class="user-info">
@@ -131,78 +117,89 @@
                     <div class="user-role">Lead Organizer</div>
                 </div>
             </div>
-        </div>
-
+        </aside>
         <!-- Main Content -->
-        <div class="main-content">
-            <!-- Modern Topbar -->
+        <main class="main-content">
             <header class="topbar">
                 <div class="topbar-left">
-                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1 class="page-title">Participant Management</h1>
+                    <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+                    <h1 class="page-title">Participant Intelligence Hub</h1>
                 </div>
-
                 <div class="topbar-right">
                     <div class="topbar-actions">
-                        <button class="action-btn ai" title="AI Insights" onclick="getAIInsights()">
-                            <i class="fas fa-brain"></i>
-                        </button>
-                        <button class="action-btn" title="Bulk Actions" onclick="bulkActions()">
-                            <i class="fas fa-tasks"></i>
-                        </button>
-                        <button class="action-btn" title="Export Data" onclick="exportParticipants()">
-                            <i class="fas fa-download"></i>
-                        </button>
-                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                        <button class="action-btn" onclick="backToDashboard()" title="Back">
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
+                        <button class="action-btn ai"><i class="fas fa-brain"></i></button>
+                        <button class="action-btn"><i class="fas fa-search"></i></button>
+                        <button class="action-btn"><i class="fas fa-bell"></i></button>
+                        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
                     </div>
                 </div>
             </header>
-
-            <!-- Content -->
-            <main class="content">
-                <!-- Modern Participant Header -->
+            <div class="content">
+                <!-- Participant Header -->
                 <div class="participant-header">
                     <div class="participant-header-content">
                         <div class="header-main">
                             <div class="header-info">
                                 <h1 class="participant-title">Participant Intelligence Hub</h1>
                                 <p class="participant-subtitle">
-                                    Advanced participant management with AI-powered insights, real-time analytics, 
-                                    and intelligent automation for seamless hackathon coordination.
+                                    Advanced participant management with AI-powered insights, real-time analytics, and
+                                    intelligent automation for seamless hackathon coordination.
                                 </p>
                                 <div class="header-stats">
-                                    <span><i class="fas fa-users"></i> 1,247 Registered</span>
-                                    <span><i class="fas fa-check-circle"></i> 892 Checked-in</span>
-                                    <span><i class="fas fa-user-friends"></i> 312 Teams</span>
-                                    <span><i class="fas fa-trophy"></i> Live Leaderboard</span>
+                                    <div><strong>1,247</strong> Registered</div>
+                                    <div><strong>892</strong> Checked-in</div>
+                                    <div><strong>312</strong> Teams</div>
+                                    <div><strong>Live</strong> Leaderboard</div>
                                 </div>
                             </div>
                             <div class="header-actions">
-                                <button class="btn btn-secondary" onclick="sendMessage()">
-                                    <i class="fas fa-bullhorn"></i>
-                                    Broadcast
-                                </button>
-                                <button class="btn btn-success" onclick="exportReport()">
-                                    <i class="fas fa-file-excel"></i>
-                                    Export Report
-                                </button>
+                                <button class="btn btn-primary"><i class="fas fa-plus"></i>Add Participant</button>
+                                <button class="btn btn-secondary"><i class="fas fa-download"></i>Export Data</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Modern Filters & Search -->
+                <!-- Overview Stats -->
+                <div class="overview-stats">
+                    <div class="stat-card registered">
+                        <div class="stat-header">
+                            <div class="stat-icon registered"><i class="fas fa-user-plus"></i></div>
+                            <div class="stat-trend positive"><i class="fas fa-arrow-up"></i>+15%</div>
+                        </div>
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-title">Total Registered</div>
+                    </div>
+                    <div class="stat-card checked-in">
+                        <div class="stat-header">
+                            <div class="stat-icon checked-in"><i class="fas fa-check-circle"></i></div>
+                            <div class="stat-trend positive"><i class="fas fa-arrow-up"></i>+89</div>
+                        </div>
+                        <div class="stat-value">892</div>
+                        <div class="stat-title">Checked-in</div>
+                    </div>
+                    <div class="stat-card teams">
+                        <div class="stat-header">
+                            <div class="stat-icon teams"><i class="fas fa-users"></i></div>
+                            <div class="stat-trend positive"><i class="fas fa-arrow-up"></i>+47</div>
+                        </div>
+                        <div class="stat-value">312</div>
+                        <div class="stat-title">Teams Formed</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-header">
+                            <div class="stat-icon pending"><i class="fas fa-clock"></i></div>
+                            <div class="stat-trend negative"><i class="fas fa-arrow-down"></i>-5</div>
+                        </div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-title">Pending Actions</div>
+                    </div>
+                </div>
+                <!-- Filters Section -->
                 <div class="filters-section">
                     <div class="search-box">
+                        <input type="text" class="search-input" id="searchInput"
+                            placeholder="Search participants, skills, or universities...">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="search-input" placeholder="Search participants by name, email, skills, or team..." id="searchInput">
                     </div>
                     <div class="filter-group">
                         <label class="filter-label">Status:</label>
@@ -217,7 +214,7 @@
                         <label class="filter-label">Team:</label>
                         <select class="filter-select" id="teamFilter">
                             <option value="">All Teams</option>
-                            <option value="formed">In Team</option>
+                            <option value="formed">Team Formed</option>
                             <option value="solo">Solo</option>
                             <option value="seeking">Seeking Team</option>
                         </select>
@@ -226,185 +223,82 @@
                         <label class="filter-label">Track:</label>
                         <select class="filter-select" id="trackFilter">
                             <option value="">All Tracks</option>
-                            <option value="web3">Web3 & Blockchain</option>
-                            <option value="ai">AI & ML</option>
-                            <option value="mobile">Mobile Apps</option>
+                            <option value="web3">Web3</option>
+                            <option value="ai">AI/ML</option>
+                            <option value="mobile">Mobile</option>
                             <option value="sustainability">Sustainability</option>
                         </select>
                     </div>
-                    <button class="ai-insights" onclick="getAIInsights()">
-                        <i class="fas fa-magic"></i>
-                        AI Insights
-                    </button>
+                    <button class="ai-insights"><i class="fas fa-brain"></i>AI Insights</button>
                 </div>
-
-                <!-- Modern Overview Stats -->
-                <div class="overview-stats">
-                    <div class="stat-card registered" onclick="filterByStatus('registered')">
-                        <div class="stat-header">
-                            <div class="stat-icon registered">
-                                <i class="fas fa-user-plus"></i>
-                            </div>
-                            <div class="stat-trend positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>+15%</span>
-                            </div>
-                        </div>
-                        <div class="stat-value" id="totalRegistered">1,247</div>
-                        <div class="stat-title">Total Registered</div>
-                    </div>
-
-                    <div class="stat-card checked-in" onclick="filterByStatus('checked-in')">
-                        <div class="stat-header">
-                            <div class="stat-icon checked-in">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="stat-trend positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>+89</span>
-                            </div>
-                        </div>
-                        <div class="stat-value" id="totalCheckedIn">892</div>
-                        <div class="stat-title">Checked-in</div>
-                    </div>
-
-                    <div class="stat-card teams" onclick="openTeamFormation()">
-                        <div class="stat-header">
-                            <div class="stat-icon teams">
-                                <i class="fas fa-user-friends"></i>
-                            </div>
-                            <div class="stat-trend positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>+47</span>
-                            </div>
-                        </div>
-                        <div class="stat-value" id="totalTeams">312</div>
-                        <div class="stat-title">Teams Formed</div>
-                    </div>
-
-                    <div class="stat-card pending" onclick="filterByStatus('pending')">
-                        <div class="stat-header">
-                            <div class="stat-icon pending">
-                                <i class="fas fa-hourglass-half"></i>
-                            </div>
-                            <div class="stat-trend negative">
-                                <i class="fas fa-arrow-down"></i>
-                                <span>-5</span>
-                            </div>
-                        </div>
-                        <div class="stat-value" id="totalPending">23</div>
-                        <div class="stat-title">Pending Actions</div>
-                    </div>
-                </div>
-
-                <!-- Modern Dashboard Grid -->
+                <!-- Dashboard Grid (OPTIMIZED WIDTH) -->
                 <div class="dashboard-grid">
-                    <!-- Modern Participants Table -->
+                    <!-- Participants Table -->
                     <div class="participants-table">
                         <div class="table-header">
-                            <h2 class="table-title">
-                                <i class="fas fa-list"></i>
-                                Participants Overview
-                            </h2>
+                            <h2 class="table-title"><i class="fas fa-users"></i>Participants</h2>
                             <div class="table-actions">
-                                <button class="btn btn-small btn-secondary" onclick="refreshList()">
-                                    <i class="fas fa-sync-alt"></i>
-                                    Refresh
-                                </button>
-                                <button class="btn btn-small btn-primary" onclick="addParticipant()">
-                                    <i class="fas fa-plus"></i>
-                                    Add Participant
-                                </button>
+                                <button class="btn btn-small btn-secondary"><i class="fas fa-filter"></i>Filter</button>
+                                <button class="btn btn-small btn-primary"><i class="fas fa-plus"></i>Add New</button>
                             </div>
                         </div>
-
                         <div class="table-container">
                             <div class="participants-list" id="participantsList">
-                                <!-- Participants will be loaded here -->
+                                <!-- JS will render participants here -->
                             </div>
-                        </div>
-
-                        <div style="text-align: center; margin-top: 2rem;">
-                            <button class="btn btn-secondary" id="loadMoreBtn" onclick="loadMoreParticipants()">
-                                <i class="fas fa-plus-circle"></i>
-                                Load More Participants
-                            </button>
                         </div>
                     </div>
-
-                    <!-- Modern Analytics Sidebar -->
+                    <!-- Analytics Sidebar -->
                     <div class="analytics-sidebar">
-                        <h3 class="sidebar-title">
-                            <i class="fas fa-chart-pie"></i>
-                            Live Analytics
-                        </h3>
-
-                        <div class="chart-container">
-                            <canvas id="registrationChart"></canvas>
+                        <div class="live-analytics">
+                            <h3 class="sidebar-title"><i class="fas fa-chart-line"></i>Live Analytics</h3>
+                            <div class="chart-container" id="chartContainer"></div>
                         </div>
-
                         <div class="recent-activity">
-                            <h3 class="sidebar-title">
-                                <i class="fas fa-clock"></i>
-                                Recent Activity
-                            </h3>
-                            <div class="activity-list" id="activityList">
-                                <!-- Activity items will be loaded here -->
-                            </div>
+                            <h3 class="sidebar-title"><i class="fas fa-clock"></i>Recent Activity</h3>
+                            <div class="activity-list" id="activityList"></div>
                         </div>
-
-                        <div class="quick-actions">
-                            <h3 class="sidebar-title">
-                                <i class="fas fa-rocket"></i>
-                                Quick Actions
-                            </h3>
-                            
-                            <div class="quick-action" onclick="bulkCheckIn()">
-                                <div class="quick-action-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="quick-action-details">
-                                    <div class="quick-action-title">Bulk Check-in</div>
-                                    <div class="quick-action-description">Check-in multiple participants at once</div>
-                                </div>
-                            </div>
-
-                            <div class="quick-action" onclick="teamRecommendations()">
-                                <div class="quick-action-icon">
-                                    <i class="fas fa-users-cog"></i>
-                                </div>
-                                <div class="quick-action-details">
-                                    <div class="quick-action-title">AI Team Matching</div>
-                                    <div class="quick-action-description">Smart team formation suggestions</div>
-                                </div>
-                            </div>
-
-                            <div class="quick-action" onclick="sendBulkMessage()">
-                                <div class="quick-action-icon">
-                                    <i class="fas fa-bullhorn"></i>
-                                </div>
-                                <div class="quick-action-details">
-                                    <div class="quick-action-title">Broadcast Message</div>
-                                    <div class="quick-action-description">Send updates to all participants</div>
-                                </div>
-                            </div>
-
-                            <div class="quick-action" onclick="generateCertificates()">
-                                <div class="quick-action-icon">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="quick-action-details">
-                                    <div class="quick-action-title">Generate Certificates</div>
-                                    <div class="quick-action-description">Bulk certificate generation</div>
-                                </div>
+                        <div class="quick-actions-section">
+                            <h3 class="sidebar-title"><i class="fas fa-bolt"></i>Quick Actions</h3>
+                            <div class="quick-actions">
+                                <a href="#" class="quick-action">
+                                    <div class="quick-action-icon"><i class="fas fa-user-plus"></i></div>
+                                    <div class="quick-action-details">
+                                        <div class="quick-action-title">Bulk Check-in</div>
+                                        <div class="quick-action-description">Check-in multiple participants at once
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="quick-action">
+                                    <div class="quick-action-icon"><i class="fas fa-users-cog"></i></div>
+                                    <div class="quick-action-details">
+                                        <div class="quick-action-title">Team Matching</div>
+                                        <div class="quick-action-description">AI-powered team recommendations</div>
+                                    </div>
+                                </a>
+                                <a href="#" class="quick-action">
+                                    <div class="quick-action-icon"><i class="fas fa-paper-plane"></i></div>
+                                    <div class="quick-action-details">
+                                        <div class="quick-action-title">Send Notification</div>
+                                        <div class="quick-action-description">Broadcast message to participants</div>
+                                    </div>
+                                </a>
+                                <a href="#" class="quick-action">
+                                    <div class="quick-action-icon"><i class="fas fa-file-export"></i></div>
+                                    <div class="quick-action-details">
+                                        <div class="quick-action-title">Export Data</div>
+                                        <div class="quick-action-description">Download participant data</div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="participant-dashboard.js"></script>
 </body>
+
 </html>
