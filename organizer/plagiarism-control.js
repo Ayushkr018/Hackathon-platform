@@ -716,9 +716,7 @@ function checkInput(data) {
                 document.getElementById('codeModal').classList.remove('active');
             }
 
-            backToDashboard() {
-                window.location.href = 'dashboard.html';
-            }
+            
 
             showToast(message, type = 'success') {
                 const existingToast = document.querySelector('.toast');
@@ -794,6 +792,16 @@ function checkInput(data) {
                 };
                 localStorage.setItem('modernOrganizerSession', JSON.stringify(sessionData));
             }, 60000);
+
+            function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('modernOrganizerSession');
+                    modernPlagiarismManager.showToast('Logging out...', 'info');
+                    setTimeout(() => {
+                        window.location.href = '../auth/login.html';
+                    }, 1000);
+                }
+            }
 
             // Keyboard shortcuts for plagiarism control
             document.addEventListener('keydown', (e) => {
