@@ -71,20 +71,21 @@ exports.getMe = async (req, res, next) => {
 
 
 /**
- * @desc      Update user profile
+ * @desc      Update user profile details (name, bio, skills)
  * @route     PUT /api/users/me
  * @access    Private
  */
 exports.updateMe = async (req, res, next) => {
     try {
-        // Filter out fields that should not be updated this way
+        // 1. Filter out fields that are not allowed to be updated
         const filteredBody = { ...req.body };
-        const forbiddenFields = ['password', 'role', 'email'];
+        const forbiddenFields = ['password', 'role', 'email', '_id'];
         forbiddenFields.forEach(el => delete filteredBody[el]);
 
+        // 2. Update user document
         const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-            new: true,
-            runValidators: true
+            new: true, // Return the new document
+            runValidators: true // Run schema validators
         });
 
         res.status(200).json({

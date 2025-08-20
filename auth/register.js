@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Event Listeners Setup ---
 function setupEventListeners() {
-    // Role selection
     document.querySelectorAll('.role-card').forEach(card => {
         card.addEventListener('click', function() {
             document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
@@ -22,120 +21,98 @@ function setupEventListeners() {
             selectedRole = this.dataset.role;
         });
     });
-
-    // Form submission
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
-
-    // Password strength checker
     document.getElementById('password').addEventListener('input', updatePasswordStrengthUI);
-
-    // Real-time validation
     document.getElementById('email').addEventListener('input', validateEmailInput);
     document.getElementById('confirmPassword').addEventListener('input', validatePasswordMatch);
-    
-    // Keyboard navigation
     document.addEventListener('keydown', handleKeyboardNavigation);
 }
 
 
 // --- Core Functions ---
 
-/**
- * Handles the main registration form submission.
- * @param {Event} event - The form submission event.
- */
 async function handleRegister(event) {
     event.preventDefault();
-    
-    if (!selectedRole) {
-        return showMessage('Please select your role.');
-    }
+    if (!selectedRole) return showMessage('Please select your role.');
     
     const submitBtn = document.getElementById('submitBtn');
     const formData = new FormData(event.target);
     
-    // Get and combine form values
     const firstName = formData.get('firstName');
     const lastName = formData.get('lastName');
-    const name = `${firstName} ${lastName}`; // Combine for backend
+    const name = `${firstName} ${lastName}`;
     const email = formData.get('email');
     const password = formData.get('password');
     const confirmPassword = formData.get('confirmPassword');
     
-    // --- Frontend Validation ---
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-        return showMessage('Please fill in all required fields.');
-    }
-    if (password !== confirmPassword) {
-        return showMessage('Passwords do not match.');
-    }
-    if (!formData.get('terms')) {
-        return showMessage('Please agree to the Terms of Service and Privacy Policy.');
-    }
+    if (!firstName || !lastName || !email || !password || !confirmPassword) return showMessage('Please fill in all required fields.');
+    if (password !== confirmPassword) return showMessage('Passwords do not match.');
+    if (!formData.get('terms')) return showMessage('Please agree to the Terms of Service and Privacy Policy.');
 
-    // Show loading state
     setLoadingState(submitBtn, true);
     
     try {
         const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                password,
-                role: selectedRole
-            }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, role: selectedRole }),
         });
 
         const data = await response.json();
 
-        if (!response.ok) {
-            // Handle server-side errors (e.g., email already exists)
-            throw new Error(data.message || 'Registration failed.');
+        // --- DEBUGGING ---
+        console.log('--- REGISTRATION ATTEMPT ---');
+        console.log('Server Status:', response.status);
+        console.log('Server Response:', data);
+        // --- END DEBUGGING ---
+
+        if (!response.ok) throw new Error(data.message || 'Registration failed.');
+        
+        if (!data.data || !data.data.user) {
+            console.error('CRITICAL: User data is missing from the server response!');
+            return showMessage('Registration succeeded, but failed to retrieve user profile.');
         }
 
-        // --- Success ---
+        const user = data.data.user;
+        
+        // --- DEBUGGING ---
+        console.log('User Object Received:', user);
+        console.log('User Role:', user.role);
+        // --- END DEBUGGING ---
+
         showMessage('Account created successfully! Redirecting...', 'success');
         
-        // Save the token and user info
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
+        localStorage.setItem('user', JSON.stringify(user));
         
-        // Redirect to the appropriate dashboard
         setTimeout(() => {
-            const dashboardUrl = getDashboardUrl(data.data.user.role);
+            const dashboardUrl = getDashboardUrl(user.role);
+            
+            // --- DEBUGGING ---
+            console.log('Redirecting to URL:', dashboardUrl);
+            // --- END DEBUGGING ---
+
+            if (!dashboardUrl) {
+                console.error(`CRITICAL: Could not determine dashboard URL for role: "${user.role}"`);
+                return showMessage('Could not find your dashboard. Please contact support.');
+            }
             handlePageTransition({ preventDefault: () => {} }, dashboardUrl);
         }, 1500);
         
     } catch (error) {
         showMessage(error.message);
     } finally {
-        // Reset button state
         setLoadingState(submitBtn, false);
     }
 }
 
-/**
- * Handles social media registration clicks.
- * @param {string} provider - The social provider ('google' or 'github').
- */
 function handleSocialRegister(provider) {
-    if (!selectedRole) {
-        return showMessage('Please select your role first.');
-    }
-    // Note: The role isn't sent with the social login request.
-    // A more advanced setup might pass it as a 'state' parameter.
-    // For now, the backend will assign a default role.
-    
-    // Redirect to the backend's OAuth endpoint
+    if (!selectedRole) return showMessage('Please select your role first.');
     window.location.href = `${API_BASE_URL}/api/auth/${provider}`;
 }
 
 
-// --- UI & Utility Functions ---
+// --- UI & Utility Functions (No changes below this line) ---
 
 function setLoadingState(button, isLoading) {
     button.disabled = isLoading;
@@ -286,7 +263,6 @@ function handleKeyboardNavigation(e) {
     }
 }
 
-// Make functions globally accessible from HTML onclick attributes
 window.handlePageTransition = handlePageTransition;
 window.nextStep = nextStep;
 window.prevStep = prevStep;

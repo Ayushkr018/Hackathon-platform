@@ -1,176 +1,126 @@
-// Initialize theme and user data
-        function initializeDashboard() {
-            // Load theme
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = themeToggle.querySelector('i');
-            themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-            
-            // Load user data
-            const userSession = localStorage.getItem('userSession');
-            if (userSession) {
-                const session = JSON.parse(userSession);
-                const firstName = session.firstName || session.email.split('@')[0];
-                
-                document.getElementById('userName').textContent = session.firstName ? 
-                    `${session.firstName} ${session.lastName || ''}`.trim() : 
-                    firstName;
-                document.getElementById('welcomeName').textContent = firstName;
-                
-                // Update avatar
-                const initials = session.firstName && session.lastName ? 
-                    `${session.firstName[0]}${session.lastName}` : 
-                    firstName.slice(0, 2).toUpperCase();
-                document.getElementById('userAvatar').textContent = initials;
-            }
+// --- Configuration ---
+const API_BASE_URL = 'http://localhost:5000';
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+    authGuard(); // Protect the page
+    initializeDashboard();
+    setupEventListeners();
+});
+
+
+// --- Authentication & Data Loading ---
+
+/**
+ * Protects the page by checking for a valid user session.
+ * Redirects to the login page if the user is not authenticated.
+ */
+function authGuard() {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    if (!token || !user) {
+        // If no token or user data, redirect to login
+        window.location.href = '../auth/login.html';
+    }
+}
+
+/**
+ * Initializes the dashboard with user data and theme settings.
+ */
+function initializeDashboard() {
+    // Load theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const themeIcon = document.getElementById('themeToggle').querySelector('i');
+    themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    
+    // Load user data from localStorage
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+        try {
+            const user = JSON.parse(userJson);
+            updateUserProfile(user);
+        } catch (error) {
+            console.error("Failed to parse user data, logging out.", error);
+            logout();
         }
+    }
+}
 
-        // Theme toggle
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            const themeIcon = document.getElementById('themeToggle').querySelector('i');
-            themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-        });
+/**
+ * Updates the UI with the logged-in user's information.
+ * @param {object} user - The user object from localStorage.
+ */
+function updateUserProfile(user) {
+    const userName = user.name || 'User';
+    const userFirstName = userName.split(' ')[0];
+    
+    // Get initials for the avatar
+    const nameParts = userName.split(' ');
+    const initials = nameParts.length > 1 
+        ? `${nameParts[0][0]}${nameParts[1][0]}` 
+        : userName.substring(0, 2);
 
-        // Sidebar toggle
+    document.getElementById('userName').textContent = userName;
+    document.getElementById('welcomeName').textContent = userFirstName;
+    document.getElementById('userAvatar').textContent = initials.toUpperCase();
+}
+
+/**
+ * Logs the user out by clearing storage and redirecting.
+ */
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '../auth/login.html';
+}
+
+
+// --- Event Listeners Setup ---
+function setupEventListeners() {
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+    // Sidebar toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    sidebarToggle.addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+    });
+    sidebarToggle.addEventListener('click', toggleMobileSidebar);
+
+    // Close mobile sidebar when clicking outside
+    document.addEventListener('click', (e) => {
         const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
-
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-        });
-
-        // Mobile sidebar
-        function toggleMobileSidebar() {
-            if (window.innerWidth <= 1024) {
-                sidebar.classList.toggle('open');
-            }
+        if (window.innerWidth <= 1024 && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target) && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
         }
+    });
 
-        sidebarToggle.addEventListener('click', toggleMobileSidebar);
-
-        // Close mobile sidebar when clicking outside
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1024 && 
-                !sidebar.contains(e.target) && 
-                !sidebarToggle.contains(e.target) &&
-                sidebar.classList.contains('open')) {
-                sidebar.classList.remove('open');
-            }
-        });
-
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('userSession');
-                window.location.href = '../auth/login.html';
-            }
+    // Handle window resize for sidebar
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024) {
+            document.getElementById('sidebar').classList.remove('open');
         }
+    });
+}
 
-        // Search functionality
-        const searchInput = document.querySelector('.search-input');
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            if (query.length > 2) {
-                // Simulate search (in real app, this would make API calls)
-                console.log('Searching for:', query);
-                // Add search logic here
-            }
-        });
 
-        // Real-time data updates
-        function updateLiveData() {
-            // Update stats with slight variations
-            const stats = document.querySelectorAll('.stat-value');
-            stats.forEach(stat => {
-                const currentValue = parseInt(stat.textContent);
-                if (!isNaN(currentValue)) {
-                    const variation = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
-                    const newValue = Math.max(0, currentValue + variation);
-                    if (variation !== 0) {
-                        stat.textContent = newValue;
-                        
-                        // Add brief animation
-                        stat.style.transform = 'scale(1.05)';
-                        setTimeout(() => {
-                            stat.style.transform = 'scale(1)';
-                        }, 200);
-                    }
-                }
-            });
-        }
+// --- UI & Utility Functions ---
 
-        // Update data every 30 seconds
-        setInterval(updateLiveData, 30000);
+function toggleTheme() {
+    const html = document.documentElement;
+    const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    this.querySelector('i').className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+}
 
-        // Notification badge animation
-        function animateNotificationBadge() {
-            const badge = document.querySelector('.has-badge');
-            badge.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                badge.style.transform = 'scale(1)';
-            }, 300);
-        }
+function toggleMobileSidebar() {
+    if (window.innerWidth <= 1024) {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+}
 
-        // Simulate new notifications
-        setInterval(animateNotificationBadge, 45000);
-
-        // Initialize dashboard on load
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeDashboard();
-            
-            // Add loading animation to quick actions
-            document.querySelectorAll('.quick-action').forEach(action => {
-                action.addEventListener('click', function(e) {
-                    if (!e.target.closest('a').href.includes('#')) {
-                        const icon = this.querySelector('.action-icon i');
-                        const originalClass = icon.className;
-                        icon.className = 'loading';
-                        
-                        setTimeout(() => {
-                            icon.className = originalClass;
-                        }, 1000);
-                    }
-                });
-            });
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 1024) {
-                sidebar.classList.remove('open');
-            }
-        });
-
-        // Smooth scroll for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add hover effects to cards
-        document.querySelectorAll('.recommendation-item, .notification-item, .activity-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateX(4px)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateX(0)';
-            });
-        });
+// Make logout globally accessible from HTML
+window.logout = logout;

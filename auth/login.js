@@ -5,30 +5,21 @@ const API_BASE_URL = 'http://localhost:5000';
 document.addEventListener('DOMContentLoaded', () => {
     initializeTheme();
     setupEventListeners();
-    handleOAuthCallback(); // Check for token from social login
+    handleOAuthCallback();
     document.getElementById('email').focus();
 });
 
 // --- Event Listeners Setup ---
 function setupEventListeners() {
-    // Form submission
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
-
-    // Real-time validation
     document.getElementById('email').addEventListener('input', validateEmailInput);
     document.getElementById('password').addEventListener('input', validatePasswordInput);
-    
-    // Keyboard shortcuts
     document.addEventListener('keydown', handleKeyboardShortcuts);
 }
 
 
 // --- Core Functions ---
 
-/**
- * Handles the main login form submission.
- * @param {Event} event - The form submission event.
- */
 async function handleLogin(event) {
     event.preventDefault();
     
@@ -36,63 +27,69 @@ async function handleLogin(event) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     
-    // --- Frontend Validation ---
-    if (!email || !password) {
-        return showMessage('Please provide both email and password.');
-    }
+    if (!email || !password) return showMessage('Please provide both email and password.');
 
-    // Show loading state
     setLoadingState(submitBtn, true);
     
     try {
         const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
 
         const data = await response.json();
 
-        if (!response.ok) {
-            // Handle server-side errors (e.g., incorrect password)
-            throw new Error(data.message || 'Login failed.');
+        // --- DEBUGGING ---
+        console.log('--- LOGIN ATTEMPT ---');
+        console.log('Server Status:', response.status);
+        console.log('Server Response:', data);
+        // --- END DEBUGGING ---
+
+        if (!response.ok) throw new Error(data.message || 'Login failed.');
+        
+        if (!data.data || !data.data.user) {
+            console.error('CRITICAL: User data is missing from the server response!');
+            return showMessage('Login succeeded, but failed to retrieve user profile.');
         }
 
-        // --- Success ---
+        const user = data.data.user;
+
+        // --- DEBUGGING ---
+        console.log('User Object Received:', user);
+        console.log('User Role:', user.role);
+        // --- END DEBUGGING ---
+
         showMessage('Login successful! Redirecting...', 'success');
         
-        // Save the token and user info
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
+        localStorage.setItem('user', JSON.stringify(user));
         
-        // Redirect to the appropriate dashboard
         setTimeout(() => {
-            const dashboardUrl = getDashboardUrl(data.data.user.role);
+            const dashboardUrl = getDashboardUrl(user.role);
+
+            // --- DEBUGGING ---
+            console.log('Redirecting to URL:', dashboardUrl);
+            // --- END DEBUGGING ---
+
+            if (!dashboardUrl) {
+                console.error(`CRITICAL: Could not determine dashboard URL for role: "${user.role}"`);
+                return showMessage('Could not find your dashboard. Please contact support.');
+            }
             handlePageTransition({ preventDefault: () => {} }, dashboardUrl);
         }, 1500);
         
     } catch (error) {
         showMessage(error.message);
     } finally {
-        // Reset button state
         setLoadingState(submitBtn, false);
     }
 }
 
-/**
- * Handles social media login clicks.
- * @param {string} provider - The social provider ('google' or 'github').
- */
 function handleSocialLogin(provider) {
-    // Redirect to the backend's OAuth endpoint
     window.location.href = `${API_BASE_URL}/api/auth/${provider}`;
 }
 
-/**
- * Checks for a JWT in the URL after an OAuth redirect and logs the user in.
- */
 async function handleOAuthCallback() {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
@@ -101,7 +98,6 @@ async function handleOAuthCallback() {
         showMessage('Authentication successful! Please wait...', 'success');
         localStorage.setItem('token', token);
 
-        // Fetch user profile to get role and other details
         try {
             const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -113,20 +109,18 @@ async function handleOAuthCallback() {
             const user = data.data.user;
             localStorage.setItem('user', JSON.stringify(user));
 
-            // Redirect to dashboard
             const dashboardUrl = getDashboardUrl(user.role);
             window.location.href = dashboardUrl;
 
         } catch (error) {
             showMessage('Failed to retrieve your profile. Please try logging in again.');
-            // Clean up URL
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
 }
 
 
-// --- UI & Utility Functions ---
+// --- UI & Utility Functions (No changes below this line) ---
 
 function setLoadingState(button, isLoading) {
     button.disabled = isLoading;
@@ -202,7 +196,6 @@ function handleKeyboardShortcuts(e) {
     }
 }
 
-// Make functions globally accessible from HTML onclick attributes
 window.handlePageTransition = handlePageTransition;
 window.togglePassword = togglePassword;
 window.handleSocialLogin = handleSocialLogin;

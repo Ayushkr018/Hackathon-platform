@@ -152,7 +152,7 @@ exports.googleCallback = (req, res, next) => {
             return res.redirect(`${process.env.CLIENT_URL}/auth/login?error=auth_failed`);
         }
         const token = signToken(user._id);
-        res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
+        res.redirect(`${process.env.CLIENT_URL}/?token=${token}`);
     })(req, res, next);
 };
 exports.githubAuth = passport.authenticate('github', { scope: ['user:email'] });
