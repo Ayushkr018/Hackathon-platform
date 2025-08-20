@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - NexusHack Platform</title>
+    <meta name="description" content="View hackathon rankings, compare performance, track competition progress, and celebrate top performers in real-time.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="leaderboard.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="logo-text">NexusHack</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboard</div>
+                <a href="dashboard.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="nav-text">Overview</div>
+                </a>
+                <a href="browse-events.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="nav-text">Browse Events</div>
+                    <div class="nav-badge">12</div>
+                </a>
+                <a href="my-teams.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="nav-text">My Teams</div>
+                    <div class="nav-badge">3</div>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Events & Projects</div>
+                <a href="team-finder.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="nav-text">Team Finder</div>
+                    <div class="nav-badge">AI</div>
+                </a>
+                <a href="participant-finder.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="nav-text">Participant Finder</div>
+                    <div class="nav-badge">NEW</div>
+                </a>
+                <a href="submissions.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="nav-text">Submissions</div>
+                    <div class="nav-badge">4</div>
+                </a>
+                <a href="leaderboard.html" class="nav-link active">
+                    <div class="nav-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="nav-text">Leaderboard</div>
+                    <div class="nav-badge">LIVE</div>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Profile & Settings</div>
+                <a href="profile.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="nav-text">Profile</div>
+                </a>
+                <a href="../shared/settings.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="nav-text">Settings</div>
+                </a>
+                <a href="../shared/help.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="nav-text">Help & Support</div>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">JD</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">John Doe</div>
+                <div class="user-role">Participant</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Leaderboard</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search participants..." id="searchInput">
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="action-btn has-badge" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="action-btn" title="Messages">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="action-btn" onclick="logout()" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content">
+            <!-- Leaderboard Overview -->
+            <div class="leaderboard-overview">
+                <div class="overview-content">
+                    <div class="overview-text">
+                        <h2 class="overview-title">
+                            <i class="fas fa-trophy"></i>
+                            Competition Rankings
+                        </h2>
+                        <p class="overview-subtitle">
+                            Track your performance against other participants, monitor rankings in real-time, 
+                            and celebrate achievements across all hackathon events.
+                        </p>
+                        
+                        <div class="overview-stats">
+                            <div class="overview-stat">
+                                <span class="stat-number">1,247</span>
+                                <span class="stat-label">Total Participants</span>
+                            </div>
+                            <div class="overview-stat">
+                                <span class="stat-number">#23</span>
+                                <span class="stat-label">Your Rank</span>
+                            </div>
+                            <div class="overview-stat">
+                                <span class="stat-number">8.7</span>
+                                <span class="stat-label">Your Score</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-actions">
+                        <button class="btn btn-primary" onclick="viewYourStats()">
+                            <i class="fas fa-chart-line"></i>
+                            View Your Stats
+                        </button>
+                        <button class="btn btn-secondary" onclick="shareRanking()">
+                            <i class="fas fa-share"></i>
+                            Share Ranking
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Filters -->
+            <div class="event-filters">
+                <div class="filter-group">
+                    <label class="filter-label">Event</label>
+                    <select class="filter-select" id="eventFilter" onchange="filterByEvent()">
+                        <option value="all">All Events</option>
+                        <option value="web3-innovation-2025" selected>Web3 Innovation Challenge 2025</option>
+                        <option value="ai-healthcare-2025">AI Healthcare Hackathon</option>
+                        <option value="mobile-innovation-2025">Mobile App Innovation Summit</option>
+                        <option value="climate-tech-2025">Climate Tech Solutions 2025</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select" id="categoryFilter" onchange="filterByCategory()">
+                        <option value="overall">Overall Ranking</option>
+                        <option value="teams">Team Rankings</option>
+                        <option value="individual">Individual Scores</option>
+                        <option value="newcomers">Newcomers</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Time Period</label>
+                    <select class="filter-select" id="periodFilter" onchange="filterByPeriod()">
+                        <option value="current">Current Event</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="all-time">All Time</option>
+                    </select>
+                </div>
+
+                <button class="refresh-btn" onclick="refreshLeaderboard()">
+                    <i class="fas fa-sync"></i>
+                    Refresh
+                </button>
+
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>Live Updates</span>
+                </div>
+            </div>
+
+            <!-- Winners Podium -->
+            <div class="winners-podium">
+                <h3 class="podium-title">
+                    <i class="fas fa-crown"></i>
+                    Top Performers
+                </h3>
+                
+                <div class="podium-container">
+                    <!-- 2nd Place -->
+                    <div class="podium-place place-2" onclick="viewParticipant('sarah-miller')">
+                        <div class="place-avatar">
+                            <div class="avatar-text">SM</div>
+                            <div class="place-medal">2</div>
+                        </div>
+                        <div class="place-info">
+                            <div class="place-name">Sarah Miller</div>
+                            <div class="place-team">CryptoBuilders</div>
+                            <div class="place-score">9.2/10</div>
+                        </div>
+                    </div>
+
+                    <!-- 1st Place -->
+                    <div class="podium-place place-1" onclick="viewParticipant('alex-chen')">
+                        <div class="place-avatar">
+                            <div class="place-crown">👑</div>
+                            <div class="avatar-text">AC</div>
+                            <div class="place-medal">1</div>
+                        </div>
+                        <div class="place-info">
+                            <div class="place-name">Alex Chen</div>
+                            <div class="place-team">BlockMasters</div>
+                            <div class="place-score">9.8/10</div>
+                        </div>
+                    </div>
+
+                    <!-- 3rd Place -->
+                    <div class="podium-place place-3" onclick="viewParticipant('mike-johnson')">
+                        <div class="place-avatar">
+                            <div class="avatar-text">MJ</div>
+                            <div class="place-medal">3</div>
+                        </div>
+                        <div class="place-info">
+                            <div class="place-name">Mike Johnson</div>
+                            <div class="place-team">WebInnovators</div>
+                            <div class="place-score">8.9/10</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard Table -->
+            <div class="leaderboard-table">
+                <div class="table-header">
+                    <h3 class="table-title">
+                        <i class="fas fa-list-ol"></i>
+                        Complete Rankings
+                    </h3>
+                    
+                    <div class="table-actions">
+                        <button class="table-btn active" onclick="sortBy('rank')" data-sort="rank">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            Rank
+                        </button>
+                        <button class="table-btn" onclick="sortBy('score')" data-sort="score">
+                            <i class="fas fa-star"></i>
+                            Score
+                        </button>
+                        <button class="table-btn" onclick="sortBy('trend')" data-sort="trend">
+                            <i class="fas fa-chart-line"></i>
+                            Trending
+                        </button>
+                        <button class="table-btn" onclick="exportLeaderboard()">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- Loading State -->
+                    <div class="loading-container" id="loadingContainer">
+                        <div class="loading-spinner"></div>
+                        <span>Loading rankings...</span>
+                    </div>
+
+                    <!-- Leaderboard Rows -->
+                    <div id="leaderboardRows" style="display: none;">
+                        <!-- Rank 1 -->
+                        <div class="leaderboard-row">
+                            <div class="row-rank top-3">1</div>
+                            <div class="row-participant">
+                                <div class="participant-avatar">AC</div>
+                                <div class="participant-info">
+                                    <div class="participant-name">
+                                        Alex Chen
+                                        <span class="achievement-badge-inline">🏆 Champion</span>
+                                    </div>
+                                    <div class="participant-team">BlockMasters</div>
+                                </div>
+                            </div>
+                            <div class="row-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">9.8</div>
+                                    <div class="stat-label">Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">3</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">2</div>
+                                    <div class="stat-label">Wins</div>
+                                </div>
+                            </div>
+                            <div class="row-actions">
+                                <button class="action-btn-small" onclick="viewParticipant('alex-chen')" title="View Profile">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn-small" onclick="messageParticipant('alex-chen')" title="Send Message">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </div>
+                            <div class="trend-indicator trend-same">
+                                <i class="fas fa-minus"></i>
+                                <span>-</span>
+                            </div>
+                        </div>
+
+                        <!-- Rank 2 -->
+                        <div class="leaderboard-row">
+                            <div class="row-rank top-3">2</div>
+                            <div class="row-participant">
+                                <div class="participant-avatar">SM</div>
+                                <div class="participant-info">
+                                    <div class="participant-name">Sarah Miller</div>
+                                    <div class="participant-team">CryptoBuilders</div>
+                                </div>
+                            </div>
+                            <div class="row-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">9.2</div>
+                                    <div class="stat-label">Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">4</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">1</div>
+                                    <div class="stat-label">Wins</div>
+                                </div>
+                            </div>
+                            <div class="row-actions">
+                                <button class="action-btn-small" onclick="viewParticipant('sarah-miller')" title="View Profile">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn-small" onclick="messageParticipant('sarah-miller')" title="Send Message">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </div>
+                            <div class="trend-indicator trend-up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+1</span>
+                            </div>
+                        </div>
+
+                        <!-- Rank 3 -->
+                        <div class="leaderboard-row">
+                            <div class="row-rank top-3">3</div>
+                            <div class="row-participant">
+                                <div class="participant-avatar">MJ</div>
+                                <div class="participant-info">
+                                    <div class="participant-name">Mike Johnson</div>
+                                    <div class="participant-team">WebInnovators</div>
+                                </div>
+                            </div>
+                            <div class="row-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">8.9</div>
+                                    <div class="stat-label">Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">2</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">1</div>
+                                    <div class="stat-label">Wins</div>
+                                </div>
+                            </div>
+                            <div class="row-actions">
+                                <button class="action-btn-small" onclick="viewParticipant('mike-johnson')" title="View Profile">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn-small" onclick="messageParticipant('mike-johnson')" title="Send Message">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </div>
+                            <div class="trend-indicator trend-down">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-1</span>
+                            </div>
+                        </div>
+
+                        <!-- Continue with more rows... -->
+                        <div class="leaderboard-row">
+                            <div class="row-rank">4</div>
+                            <div class="row-participant">
+                                <div class="participant-avatar">EG</div>
+                                <div class="participant-info">
+                                    <div class="participant-name">Emma Green</div>
+                                    <div class="participant-team">EcoTech Solutions</div>
+                                </div>
+                            </div>
+                            <div class="row-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">8.7</div>
+                                    <div class="stat-label">Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">3</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">0</div>
+                                    <div class="stat-label">Wins</div>
+                                </div>
+                            </div>
+                            <div class="row-actions">
+                                <button class="action-btn-small" onclick="viewParticipant('emma-green')" title="View Profile">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn-small" onclick="messageParticipant('emma-green')" title="Send Message">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </div>
+                            <div class="trend-indicator trend-up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+2</span>
+                            </div>
+                        </div>
+
+                        <!-- Your Position (Rank 23) -->
+                        <div class="leaderboard-row your-position">
+                            <div class="row-rank">23</div>
+                            <div class="row-participant">
+                                <div class="participant-avatar">JD</div>
+                                <div class="participant-info">
+                                    <div class="participant-name">John Doe (You)</div>
+                                    <div class="participant-team">Block Innovators</div>
+                                </div>
+                            </div>
+                            <div class="row-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">8.7</div>
+                                    <div class="stat-label">Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">2</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">0</div>
+                                    <div class="stat-label">Wins</div>
+                                </div>
+                            </div>
+                            <div class="row-actions">
+                                <button class="action-btn-small" onclick="viewYourStats()" title="View Your Stats">
+                                    <i class="fas fa-chart-line"></i>
+                                </button>
+                                <button class="action-btn-small" onclick="improveRanking()" title="Improve Ranking">
+                                    <i class="fas fa-arrow-up"></i>
+                                </button>
+                            </div>
+                            <div class="trend-indicator trend-up">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Participant Details Modal -->
+    <div class="modal-overlay" id="participantModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Participant Details</h3>
+                <button class="modal-close" onclick="closeParticipantModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="modalContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+   <script src="leaderboard.js"></script>
+</body>
+</html>
+

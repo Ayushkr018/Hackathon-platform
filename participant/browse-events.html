@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Events - NexusHack Platform</title>
+    <meta name="description" content="Discover and join exciting hackathons with AI-powered event recommendations tailored for you.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    <link rel="stylesheet" href="browse-events.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="logo-text">NexusHack</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboard</div>
+                <a href="dashboard.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="nav-text">Overview</div>
+                </a>
+                <a href="browse-events.html" class="nav-link active">
+                    <div class="nav-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="nav-text">Browse Events</div>
+                    <div class="nav-badge">12</div>
+                </a>
+                <a href="my-teams.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="nav-text">My Teams</div>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Events & Projects</div>
+                <a href="team-finder.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="nav-text">Team Finder</div>
+                    <div class="nav-badge">AI</div>
+                </a>
+                <a href="participant-finder.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="nav-text">Participant Finder</div>
+                    <div class="nav-badge">AI</div>
+                </a>
+                <a href="submissions.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="nav-text">Submissions</div>
+                </a>
+                <a href="leaderboard.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="nav-text">Leaderboard</div>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Profile & Settings</div>
+                <a href="profile.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="nav-text">Profile</div>
+                </a>
+                <a href="../shared/settings.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="nav-text">Settings</div>
+                </a>
+                <a href="../shared/help.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="nav-text">Help & Support</div>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">JD</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">John Doe</div>
+                <div class="user-role">Participant</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Browse Events</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search hackathons..." id="searchInput">
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="action-btn has-badge" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="action-btn" title="Messages">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="action-btn" onclick="logout()" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content">
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <div class="filters-header">
+                    <h3 class="filters-title">
+                        <i class="fas fa-filter"></i>
+                        Filter Events
+                    </h3>
+                    <a href="#" class="clear-filters" onclick="clearAllFilters()">Clear All</a>
+                </div>
+                
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <select class="filter-select" id="categoryFilter" onchange="applyFilters()">
+                            <option value="">All Categories</option>
+                            <option value="web3">Web3 & Blockchain</option>
+                            <option value="ai">AI & Machine Learning</option>
+                            <option value="mobile">Mobile Development</option>
+                            <option value="iot">IoT & Hardware</option>
+                            <option value="fintech">FinTech</option>
+                            <option value="healthtech">HealthTech</option>
+                            <option value="climate">Climate Tech</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Duration</label>
+                        <select class="filter-select" id="durationFilter" onchange="applyFilters()">
+                            <option value="">Any Duration</option>
+                            <option value="1">24 Hours</option>
+                            <option value="2">48 Hours</option>
+                            <option value="7">1 Week</option>
+                            <option value="30">1 Month</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Prize Pool</label>
+                        <select class="filter-select" id="prizeFilter" onchange="applyFilters()">
+                            <option value="">Any Prize</option>
+                            <option value="10000">$10K+</option>
+                            <option value="25000">$25K+</option>
+                            <option value="50000">$50K+</option>
+                            <option value="100000">$100K+</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Difficulty</label>
+                        <select class="filter-select" id="difficultyFilter" onchange="applyFilters()">
+                            <option value="">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Technologies</label>
+                    <div class="filter-tags">
+                        <span class="filter-tag" data-tech="react" onclick="toggleTechFilter(this)">React</span>
+                        <span class="filter-tag" data-tech="python" onclick="toggleTechFilter(this)">Python</span>
+                        <span class="filter-tag" data-tech="nodejs" onclick="toggleTechFilter(this)">Node.js</span>
+                        <span class="filter-tag" data-tech="solidity" onclick="toggleTechFilter(this)">Solidity</span>
+                        <span class="filter-tag" data-tech="tensorflow" onclick="toggleTechFilter(this)">TensorFlow</span>
+                        <span class="filter-tag" data-tech="flutter" onclick="toggleTechFilter(this)">Flutter</span>
+                        <span class="filter-tag" data-tech="swift" onclick="toggleTechFilter(this)">Swift</span>
+                        <span class="filter-tag" data-tech="docker" onclick="toggleTechFilter(this)">Docker</span>
+                        <span class="filter-tag" data-tech="aws" onclick="toggleTechFilter(this)">AWS</span>
+                        <span class="filter-tag" data-tech="firebase" onclick="toggleTechFilter(this)">Firebase</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Header -->
+            <div class="events-header">
+                <div>
+                    <h2 class="events-title">
+                        Discover Events
+                        <span class="events-count" id="eventsCount">(24 events found)</span>
+                    </h2>
+                </div>
+
+                <div class="view-toggle">
+                    <button class="view-btn active" onclick="toggleView('grid')" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" onclick="toggleView('list')" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Events Loading -->
+            <div class="events-loading" id="eventsLoading" style="display: none;">
+                <div class="event-skeleton">
+                    <div class="skeleton-banner"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line"></div>
+                    </div>
+                </div>
+                <div class="event-skeleton">
+                    <div class="skeleton-banner"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line"></div>
+                    </div>
+                </div>
+                <div class="event-skeleton">
+                    <div class="skeleton-banner"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Grid -->
+            <div class="events-grid active" id="eventsGrid">
+                <!-- AI Recommended Event -->
+                <div class="event-card">
+                    <div class="ai-recommended">AI Recommended</div>
+                    <div class="event-banner">
+                        <div class="event-category">Web3</div>
+                        <div class="event-status status-open">Registration Open</div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Web3 Innovation Challenge 2025</h3>
+                        <p class="event-description">
+                            Build the next generation of decentralized applications using cutting-edge blockchain technology. 
+                            Create solutions that will reshape the digital economy.
+                        </p>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar meta-icon"></i>
+                                <span>Mar 15-17, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock meta-icon"></i>
+                                <span>48 Hours</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users meta-icon"></i>
+                                <span>2,456 Participants</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt meta-icon"></i>
+                                <span>San Francisco, CA</span>
+                            </div>
+                        </div>
+
+                        <div class="event-prizes">
+                            <div class="prize-item">
+                                <span class="prize-value">$75K</span>
+                                <span class="prize-label">Total Prize</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">$25K</span>
+                                <span class="prize-label">First Place</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">500+</span>
+                                <span class="prize-label">Teams</span>
+                            </div>
+                        </div>
+
+                        <div class="event-tags">
+                            <span class="event-tag">Solidity</span>
+                            <span class="event-tag">React</span>
+                            <span class="event-tag">IPFS</span>
+                            <span class="event-tag">Ethereum</span>
+                        </div>
+
+                        <div class="event-actions">
+                            <button class="btn btn-primary" onclick="registerForEvent('web3-innovation-2025')">
+                                <i class="fas fa-rocket"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewEventDetails('web3-innovation-2025')">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regular Events -->
+                <div class="event-card">
+                    <div class="event-banner">
+                        <div class="event-category">AI/ML</div>
+                        <div class="event-status status-open">Registration Open</div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">AI Healthcare Hackathon</h3>
+                        <p class="event-description">
+                            Develop AI-powered solutions to revolutionize healthcare delivery and patient outcomes. 
+                            Join leading medical professionals and tech innovators.
+                        </p>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar meta-icon"></i>
+                                <span>Apr 5-7, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock meta-icon"></i>
+                                <span>72 Hours</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users meta-icon"></i>
+                                <span>1,834 Participants</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt meta-icon"></i>
+                                <span>Boston, MA</span>
+                            </div>
+                        </div>
+
+                        <div class="event-prizes">
+                            <div class="prize-item">
+                                <span class="prize-value">$50K</span>
+                                <span class="prize-label">Total Prize</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">$15K</span>
+                                <span class="prize-label">First Place</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">300+</span>
+                                <span class="prize-label">Teams</span>
+                            </div>
+                        </div>
+
+                        <div class="event-tags">
+                            <span class="event-tag">TensorFlow</span>
+                            <span class="event-tag">Python</span>
+                            <span class="event-tag">PyTorch</span>
+                            <span class="event-tag">OpenCV</span>
+                        </div>
+
+                        <div class="event-actions">
+                            <button class="btn btn-primary" onclick="registerForEvent('ai-healthcare-2025')">
+                                <i class="fas fa-rocket"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewEventDetails('ai-healthcare-2025')">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-banner">
+                        <div class="event-category">Mobile</div>
+                        <div class="event-status status-closing-soon">Closing Soon</div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Mobile App Innovation Summit</h3>
+                        <p class="event-description">
+                            Create the next breakthrough mobile application. Focus on user experience, 
+                            performance, and innovative features that will change how people interact with technology.
+                        </p>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar meta-icon"></i>
+                                <span>Mar 22-24, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock meta-icon"></i>
+                                <span>48 Hours</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users meta-icon"></i>
+                                <span>3,128 Participants</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt meta-icon"></i>
+                                <span>Austin, TX</span>
+                            </div>
+                        </div>
+
+                        <div class="event-prizes">
+                            <div class="prize-item">
+                                <span class="prize-value">$40K</span>
+                                <span class="prize-label">Total Prize</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">$12K</span>
+                                <span class="prize-label">First Place</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">400+</span>
+                                <span class="prize-label">Teams</span>
+                            </div>
+                        </div>
+
+                        <div class="event-tags">
+                            <span class="event-tag">Flutter</span>
+                            <span class="event-tag">Swift</span>
+                            <span class="event-tag">Kotlin</span>
+                            <span class="event-tag">React Native</span>
+                        </div>
+
+                        <div class="event-actions">
+                            <button class="btn btn-primary" onclick="registerForEvent('mobile-innovation-2025')">
+                                <i class="fas fa-rocket"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewEventDetails('mobile-innovation-2025')">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-banner">
+                        <div class="event-category">Climate</div>
+                        <div class="event-status status-open">Registration Open</div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Climate Tech Solutions 2025</h3>
+                        <p class="event-description">
+                            Build sustainable technology solutions to combat climate change. Create impactful 
+                            applications that contribute to environmental conservation and sustainability.
+                        </p>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar meta-icon"></i>
+                                <span>Apr 12-14, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock meta-icon"></i>
+                                <span>60 Hours</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users meta-icon"></i>
+                                <span>2,756 Participants</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt meta-icon"></i>
+                                <span>Seattle, WA</span>
+                            </div>
+                        </div>
+
+                        <div class="event-prizes">
+                            <div class="prize-item">
+                                <span class="prize-value">$100K</span>
+                                <span class="prize-label">Total Prize</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">$35K</span>
+                                <span class="prize-label">First Place</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">450+</span>
+                                <span class="prize-label">Teams</span>
+                            </div>
+                        </div>
+
+                        <div class="event-tags">
+                            <span class="event-tag">IoT</span>
+                            <span class="event-tag">Python</span>
+                            <span class="event-tag">Arduino</span>
+                            <span class="event-tag">Machine Learning</span>
+                        </div>
+
+                        <div class="event-actions">
+                            <button class="btn btn-primary" onclick="registerForEvent('climate-tech-2025')">
+                                <i class="fas fa-rocket"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewEventDetails('climate-tech-2025')">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-banner">
+                        <div class="event-category">FinTech</div>
+                        <div class="event-status status-open">Registration Open</div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">FinTech Revolution Hackathon</h3>
+                        <p class="event-description">
+                            Revolutionize financial services with innovative technology solutions. Build secure, 
+                            scalable applications that will transform how people manage and interact with money.
+                        </p>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar meta-icon"></i>
+                                <span>May 3-5, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock meta-icon"></i>
+                                <span>48 Hours</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users meta-icon"></i>
+                                <span>1,967 Participants</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt meta-icon"></i>
+                                <span>New York, NY</span>
+                            </div>
+                        </div>
+
+                        <div class="event-prizes">
+                            <div class="prize-item">
+                                <span class="prize-value">$60K</span>
+                                <span class="prize-label">Total Prize</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">$20K</span>
+                                <span class="prize-label">First Place</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">350+</span>
+                                <span class="prize-label">Teams</span>
+                            </div>
+                        </div>
+
+                        <div class="event-tags">
+                            <span class="event-tag">Blockchain</span>
+                            <span class="event-tag">Node.js</span>
+                            <span class="event-tag">React</span>
+                            <span class="event-tag">PostgreSQL</span>
+                        </div>
+
+                        <div class="event-actions">
+                            <button class="btn btn-primary" onclick="registerForEvent('fintech-revolution-2025')">
+                                <i class="fas fa-rocket"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewEventDetails('fintech-revolution-2025')">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-banner">
+                        <div class="event-category">Gaming</div>
+                        <div class="event-status status-open">Registration Open</div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Indie Game Dev Challenge</h3>
+                        <p class="event-description">
+                            Create the next breakthrough indie game. Focus on innovative gameplay mechanics, 
+                            compelling narratives, and unique art styles that will captivate players worldwide.
+                        </p>
+                        
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar meta-icon"></i>
+                                <span>May 15-17, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock meta-icon"></i>
+                                <span>54 Hours</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users meta-icon"></i>
+                                <span>2,134 Participants</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt meta-icon"></i>
+                                <span>Los Angeles, CA</span>
+                            </div>
+                        </div>
+
+                        <div class="event-prizes">
+                            <div class="prize-item">
+                                <span class="prize-value">$35K</span>
+                                <span class="prize-label">Total Prize</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">$12K</span>
+                                <span class="prize-label">First Place</span>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-value">280+</span>
+                                <span class="prize-label">Teams</span>
+                            </div>
+                        </div>
+
+                        <div class="event-tags">
+                            <span class="event-tag">Unity</span>
+                            <span class="event-tag">C#</span>
+                            <span class="event-tag">Godot</span>
+                            <span class="event-tag">JavaScript</span>
+                        </div>
+
+                        <div class="event-actions">
+                            <button class="btn btn-primary" onclick="registerForEvent('indie-game-2025')">
+                                <i class="fas fa-rocket"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewEventDetails('indie-game-2025')">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div class="events-list" id="eventsList">
+                <div class="event-card-list">
+                    <div class="list-banner"></div>
+                    <div class="list-content">
+                        <div class="list-header">
+                            <div>
+                                <h3 class="list-title">Web3 Innovation Challenge 2025</h3>
+                                <div class="list-meta">
+                                    <span><i class="fas fa-calendar"></i> Mar 15-17, 2025</span>
+                                    <span><i class="fas fa-users"></i> 2,456 participants</span>
+                                    <span><i class="fas fa-trophy"></i> $75K prizes</span>
+                                </div>
+                            </div>
+                            <div class="event-status status-open">Open</div>
+                        </div>
+                        <div class="list-actions">
+                            <div class="list-tags">
+                                <span class="event-tag">Solidity</span>
+                                <span class="event-tag">React</span>
+                                <span class="event-tag">IPFS</span>
+                            </div>
+                            <div class="list-buttons">
+                                <button class="btn btn-primary btn-small" onclick="registerForEvent('web3-innovation-2025')">Register</button>
+                                <button class="btn btn-secondary btn-small" onclick="viewEventDetails('web3-innovation-2025')">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="empty-title">No events found</h3>
+                <p class="empty-desc">Try adjusting your filters or search criteria to find more events.</p>
+                <button class="btn btn-primary" onclick="clearAllFilters()">
+                    <i class="fas fa-refresh"></i>
+                    Clear Filters
+                </button>
+            </div>
+        </main>
+    </div>
+
+ <script src="browse-events.js"></script>    
+</body>
+</html>

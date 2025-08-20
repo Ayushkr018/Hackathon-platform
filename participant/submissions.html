@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions - NexusHack Platform</title>
+    <meta name="description" content="Submit your hackathon projects, track submission status, and manage your project portfolios with advanced file management.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+   <link rel="stylesheet" href="submission.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="logo-text">NexusHack</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboard</div>
+                <a href="dashboard.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="nav-text">Overview</div>
+                </a>
+                <a href="browse-events.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="nav-text">Browse Events</div>
+                    <div class="nav-badge">12</div>
+                </a>
+                <a href="my-teams.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="nav-text">My Teams</div>
+                    <div class="nav-badge">3</div>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Events & Projects</div>
+                <a href="team-finder.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="nav-text">Team Finder</div>
+                    <div class="nav-badge">AI</div>
+                </a>
+                <a href="participant-finder.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="nav-text">Participant Finder</div>
+                    <div class="nav-badge">NEW</div>
+                </a>
+                <a href="submissions.html" class="nav-link active">
+                    <div class="nav-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="nav-text">Submissions</div>
+                    <div class="nav-badge">4</div>
+                </a>
+                <a href="leaderboard.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="nav-text">Leaderboard</div>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Profile & Settings</div>
+                <a href="profile.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="nav-text">Profile</div>
+                </a>
+                <a href="../shared/settings.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="nav-text">Settings</div>
+                </a>
+                <a href="../shared/help.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="nav-text">Help & Support</div>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">JD</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">John Doe</div>
+                <div class="user-role">Participant</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Submissions</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search submissions..." id="searchInput">
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="action-btn has-badge" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="action-btn" title="Messages">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="action-btn" onclick="logout()" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content">
+            <!-- Submissions Overview -->
+            <div class="submissions-overview">
+                <div class="overview-content">
+                    <div class="overview-text">
+                        <h2 class="overview-title">
+                            <i class="fas fa-upload"></i>
+                            Your Project Submissions
+                        </h2>
+                        <p class="overview-subtitle">
+                            Submit your hackathon projects, track submission status, manage files, 
+                            and monitor judging progress all from one powerful dashboard.
+                        </p>
+                        
+                        <div class="overview-stats">
+                            <div class="overview-stat">
+                                <span class="stat-number">4</span>
+                                <span class="stat-label">Total Submissions</span>
+                            </div>
+                            <div class="overview-stat">
+                                <span class="stat-number">2</span>
+                                <span class="stat-label">Under Review</span>
+                            </div>
+                            <div class="overview-stat">
+                                <span class="stat-number">1</span>
+                                <span class="stat-label">Winner</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-actions">
+                        <button class="btn btn-primary" onclick="openSubmissionModal()">
+                            <i class="fas fa-plus"></i>
+                            New Submission
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewGuidelines()">
+                            <i class="fas fa-file-alt"></i>
+                            Submission Guidelines
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submission Tabs -->
+            <div class="submission-tabs">
+                <button class="tab-btn active" onclick="switchTab('all')" data-tab="all">
+                    <i class="fas fa-list"></i>
+                    All Submissions (4)
+                </button>
+                <button class="tab-btn" onclick="switchTab('submitted')" data-tab="submitted">
+                    <i class="fas fa-check-circle"></i>
+                    Submitted (2)
+                </button>
+                <button class="tab-btn" onclick="switchTab('draft')" data-tab="draft">
+                    <i class="fas fa-edit"></i>
+                    Drafts (1)
+                </button>
+                <button class="tab-btn" onclick="switchTab('reviewing')" data-tab="reviewing">
+                    <i class="fas fa-clock"></i>
+                    Under Review (1)
+                </button>
+            </div>
+
+            <!-- All Submissions -->
+            <div class="tab-content" id="allTab">
+                <div class="submissions-grid">
+                    <!-- Submission 1: Submitted -->
+                    <div class="submission-card">
+                        <div class="submission-status status-submitted">Submitted</div>
+                        
+                        <div class="submission-header">
+                            <div class="submission-icon">🚀</div>
+                            <div class="submission-details">
+                                <h3 class="submission-title">CryptoWallet DeFi</h3>
+                                <div class="submission-event">Web3 Innovation Challenge 2025</div>
+                                <div class="submission-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Submitted on Mar 10, 2025
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-description">
+                            A comprehensive DeFi wallet with advanced trading features, portfolio tracking, and yield farming capabilities. Built with React, Solidity, and Web3.js.
+                        </div>
+
+                        <div class="submission-files">
+                            <div class="files-header">
+                                <span class="files-label">Project Files</span>
+                                <span class="files-count">5 files</span>
+                            </div>
+                            <div class="files-list">
+                                <div class="file-item">
+                                    <i class="fas fa-file-code file-icon"></i>
+                                    source-code.zip
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-video file-icon"></i>
+                                    demo-video.mp4
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-alt file-icon"></i>
+                                    README.md
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-actions">
+                            <button class="btn btn-view btn-submission" onclick="viewSubmission('cryptowallet-defi')">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </button>
+                            <button class="btn btn-edit btn-submission" onclick="editSubmission('cryptowallet-defi')">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-delete" onclick="deleteSubmission('cryptowallet-defi')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Submission 2: Under Review -->
+                    <div class="submission-card">
+                        <div class="submission-status status-reviewing">Under Review</div>
+                        
+                        <div class="submission-header">
+                            <div class="submission-icon">🏥</div>
+                            <div class="submission-details">
+                                <h3 class="submission-title">HealthAI Assistant</h3>
+                                <div class="submission-event">AI Healthcare Hackathon</div>
+                                <div class="submission-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Submitted on Mar 5, 2025
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-description">
+                            AI-powered diagnostic assistant that helps doctors analyze medical reports and provide preliminary diagnoses using machine learning algorithms.
+                        </div>
+
+                        <div class="submission-files">
+                            <div class="files-header">
+                                <span class="files-label">Project Files</span>
+                                <span class="files-count">7 files</span>
+                            </div>
+                            <div class="files-list">
+                                <div class="file-item">
+                                    <i class="fas fa-file-code file-icon"></i>
+                                    ml-models.zip
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-powerpoint file-icon"></i>
+                                    presentation.pptx
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-pdf file-icon"></i>
+                                    research-paper.pdf
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-actions">
+                            <button class="btn btn-view btn-submission" onclick="viewSubmission('healthai-assistant')">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </button>
+                            <button class="btn btn-edit btn-submission" onclick="editSubmission('healthai-assistant')">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-delete" onclick="deleteSubmission('healthai-assistant')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Submission 3: Draft -->
+                    <div class="submission-card">
+                        <div class="submission-status status-draft">Draft</div>
+                        
+                        <div class="submission-header">
+                            <div class="submission-icon">📱</div>
+                            <div class="submission-details">
+                                <h3 class="submission-title">EcoTrack Mobile</h3>
+                                <div class="submission-event">Climate Tech Solutions 2025</div>
+                                <div class="submission-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Last edited on Mar 12, 2025
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-description">
+                            Mobile app for tracking personal carbon footprint with gamification elements and community challenges. Work in progress with core features completed.
+                        </div>
+
+                        <div class="submission-files">
+                            <div class="files-header">
+                                <span class="files-label">Project Files</span>
+                                <span class="files-count">3 files</span>
+                            </div>
+                            <div class="files-list">
+                                <div class="file-item">
+                                    <i class="fas fa-file-code file-icon"></i>
+                                    app-prototype.zip
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-image file-icon"></i>
+                                    mockups.png
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-actions">
+                            <button class="btn btn-edit btn-submission" onclick="editSubmission('ecotrack-mobile')">
+                                <i class="fas fa-edit"></i>
+                                Continue Editing
+                            </button>
+                            <button class="btn btn-view btn-submission" onclick="submitProject('ecotrack-mobile')">
+                                <i class="fas fa-paper-plane"></i>
+                                Submit Project
+                            </button>
+                            <button class="btn btn-delete" onclick="deleteSubmission('ecotrack-mobile')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Submission 4: Submitted (Winner) -->
+                    <div class="submission-card">
+                        <div class="submission-status status-submitted">🏆 Winner</div>
+                        
+                        <div class="submission-header">
+                            <div class="submission-icon">💰</div>
+                            <div class="submission-details">
+                                <h3 class="submission-title">CryptoPortfolio Pro</h3>
+                                <div class="submission-event">FinTech Revolution 2024</div>
+                                <div class="submission-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Submitted on Dec 15, 2024
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-description">
+                            Advanced cryptocurrency portfolio management tool with real-time analytics, automated trading strategies, and risk assessment features.
+                        </div>
+
+                        <div class="submission-files">
+                            <div class="files-header">
+                                <span class="files-label">Project Files</span>
+                                <span class="files-count">8 files</span>
+                            </div>
+                            <div class="files-list">
+                                <div class="file-item">
+                                    <i class="fas fa-file-code file-icon"></i>
+                                    full-source.zip
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-trophy file-icon"></i>
+                                    winner-certificate.pdf
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-video file-icon"></i>
+                                    final-demo.mp4
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="submission-actions">
+                            <button class="btn btn-view btn-submission" onclick="viewSubmission('cryptoportfolio-pro')">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </button>
+                            <button class="btn btn-edit btn-submission" onclick="shareSubmission('cryptoportfolio-pro')">
+                                <i class="fas fa-share"></i>
+                                Share Project
+                            </button>
+                            <button class="btn btn-delete" onclick="downloadCertificate('cryptoportfolio-pro')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Tabs (Hidden by default) -->
+            <div class="tab-content" id="submittedTab" style="display: none;">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="empty-title">Submitted Projects</h3>
+                    <p class="empty-desc">Your submitted projects will appear here.</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="draftTab" style="display: none;">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="empty-title">Draft Projects</h3>
+                    <p class="empty-desc">Projects you're still working on will appear here.</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="reviewingTab" style="display: none;">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="empty-title">Under Review</h3>
+                    <p class="empty-desc">Projects currently being evaluated by judges.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Submission Modal -->
+    <div class="modal-overlay" id="submissionModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">New Project Submission</h3>
+                <button class="modal-close" onclick="closeSubmissionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="submissionForm">
+                <div class="form-group">
+                    <label class="form-label">Project Title</label>
+                    <input type="text" class="form-input" placeholder="Enter project title..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Target Event</label>
+                    <select class="form-select" required>
+                        <option value="">Select hackathon event...</option>
+                        <option value="web3-innovation-2025">Web3 Innovation Challenge 2025</option>
+                        <option value="ai-healthcare-2025">AI Healthcare Hackathon</option>
+                        <option value="mobile-innovation-2025">Mobile App Innovation Summit</option>
+                        <option value="climate-tech-2025">Climate Tech Solutions 2025</option>
+                        <option value="fintech-revolution-2025">FinTech Revolution Hackathon</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Project Description</label>
+                    <textarea class="form-textarea" placeholder="Describe your project, its features, and technical implementation..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Team Name</label>
+                    <select class="form-select" required>
+                        <option value="">Select your team...</option>
+                        <option value="block-innovators">Block Innovators</option>
+                        <option value="healthtech-heroes">HealthTech Heroes</option>
+                        <option value="green-warriors">Green Warriors</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Project Files</label>
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-title">Drag & Drop Files Here</div>
+                        <div class="upload-subtitle">Or click to browse and select files</div>
+                        <div class="upload-formats">Supports: ZIP, PDF, MP4, PNG, JPG (Max 100MB)</div>
+                        <input type="file" class="file-input" id="fileInput" multiple accept=".zip,.pdf,.mp4,.png,.jpg,.jpeg,.pptx,.docx">
+                    </div>
+                    
+                    <div class="upload-progress" id="uploadProgress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Uploading...</div>
+                    </div>
+                </div>
+
+                <div class="uploaded-files" id="uploadedFiles" style="display: none;">
+                    <div class="uploaded-files-title">Uploaded Files</div>
+                    <div id="filesList"></div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-cancel" onclick="closeSubmissionModal()">
+                        Save as Draft
+                    </button>
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Project
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="submissions.js"></script>
+</body>
+</html>
