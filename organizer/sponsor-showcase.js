@@ -590,9 +590,7 @@ class ModernSponsorManager {
                 }
             }
 
-            backToDashboard() {
-                window.location.href = 'dashboard.html';
-            }
+           
 
             showToast(message, type = 'success') {
                 const existingToast = document.querySelector('.toast');
@@ -721,6 +719,18 @@ class ModernSponsorManager {
                 }
             }, 45000); // Every 45 seconds
         });
+
+       function logout() {
+           if (confirm('Are you sure you want to logout?')) {
+               localStorage.removeItem('modernOrganizerSession');
+               // Create a temporary instance to show toast
+               const tempManager = new ModernSponsorManager();
+               tempManager.showToast('Logging out...', 'info');
+               setTimeout(() => {
+                   window.location.href = '../auth/login.html';
+               }, 1000);
+           }
+     }
 
         // Enhanced animations and performance styles
         const style = document.createElement('style');
