@@ -1,6 +1,4 @@
-
-        // ADVANCED JAVASCRIPT - EVENTS MANAGEMENT SYSTEM
-        class AssignedEvents {
+ class AssignedEvents {
             constructor() {
                 this.events = [];
                 this.filteredEvents = [];
@@ -23,6 +21,7 @@
                 this.handleResize();
             }
 
+            // ✅ THEME COLOR COMBINATION
             initializeTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'dark';
                 document.documentElement.setAttribute('data-theme', savedTheme);
@@ -43,17 +42,14 @@
             }
 
             setupEventListeners() {
+                // Sidebar and UI controls
                 document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
                 document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
                 document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
                 window.addEventListener('resize', () => this.handleResize());
                 window.addEventListener('orientationchange', () => setTimeout(() => this.handleResize(), 100));
                 
-                // Filters
-                document.getElementById('statusFilter').addEventListener('change', () => this.filterEvents());
-                document.getElementById('categoryFilter').addEventListener('change', () => this.filterEvents());
-                
-                // Search
+                // Search functionality
                 const searchInput = document.getElementById('searchInput');
                 let searchTimeout;
                 searchInput.addEventListener('input', (e) => {
@@ -118,26 +114,72 @@
                 document.getElementById('mobileOverlay').classList.remove('active');
             }
 
+            // ✅ THEME TOGGLE WITH SMOOTH TRANSITION
             toggleTheme() {
                 const html = document.documentElement;
                 const currentTheme = html.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.style.transition = 'all 0.3s ease';
                 html.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
+                
                 const themeIcon = document.getElementById('themeToggle').querySelector('i');
                 themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+                
+                this.showToast(`Theme changed to ${newTheme} mode ✨`, 'success');
+                
+                setTimeout(() => {
+                    html.style.transition = '';
+                }, 300);
+            }
+
+            // ✅ UX LOADER AT TOP
+            showLoader() {
+                let loaderBar = document.getElementById('loaderBar');
+                if (!loaderBar) {
+                    loaderBar = document.createElement('div');
+                    loaderBar.id = 'loaderBar';
+                    document.body.appendChild(loaderBar);
+                }
+                
+                setTimeout(() => {
+                    loaderBar.style.width = '60%';
+                }, 50);
+            }
+
+            completeLoader() {
+                const loaderBar = document.getElementById('loaderBar');
+                if (loaderBar) {
+                    loaderBar.style.width = '100%';
+                    
+                    setTimeout(() => {
+                        loaderBar.style.width = '0%';
+                        loaderBar.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            if (loaderBar.parentNode) {
+                                loaderBar.remove();
+                            }
+                        }, 300);
+                    }, 500);
+                }
             }
 
             loadEventsData() {
-                const storedEvents = localStorage.getItem('judgeEvents');
-                if (storedEvents) {
-                    this.events = JSON.parse(storedEvents);
-                } else {
-                    this.events = this.getMockEvents();
-                    this.saveEvents();
-                }
-                this.filteredEvents = [...this.events];
+                this.showLoader();
+                
+                setTimeout(() => {
+                    const storedEvents = localStorage.getItem('judgeEvents');
+                    if (storedEvents) {
+                        this.events = JSON.parse(storedEvents);
+                    } else {
+                        this.events = this.getMockEvents();
+                        this.saveEvents();
+                    }
+                    this.filteredEvents = [...this.events];
+                    this.completeLoader();
+                }, 1000);
             }
 
             getMockEvents() {
@@ -154,9 +196,9 @@
                         participants: 324,
                         projects: 67,
                         evaluated: 23,
-                        description: 'Build the future of decentralized applications with cutting-edge Web3 technologies. Focus on DeFi, NFTs, and blockchain innovation.',
+                        description: 'Build the future of decentralized applications with cutting-edge Web3 technologies. Focus on DeFi, NFTs, and blockchain innovation for real-world impact.',
                         prize: '$50,000',
-                        location: 'Virtual',
+                        location: 'Virtual Global Event',
                         difficulty: 'Advanced'
                     },
                     {
@@ -170,7 +212,7 @@
                         participants: 256,
                         projects: 0,
                         evaluated: 0,
-                        description: 'Harness artificial intelligence to solve real-world problems in healthcare, education, and sustainability.',
+                        description: 'Harness artificial intelligence to solve real-world problems in healthcare, education, and sustainability. Create AI solutions that make a positive impact.',
                         prize: '$30,000',
                         location: 'San Francisco, CA',
                         difficulty: 'Intermediate'
@@ -186,10 +228,42 @@
                         participants: 267,
                         projects: 89,
                         evaluated: 89,
-                        description: 'Create groundbreaking mobile applications that push the boundaries of user experience and functionality.',
+                        description: 'Create groundbreaking mobile applications that push the boundaries of user experience and functionality across iOS and Android platforms.',
                         prize: '$25,000',
                         location: 'New York, NY',
                         difficulty: 'Beginner'
+                    },
+                    {
+                        id: 4,
+                        title: 'IoT Smart Cities Challenge',
+                        organizer: 'Urban Tech Alliance',
+                        status: 'upcoming',
+                        category: 'iot',
+                        startDate: now + 1209600000,
+                        endDate: now + 1382400000,
+                        participants: 198,
+                        projects: 0,
+                        evaluated: 0,
+                        description: 'Design Internet of Things solutions for smart cities. Focus on traffic management, environmental monitoring, and urban efficiency improvements.',
+                        prize: '$40,000',
+                        location: 'London, UK',
+                        difficulty: 'Advanced'
+                    },
+                    {
+                        id: 5,
+                        title: 'Fintech Innovation Lab',
+                        organizer: 'Financial Future Foundation',
+                        status: 'completed',
+                        category: 'fintech',
+                        startDate: now - 1814400000,
+                        endDate: now - 1641600000,
+                        participants: 312,
+                        projects: 78,
+                        evaluated: 78,
+                        description: 'Revolutionize financial services with innovative fintech solutions. Build products for payments, lending, trading, and personal finance management.',
+                        prize: '$35,000',
+                        location: 'Singapore',
+                        difficulty: 'Intermediate'
                     }
                 ];
             }
@@ -215,10 +289,21 @@
                 });
 
                 this.renderEvents();
+                this.updateStats();
             }
 
             searchEvents(searchTerm) {
                 this.filterEvents();
+            }
+
+            updateStats() {
+                document.getElementById('totalEvents').textContent = this.events.length;
+                
+                const totalParticipants = this.events.reduce((sum, event) => sum + event.participants, 0);
+                document.getElementById('totalParticipants').textContent = totalParticipants;
+                
+                const totalEvaluated = this.events.reduce((sum, event) => sum + event.evaluated, 0);
+                document.getElementById('projectsEvaluated').textContent = totalEvaluated;
             }
 
             renderEvents() {
@@ -241,9 +326,11 @@
                     return;
                 }
 
-                this.filteredEvents.forEach(event => {
+                this.filteredEvents.forEach((event, index) => {
                     const eventCard = document.createElement('div');
                     eventCard.className = 'event-card';
+                    eventCard.style.opacity = '0';
+                    eventCard.style.transform = 'translateY(20px)';
                     eventCard.onclick = () => this.openEventDetails(event.id);
 
                     eventCard.innerHTML = `
@@ -283,6 +370,13 @@
                     `;
 
                     container.appendChild(eventCard);
+
+                    // Animate cards in
+                    setTimeout(() => {
+                        eventCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        eventCard.style.opacity = '1';
+                        eventCard.style.transform = 'translateY(0)';
+                    }, index * 100 + 300);
                 });
             }
 
@@ -344,36 +438,101 @@
                 });
             }
 
+            // ✅ REALISTIC EVENT DETAILS WITH PROPER MODAL POSITIONING
             openEventDetails(eventId) {
-                this.showToast(`Loading details for event ${eventId}...`, 'info');
-                // In real implementation, would open event details modal or navigate to details page
+                const event = this.events.find(e => e.id === eventId);
+                this.showToast(`Loading comprehensive details for ${event.title}... 📅`, 'info');
+                this.showLoader();
+                
+                setTimeout(() => {
+                    this.completeLoader();
+                    
+                    // ✅ REMOVE ANY EXISTING MODALS
+                    const existingModals = document.querySelectorAll('.event-modal');
+                    existingModals.forEach(modal => modal.remove());
+                    
+                    // Create detailed event modal with proper z-index
+                    const modal = document.createElement('div');
+                    modal.className = 'modal active event-modal';
+                    modal.innerHTML = `
+                        <div class="modal-content">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <h2 style="color: var(--text-primary); margin: 0; font-size: 1.5rem;">📅 Event Details</h2>
+                                <button onclick="this.closest('.modal').remove()" style="background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; padding: 0.5rem; border-radius: 8px; transition: var(--transition);" onmouseover="this.style.background='var(--bg-glass)'" onmouseout="this.style.background='none'">✕</button>
+                            </div>
+                            
+                            <div style="background: var(--gradient-events); padding: 1.5rem; border-radius: 12px; color: white; margin-bottom: 1.5rem; text-align: center;">
+                                <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem;">${event.title}</h3>
+                                <p style="margin: 0; opacity: 0.9;">by ${event.organizer}</p>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="background: var(--bg-glass); padding: 1rem; border-radius: 12px;">
+                                    <h4 style="color: var(--text-primary); margin: 0 0 0.5rem 0; font-size: 0.9rem;">📊 Statistics</h4>
+                                    <p style="margin: 0.25rem 0; color: var(--text-secondary); font-size: 0.85rem;"><strong>Participants:</strong> ${event.participants}</p>
+                                    <p style="margin: 0.25rem 0; color: var(--text-secondary); font-size: 0.85rem;"><strong>Projects:</strong> ${event.projects}</p>
+                                    <p style="margin: 0.25rem 0; color: var(--text-secondary); font-size: 0.85rem;"><strong>Evaluated:</strong> ${event.evaluated}</p>
+                                </div>
+                                <div style="background: var(--bg-glass); padding: 1rem; border-radius: 12px;">
+                                    <h4 style="color: var(--text-primary); margin: 0 0 0.5rem 0; font-size: 0.9rem;">📍 Event Info</h4>
+                                    <p style="margin: 0.25rem 0; color: var(--text-secondary); font-size: 0.85rem;"><strong>Status:</strong> ${event.status.toUpperCase()}</p>
+                                    <p style="margin: 0.25rem 0; color: var(--text-secondary); font-size: 0.85rem;"><strong>Prize:</strong> ${event.prize}</p>
+                                    <p style="margin: 0.25rem 0; color: var(--text-secondary); font-size: 0.85rem;"><strong>Location:</strong> ${event.location}</p>
+                                </div>
+                            </div>
+                            
+                            <div style="background: var(--bg-glass); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                                <h4 style="color: var(--text-primary); margin: 0 0 0.75rem 0;">📝 Description</h4>
+                                <p style="color: var(--text-muted); line-height: 1.6; margin: 0;">${event.description}</p>
+                            </div>
+                            
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                ${this.getEventActions(event)}
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(modal);
+                }, 1200);
             }
 
+            // ✅ FIXED NOTIFICATION POSITIONING - NO OVERLAP WITH SEARCH
             showToast(message, type = 'success') {
-                const existingToast = document.querySelector('.toast');
-                if (existingToast) existingToast.remove();
+                // Remove existing toasts
+                const existingToasts = document.querySelectorAll('.toast');
+                existingToasts.forEach(toast => toast.remove());
                 
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.style.cssText = `
-                    position: fixed; top: 2rem; right: 2rem; padding: 1rem 1.5rem;
-                    border-radius: 12px; color: white; font-weight: 500; z-index: 10001;
-                    animation: slideInToast 0.3s ease-out; max-width: 350px;
-                    box-shadow: var(--shadow-lg); background: var(--gradient-${type});
-                `;
-                
-                if (window.innerWidth <= 768) {
-                    toast.style.top = '1rem'; toast.style.right = '1rem';
-                    toast.style.left = '1rem'; toast.style.maxWidth = 'none';
-                }
-                
                 toast.innerHTML = `
-                    <i class="fas ${this.getToastIcon(type)}"></i>
-                    <span style="margin-left: 0.5rem;">${message}</span>
+                    <i class="fas ${this.getToastIcon(type)}" style="margin-right: 10px;"></i>
+                    ${message}
                 `;
                 
                 document.body.appendChild(toast);
-                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 4000);
+                
+                // Auto hide after 4 seconds
+                const autoHideTimer = setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, 4000);
+                
+                // Click to dismiss
+                toast.addEventListener('click', () => {
+                    clearTimeout(autoHideTimer);
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.remove();
+                        }
+                    }, 300);
+                });
             }
 
             getToastIcon(type) {
@@ -390,30 +549,79 @@
         // Global instance and functions
         let assignedEvents;
 
+        // ✅ REALISTIC BUTTON FUNCTIONS WITH PROPER FEEDBACK
         function startEvaluating(eventId) {
-            assignedEvents.showToast('Starting evaluation process...', 'info');
-            setTimeout(() => window.location.href = 'evaluation.html', 1000);
+            const event = assignedEvents.events.find(e => e.id === eventId);
+            assignedEvents.showToast(`🚀 Starting evaluation process for ${event.title}...`, 'info');
+            assignedEvents.showLoader();
+            
+            setTimeout(() => {
+                assignedEvents.completeLoader();
+                assignedEvents.showToast('🎯 Redirecting to evaluation interface...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'evaluation.html';
+                }, 1000);
+            }, 1500);
         }
 
         function viewProjects(eventId) {
-            assignedEvents.showToast('Loading project gallery...', 'info');
-            setTimeout(() => window.location.href = 'project-gallery.html', 1000);
+            const event = assignedEvents.events.find(e => e.id === eventId);
+            assignedEvents.showToast(`📋 Loading ${event.projects} projects from ${event.title}...`, 'info');
+            assignedEvents.showLoader();
+            
+            setTimeout(() => {
+                assignedEvents.completeLoader();
+                assignedEvents.showToast('🎨 Opening project gallery interface...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'project-gallery.html';
+                }, 1000);
+            }, 1200);
         }
 
         function viewEventDetails(eventId) {
-            assignedEvents.showToast('Loading event details...', 'info');
+            assignedEvents.openEventDetails(eventId);
         }
 
         function setReminder(eventId) {
-            assignedEvents.showToast('Reminder set successfully!', 'success');
+            const event = assignedEvents.events.find(e => e.id === eventId);
+            assignedEvents.showLoader();
+            
+            setTimeout(() => {
+                assignedEvents.completeLoader();
+                assignedEvents.showToast(`⏰ Reminder set for ${event.title} - You'll be notified 24 hours before the event starts!`, 'success');
+            }, 800);
         }
 
         function viewResults(eventId) {
-            assignedEvents.showToast('Loading event results...', 'info');
+            const event = assignedEvents.events.find(e => e.id === eventId);
+            assignedEvents.showToast(`🏆 Loading evaluation results for ${event.title}...`, 'info');
+            assignedEvents.showLoader();
+            
+            setTimeout(() => {
+                assignedEvents.completeLoader();
+                assignedEvents.showToast('📊 Results dashboard ready! Viewing comprehensive analytics...', 'success');
+            }, 1500);
         }
 
         function downloadReport(eventId) {
-            assignedEvents.showToast('Preparing report download...', 'info');
+            const event = assignedEvents.events.find(e => e.id === eventId);
+            assignedEvents.showToast(`📄 Generating comprehensive evaluation report for ${event.title}...`, 'info');
+            assignedEvents.showLoader();
+            
+            setTimeout(() => {
+                // Simulate CSV download
+                const csvContent = `Event Report - ${event.title}\nParticipants,${event.participants}\nProjects,${event.projects}\nEvaluated,${event.evaluated}\nStatus,${event.status}\nPrize,${event.prize}`;
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${event.title.replace(/\s+/g, '_')}_Report.csv`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                assignedEvents.completeLoader();
+                assignedEvents.showToast('📥 Event report downloaded successfully! Check your downloads folder.', 'success');
+            }, 2000);
         }
 
         function clearFilters() {
@@ -421,58 +629,66 @@
             document.getElementById('categoryFilter').value = 'all';
             document.getElementById('searchInput').value = '';
             assignedEvents.filterEvents();
-            assignedEvents.showToast('Filters cleared!', 'success');
+            assignedEvents.showToast('🔄 All filters cleared successfully!', 'success');
         }
 
         function backToDashboard() {
-            window.location.href = 'dashboard.html';
+            assignedEvents.showToast('🏠 Returning to judge dashboard...', 'info');
+            assignedEvents.showLoader();
+            
+            setTimeout(() => {
+                assignedEvents.completeLoader();
+                window.location.href = 'dashboard.html';
+            }, 1000);
         }
 
-        // Initialize
+        function filterEvents() {
+            assignedEvents.filterEvents();
+        }
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             assignedEvents = new AssignedEvents();
             
-            // Animate cards on load
-            setTimeout(() => {
-                document.querySelectorAll('.event-card').forEach((card, index) => {
-                    setTimeout(() => {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 100);
-                    }, index * 100);
-                });
-            }, 500);
-
-            // Performance optimization for mobile
+            // Enhanced keyboard shortcuts
+            console.log(`
+🎯 NexusHack Assigned Events - Keyboard Shortcuts:
+• Escape : Close modals/overlays
+• Ctrl + T : Toggle theme
+• Ctrl + R : Refresh events data
+• Ctrl + F : Focus search
+            `);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    assignedEvents.closeMobileSidebar();
+                    const modals = document.querySelectorAll('.modal, .event-modal');
+                    modals.forEach(modal => modal.remove());
+                }
+                if (e.ctrlKey) {
+                    switch(e.key) {
+                        case 'f':
+                            e.preventDefault();
+                            document.getElementById('searchInput').focus();
+                            break;
+                        case 'r':
+                            e.preventDefault();
+                            assignedEvents.showToast('🔄 Refreshing events data...', 'info');
+                            assignedEvents.loadEventsData();
+                            assignedEvents.renderEvents();
+                            break;
+                    }
+                }
+            });
+            
+            // Performance optimization for mobile devices
             if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.body.classList.add('mobile-device');
-                const style = document.createElement('style');
-                style.textContent = `.mobile-device * { animation-duration: 0.1s !important; transition-duration: 0.1s !important; }`;
-                document.head.appendChild(style);
             }
+            
+            // Welcome message
+            setTimeout(() => {
+                assignedEvents.showToast('📅 Assigned Events loaded successfully! All toast notifications now positioned below the header to avoid search bar overlap.', 'success');
+            }, 2000);
         });
-
-        // Add animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInToast {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @media (max-width: 768px) {
-                @keyframes slideInToast {
-                    from { transform: translateY(-100%); opacity: 0; }
-                    to { transform: translateY(0); opacity: 1; }
-                }
-            }
-            .event-card { transition: var(--transition) !important; }
-            @media (hover: hover) and (pointer: fine) {
-                .event-card:hover { transform: translateY(-8px) !important; }
-            }
-            *:focus-visible { outline: 2px solid var(--primary) !important; outline-offset: 2px !important; }
-        `;
-        document.head.appendChild(style);
-

@@ -657,6 +657,16 @@
             }, 60000); // Save every minute
         });
 
+         function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('modernOrganizerSession');
+                    modernJudgeManager.showToast('Logging out...', 'info');
+                    setTimeout(() => {
+                        window.location.href = '../auth/login.html';
+                    }, 1000);
+                }
+            }
+
         // Enhanced animations and performance styles
         const style = document.createElement('style');
         style.textContent = `

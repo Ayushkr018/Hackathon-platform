@@ -1,11 +1,15 @@
-// ADVANCED EVALUATION SYSTEM
-        class EvaluationSystem {
+ class EvaluationSystem {
             constructor() {
                 this.evaluationData = {};
                 this.startTime = Date.now() - 2730000; // 45:30 ago
                 this.progress = 25;
                 this.isMobile = window.innerWidth <= 1024;
-                this.currentUser = { name: 'Dr. Jane Smith', initials: 'JS', role: 'Senior Judge', id: 'judge_001' };
+                this.currentUser = {
+                    name: 'Dr. Jane Smith',
+                    initials: 'JS',
+                    role: 'Senior Judge',
+                    id: 'judge_001'
+                };
                 this.currentProject = {
                     id: 1,
                     name: 'DeFi Portfolio Tracker',
@@ -26,11 +30,13 @@
                 this.handleResize();
             }
 
+            // ✅ THEME COLOR COMBINATION
             initializeTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'dark';
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 const themeToggle = document.getElementById('themeToggle');
-                themeToggle.querySelector('i').className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
             }
 
             initializeUser() {
@@ -45,16 +51,37 @@
             }
 
             setupEventListeners() {
+                // Sidebar and UI controls
                 document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
                 document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
                 document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
                 window.addEventListener('resize', () => this.handleResize());
+                window.addEventListener('orientationchange', () => setTimeout(() => this.handleResize(), 100));
                 window.addEventListener('beforeunload', (e) => this.handleBeforeUnload(e));
                 
                 // Auto-save every 2 minutes
                 setInterval(() => {
                     this.autoSave();
                 }, 120000);
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeMobileSidebar();
+                    }
+                    if (e.ctrlKey) {
+                        switch(e.key) {
+                            case 's':
+                                e.preventDefault();
+                                this.saveProgress();
+                                break;
+                            case 'e':
+                                e.preventDefault();
+                                this.exportEvaluation();
+                                break;
+                        }
+                    }
+                });
 
                 this.setupTouchGestures();
             }
@@ -113,17 +140,59 @@
                 document.getElementById('mobileOverlay').classList.remove('active');
             }
 
+            // ✅ THEME TOGGLE WITH SMOOTH TRANSITION
             toggleTheme() {
                 const html = document.documentElement;
                 const currentTheme = html.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.style.transition = 'all 0.3s ease';
                 html.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
+                
                 const themeIcon = document.getElementById('themeToggle').querySelector('i');
                 themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+                
+                this.showToast(`Theme changed to ${newTheme} mode ✨`, 'success');
+                
+                setTimeout(() => {
+                    html.style.transition = '';
+                }, 300);
             }
 
+            // ✅ UX LOADER AT TOP
+            showLoader() {
+                let loaderBar = document.getElementById('loaderBar');
+                if (!loaderBar) {
+                    loaderBar = document.createElement('div');
+                    loaderBar.id = 'loaderBar';
+                    document.body.appendChild(loaderBar);
+                }
+                
+                setTimeout(() => {
+                    loaderBar.style.width = '60%';
+                }, 50);
+            }
+
+            completeLoader() {
+                const loaderBar = document.getElementById('loaderBar');
+                if (loaderBar) {
+                    loaderBar.style.width = '100%';
+                    
+                    setTimeout(() => {
+                        loaderBar.style.width = '0%';
+                        loaderBar.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            if (loaderBar.parentNode) {
+                                loaderBar.remove();
+                            }
+                        }, 300);
+                    }, 500);
+                }
+            }
+
+            // ✅ REALISTIC TIMER
             startTimer() {
                 setInterval(() => {
                     const elapsed = Date.now() - this.startTime;
@@ -131,6 +200,15 @@
                     const seconds = Math.floor((elapsed % 60000) / 1000);
                     const timer = document.getElementById('evaluationTimer');
                     timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    
+                    // Change color based on time elapsed
+                    if (minutes >= 60) {
+                        timer.style.color = '#ef4444';
+                    } else if (minutes >= 45) {
+                        timer.style.color = '#f59e0b';
+                    } else {
+                        timer.style.color = 'white';
+                    }
                 }, 1000);
             }
 
@@ -151,7 +229,10 @@
                             detailedScoring: { completed: false, progress: 0.3 },
                             teamInterview: { completed: false, scheduled: Date.now() + 7200000 },
                             finalReport: { completed: false }
-                        }
+                        },
+                        notes: [],
+                        scores: {},
+                        feedback: {}
                     };
                 }
             }
@@ -190,21 +271,29 @@
                 } else if (this.progress >= 50) {
                     progressElement.style.background = 'var(--gradient-warning)';
                 } else {
-                    progressElement.style.background = 'var(--gradient-ai)';
+                    progressElement.style.background = 'var(--gradient-evaluation)';
                 }
             }
 
+            // ✅ REALISTIC SAVE PROGRESS WITH LOADER
             saveProgress() {
-                const saveData = {
-                    ...this.evaluationData,
-                    lastSaved: Date.now(),
-                    progress: this.progress
-                };
+                this.showLoader();
+                
+                setTimeout(() => {
+                    const saveData = {
+                        ...this.evaluationData,
+                        lastSaved: Date.now(),
+                        progress: this.progress,
+                        savedBy: this.currentUser.name
+                    };
 
-                localStorage.setItem(`evaluation_${this.currentProject.id}`, JSON.stringify(saveData));
-                this.showToast('Evaluation progress saved successfully!', 'success');
+                    localStorage.setItem(`evaluation_${this.currentProject.id}`, JSON.stringify(saveData));
+                    this.completeLoader();
+                    this.showToast('💾 Evaluation progress saved successfully with all data preserved!', 'success');
+                }, 1500);
             }
 
+            // ✅ REALISTIC AUTO-SAVE
             autoSave() {
                 if (Object.keys(this.evaluationData).length > 0) {
                     const saveData = {
@@ -213,116 +302,217 @@
                         progress: this.progress
                     };
                     localStorage.setItem(`evaluation_autosave_${this.currentProject.id}`, JSON.stringify(saveData));
+                    this.showToast('🔄 Auto-saved evaluation data', 'info');
                 }
             }
 
+            // ✅ REALISTIC CONTINUE EVALUATION
             continueEvaluation() {
-                // Determine next step based on progress
                 const stages = this.evaluationData.stages;
                 
-                if (!stages.detailedScoring.completed) {
-                    this.showToast('Redirecting to scoring system...', 'info');
-                    setTimeout(() => window.location.href = 'scoring.html', 1000);
-                } else if (!stages.teamInterview.completed) {
-                    this.showToast('Starting video interview...', 'info');
-                    setTimeout(() => window.location.href = 'video-interview.html', 1000);
-                } else if (!stages.finalReport.completed) {
-                    this.showToast('Opening final report editor...', 'info');
-                    setTimeout(() => window.location.href = 'feedback.html', 1000);
-                } else {
-                    this.showToast('All stages completed! Ready for finalization.', 'success');
-                }
-            }
-
-            finalizeEvaluation() {
-                if (this.progress < 80) {
-                    this.showToast('Please complete at least 80% of the evaluation before finalizing', 'warning');
-                    return;
-                }
-
-                if (!confirm('Are you sure you want to finalize this evaluation? This action cannot be undone.')) {
-                    return;
-                }
-
-                const finalData = {
-                    ...this.evaluationData,
-                    status: 'finalized',
-                    finalizedAt: Date.now(),
-                    finalizedBy: this.currentUser.id,
-                    totalTime: Date.now() - this.startTime
-                };
-
-                // Save to submissions
-                const submissions = JSON.parse(localStorage.getItem('evaluationSubmissions') || '[]');
-                submissions.push(finalData);
-                localStorage.setItem('evaluationSubmissions', JSON.stringify(submissions));
-
-                // Clear current evaluation
-                localStorage.removeItem(`evaluation_${this.currentProject.id}`);
-                localStorage.removeItem(`evaluation_autosave_${this.currentProject.id}`);
-
-                this.showToast('Evaluation finalized successfully!', 'success');
+                this.showLoader();
                 
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    this.completeLoader();
+                    
+                    if (!stages.detailedScoring.completed) {
+                        this.showToast('🎯 Redirecting to comprehensive scoring system...', 'info');
+                        setTimeout(() => window.location.href = 'scoring.html', 1000);
+                    } else if (!stages.teamInterview.completed) {
+                        this.showToast('🎥 Starting professional video interview session...', 'info');
+                        setTimeout(() => window.location.href = 'video-interview.html', 1000);
+                    } else if (!stages.finalReport.completed) {
+                        this.showToast('📝 Opening final report and feedback editor...', 'info');
+                        setTimeout(() => window.location.href = 'feedback.html', 1000);
+                    } else {
+                        this.showToast('✅ All stages completed! Ready for final evaluation submission.', 'success');
+                    }
+                }, 1500);
+            }
+
+            // ✅ REALISTIC FINALIZE EVALUATION
+            finalizeEvaluation() {
+                if (this.progress < 80) {
+                    this.showToast('⚠️ Please complete at least 80% of the evaluation before finalizing', 'warning');
+                    return;
+                }
+
+                const modal = document.createElement('div');
+                modal.className = 'modal active';
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;
+                    z-index: 10000; backdrop-filter: blur(15px);
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: var(--bg-card); border-radius: 20px; padding: 2.5rem; max-width: 600px; width: 90%; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1.5rem;">🏁</div>
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1.5rem;">Finalize Evaluation</h3>
+                        <p style="margin-bottom: 1rem; color: var(--text-secondary); line-height: 1.6;">
+                            You are about to finalize the evaluation for "<strong style="color: var(--text-primary);">${this.currentProject.name}</strong>".
+                        </p>
+                        <div style="background: var(--bg-glass); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: left;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Evaluation Summary:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem;">
+                                <div>Progress: <strong style="color: var(--primary);">${this.progress}%</strong></div>
+                                <div>Judge: <strong style="color: var(--primary);">${this.currentUser.name}</strong></div>
+                                <div>Project: <strong style="color: var(--primary);">${this.currentProject.team}</strong></div>
+                                <div>Category: <strong style="color: var(--primary);">${this.currentProject.category}</strong></div>
+                            </div>
+                        </div>
+                        <p style="margin-bottom: 2rem; color: var(--text-muted); font-size: 0.85rem;">
+                            ⚠️ This action cannot be undone. The evaluation will be submitted for final review.
+                        </p>
+                        <div style="display: flex; gap: 1rem; justify-content: center;">
+                            <button onclick="this.closest('.modal').remove()" 
+                                style="padding: 0.75rem 1.5rem; border: 1px solid var(--border); border-radius: 8px; 
+                                background: var(--bg-glass); color: var(--text-primary); cursor: pointer;">Cancel</button>
+                            <button onclick="evaluationSystem.confirmFinalize(); this.closest('.modal').remove();" 
+                                style="padding: 0.75rem 1.5rem; border: none; border-radius: 8px; 
+                                background: var(--gradient-success); color: white; cursor: pointer;">Finalize Evaluation</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+            }
+
+            confirmFinalize() {
+                this.showLoader();
+                
+                setTimeout(() => {
+                    const finalData = {
+                        ...this.evaluationData,
+                        status: 'finalized',
+                        finalizedAt: Date.now(),
+                        finalizedBy: this.currentUser.id,
+                        totalTime: Date.now() - this.startTime,
+                        finalProgress: this.progress,
+                        submissionId: `EVAL-${Date.now()}-${this.currentProject.id}`
+                    };
+
+                    // Save to submissions
+                    const submissions = JSON.parse(localStorage.getItem('evaluationSubmissions') || '[]');
+                    submissions.push(finalData);
+                    localStorage.setItem('evaluationSubmissions', JSON.stringify(submissions));
+
+                    // Clear current evaluation
+                    localStorage.removeItem(`evaluation_${this.currentProject.id}`);
+                    localStorage.removeItem(`evaluation_autosave_${this.currentProject.id}`);
+
+                    this.completeLoader();
+                    this.showToast('🎉 Evaluation finalized successfully! Submission ID: ' + finalData.submissionId, 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 3000);
+                }, 2500);
+            }
+
+            // ✅ REALISTIC EXPORT EVALUATION
+            exportEvaluation() {
+                this.showLoader();
+                
+                setTimeout(() => {
+                    const exportData = {
+                        nexusHackEvaluation: {
+                            project: {
+                                ...this.currentProject,
+                                submittedAt: new Date(Date.now() - 7200000).toISOString(),
+                                description: "A comprehensive decentralized finance portfolio tracking application"
+                            },
+                            judge: {
+                                ...this.currentUser,
+                                evaluationId: `JUDGE-${this.currentUser.id}-${Date.now()}`
+                            },
+                            evaluation: this.evaluationData,
+                            progress: this.progress,
+                            metadata: {
+                                platform: 'NexusHack Professional',
+                                version: '2.0',
+                                exportedAt: new Date().toISOString(),
+                                totalTimeSpent: this.formatTime(Date.now() - this.startTime),
+                                evaluationStage: this.progress >= 80 ? 'Ready for Finalization' : 'In Progress'
+                            }
+                        }
+                    };
+
+                    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `nexushack-evaluation-${this.currentProject.name.replace(/\s+/g, '_')}-${new Date().toISOString().split('T')[0]}.json`;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    this.completeLoader();
+                    this.showToast('📥 Complete evaluation data exported with metadata and progress tracking!', 'success');
                 }, 2000);
             }
 
-            exportEvaluation() {
-                const exportData = {
-                    project: this.currentProject,
-                    judge: this.currentUser,
-                    evaluation: this.evaluationData,
-                    progress: this.progress,
-                    exportedAt: Date.now()
-                };
-
-                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `evaluation_${this.currentProject.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-                
-                this.showToast('Evaluation data exported successfully!', 'success');
+            formatTime(milliseconds) {
+                const hours = Math.floor(milliseconds / 3600000);
+                const minutes = Math.floor((milliseconds % 3600000) / 60000);
+                return `${hours}h ${minutes}m`;
             }
 
             handleBeforeUnload(event) {
                 if (this.progress > 0 && this.progress < 100) {
                     event.preventDefault();
-                    event.returnValue = 'You have an evaluation in progress. Are you sure you want to leave?';
-                    return 'You have an evaluation in progress. Are you sure you want to leave?';
+                    event.returnValue = 'You have an evaluation in progress. Are you sure you want to leave? Your progress will be auto-saved.';
+                    return 'You have an evaluation in progress. Are you sure you want to leave? Your progress will be auto-saved.';
                 }
             }
 
+            // ✅ NOTIFICATION VISIBILITY - NO OVERLAP
             showToast(message, type = 'success') {
-                const existingToast = document.querySelector('.toast');
-                if (existingToast) existingToast.remove();
+                // Remove existing toasts
+                const existingToasts = document.querySelectorAll('.toast');
+                existingToasts.forEach(toast => toast.remove());
                 
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.style.cssText = `
-                    position: fixed; top: 2rem; right: 2rem; padding: 1rem 1.5rem;
-                    border-radius: 12px; color: white; font-weight: 500; z-index: 10001;
-                    animation: slideInToast 0.3s ease-out; max-width: 350px;
-                    box-shadow: var(--shadow-lg); background: var(--gradient-${type});
+                toast.innerHTML = `
+                    <i class="fas ${this.getToastIcon(type)}" style="margin-right: 10px;"></i>
+                    ${message}
                 `;
                 
-                if (window.innerWidth <= 768) {
-                    toast.style.top = '1rem'; toast.style.right = '1rem';
-                    toast.style.left = '1rem'; toast.style.maxWidth = 'none';
-                }
-                
-                toast.innerHTML = `<i class="fas ${this.getToastIcon(type)}"></i><span style="margin-left: 0.5rem;">${message}</span>`;
                 document.body.appendChild(toast);
-                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 4000);
+                
+                // Auto hide after 5 seconds for important messages
+                const autoHideTimer = setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, type === 'success' && message.includes('finalized') ? 8000 : 5000);
+                
+                // Click to dismiss
+                toast.addEventListener('click', () => {
+                    clearTimeout(autoHideTimer);
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.remove();
+                        }
+                    }, 300);
+                });
             }
 
             getToastIcon(type) {
                 const icons = {
-                    success: 'fa-check-circle', error: 'fa-exclamation-circle',
-                    info: 'fa-info-circle', warning: 'fa-exclamation-triangle'
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle',
+                    warning: 'fa-exclamation-triangle'
                 };
                 return icons[type] || 'fa-check-circle';
             }
@@ -335,8 +525,18 @@
         function continueEvaluation() { evaluationSystem.continueEvaluation(); }
         function finalizeEvaluation() { evaluationSystem.finalizeEvaluation(); }
         function exportEvaluation() { evaluationSystem.exportEvaluation(); }
-        function backToDashboard() { window.location.href = 'dashboard.html'; }
 
+        function backToDashboard() {
+            evaluationSystem.showToast('🏠 Returning to main dashboard...', 'info');
+            evaluationSystem.showLoader();
+            
+            setTimeout(() => {
+                evaluationSystem.completeLoader();
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             evaluationSystem = new EvaluationSystem();
             
@@ -345,8 +545,9 @@
                 document.querySelectorAll('.tool-card').forEach((card, index) => {
                     setTimeout(() => {
                         card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
+                        card.style.transform = 'translateY(30px)';
                         setTimeout(() => {
+                            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                             card.style.opacity = '1';
                             card.style.transform = 'translateY(0)';
                         }, 100);
@@ -359,8 +560,9 @@
                 document.querySelectorAll('.progress-item').forEach((item, index) => {
                     setTimeout(() => {
                         item.style.opacity = '0';
-                        item.style.transform = 'translateX(-20px)';
+                        item.style.transform = 'translateX(-30px)';
                         setTimeout(() => {
+                            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                             item.style.opacity = '1';
                             item.style.transform = 'translateX(0)';
                         }, 100);
@@ -368,34 +570,28 @@
                 });
             }, 1500);
 
+            // Meta item animations
+            setTimeout(() => {
+                document.querySelectorAll('.meta-item').forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 100);
+                    }, index * 75);
+                });
+            }, 2000);
+
             // Performance optimization for mobile
             if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.body.classList.add('mobile-device');
-                const style = document.createElement('style');
-                style.textContent = `.mobile-device * { animation-duration: 0.1s !important; transition-duration: 0.1s !important; }`;
-                document.head.appendChild(style);
             }
-        });
 
-        // Animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInToast {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @media (max-width: 768px) {
-                @keyframes slideInToast {
-                    from { transform: translateY(-100%); opacity: 0; }
-                    to { transform: translateY(0); opacity: 1; }
-                }
-            }
-            .tool-card, .progress-item, .meta-item { transition: var(--transition) !important; }
-            @media (hover: hover) and (pointer: fine) {
-                .tool-card:hover { transform: translateY(-8px) !important; }
-                .progress-item:hover { transform: translateX(4px) !important; }
-                .meta-item:hover { transform: translateY(-2px) !important; }
-            }
-            *:focus-visible { outline: 2px solid var(--primary) !important; outline-offset: 2px !important; }
-        `;
-        document.head.appendChild(style);
+            // Welcome message
+            setTimeout(() => {
+                evaluationSystem.showToast('📋 Project Evaluation workspace loaded! Comprehensive assessment tools ready for professional judging.', 'success');
+            }, 2500);
+        });

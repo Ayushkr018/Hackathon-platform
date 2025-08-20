@@ -1,5 +1,4 @@
-// ADVANCED CODE REVIEW SYSTEM - FIXED OVERLAPPING ISSUES
-        class CodeReview {
+  class CodeReview {
             constructor() {
                 this.currentFile = null;
                 this.files = [];
@@ -24,6 +23,7 @@
                 this.handleResize();
             }
 
+            // ✅ THEME COLOR COMBINATION
             initializeTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'dark';
                 document.documentElement.setAttribute('data-theme', savedTheme);
@@ -44,13 +44,12 @@
             }
 
             setupEventListeners() {
+                // Sidebar and UI controls
                 document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
                 document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
                 document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
                 window.addEventListener('resize', () => this.handleResize());
-                window.addEventListener('orientationchange', () => {
-                    setTimeout(() => this.handleResize(), 100);
-                });
+                window.addEventListener('orientationchange', () => setTimeout(() => this.handleResize(), 100));
 
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
@@ -77,7 +76,7 @@
                 document.addEventListener('touchend', (e) => {
                     if (!startX || !startY) return;
                     
-                    endX = e.changedTouches.clientX;
+                    endX = e.changedTouches[0].clientX;
                     endY = e.changedTouches.clientY;
                     
                     const diffX = startX - endX;
@@ -100,16 +99,11 @@
 
             handleResize() {
                 this.isMobile = window.innerWidth <= 1024;
-                
-                if (!this.isMobile) {
-                    this.closeMobileSidebar();
-                }
-                
+                if (!this.isMobile) this.closeMobileSidebar();
                 this.adjustLayoutForScreen();
             }
 
             adjustLayoutForScreen() {
-                // Adjust layout based on screen size
                 const layout = document.querySelector('.code-review-layout');
                 if (window.innerWidth <= 1024) {
                     layout.style.height = 'auto';
@@ -120,7 +114,6 @@
 
             toggleSidebar() {
                 const sidebar = document.getElementById('sidebar');
-                
                 if (this.isMobile) {
                     sidebar.classList.toggle('open');
                     this.toggleMobileOverlay();
@@ -131,45 +124,78 @@
 
             openMobileSidebar() {
                 if (this.isMobile) {
-                    const sidebar = document.getElementById('sidebar');
-                    sidebar.classList.add('open');
+                    document.getElementById('sidebar').classList.add('open');
                     this.showMobileOverlay();
                 }
             }
 
             closeMobileSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                sidebar.classList.remove('open');
+                document.getElementById('sidebar').classList.remove('open');
                 this.hideMobileOverlay();
             }
 
             toggleMobileOverlay() {
-                const overlay = document.getElementById('mobileOverlay');
-                overlay.classList.toggle('active');
+                document.getElementById('mobileOverlay').classList.toggle('active');
             }
 
             showMobileOverlay() {
-                const overlay = document.getElementById('mobileOverlay');
-                overlay.classList.add('active');
+                document.getElementById('mobileOverlay').classList.add('active');
             }
 
             hideMobileOverlay() {
-                const overlay = document.getElementById('mobileOverlay');
-                overlay.classList.remove('active');
+                document.getElementById('mobileOverlay').classList.remove('active');
             }
 
+            // ✅ THEME TOGGLE WITH SMOOTH TRANSITION
             toggleTheme() {
                 const html = document.documentElement;
                 const currentTheme = html.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 
+                html.style.transition = 'all 0.3s ease';
                 html.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
                 
                 const themeIcon = document.getElementById('themeToggle').querySelector('i');
                 themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
                 
-                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+                this.showToast(`Theme changed to ${newTheme} mode ✨`, 'success');
+                
+                setTimeout(() => {
+                    html.style.transition = '';
+                }, 300);
+            }
+
+            // ✅ UX LOADER AT TOP
+            showLoader() {
+                let loaderBar = document.getElementById('loaderBar');
+                if (!loaderBar) {
+                    loaderBar = document.createElement('div');
+                    loaderBar.id = 'loaderBar';
+                    document.body.appendChild(loaderBar);
+                }
+                
+                setTimeout(() => {
+                    loaderBar.style.width = '60%';
+                }, 50);
+            }
+
+            completeLoader() {
+                const loaderBar = document.getElementById('loaderBar');
+                if (loaderBar) {
+                    loaderBar.style.width = '100%';
+                    
+                    setTimeout(() => {
+                        loaderBar.style.width = '0%';
+                        loaderBar.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            if (loaderBar.parentNode) {
+                                loaderBar.remove();
+                            }
+                        }, 300);
+                    }, 500);
+                }
             }
 
             loadProjectData() {
@@ -218,7 +244,7 @@
                 
                 // Load code content
                 this.displayCode(file);
-                this.showToast(`Loaded ${file.name}`, 'info');
+                this.showToast(`📂 Loaded ${file.name} for comprehensive review`, 'info');
             }
 
             displayCode(file) {
@@ -526,7 +552,7 @@ This project is licensed under the MIT License.`
             }
 
             showLineComment(lineNumber) {
-                this.showToast(`Line ${lineNumber} selected. Click "Add Comment" to review this line.`, 'info');
+                this.showToast(`📍 Line ${lineNumber} selected. Click "Add Comment" to provide detailed feedback on this code section.`, 'info');
             }
 
             loadComments() {
@@ -536,7 +562,7 @@ This project is licensed under the MIT License.`
                         author: 'Dr. Jane Smith',
                         time: '2 hours ago',
                         line: 15,
-                        content: 'Consider adding error handling for network failures in this section.',
+                        content: 'Excellent error handling implementation. Consider adding retry logic for network failures.',
                         file: 'Portfolio.js'
                     },
                     {
@@ -544,8 +570,16 @@ This project is licensed under the MIT License.`
                         author: 'Dr. Jane Smith',
                         time: '1 hour ago',
                         line: 8,
-                        content: 'Good use of useEffect for data loading. Performance looks optimal.',
+                        content: 'Good use of useEffect for data loading. Performance optimization looks solid.',
                         file: 'App.js'
+                    },
+                    {
+                        id: 3,
+                        author: 'Dr. Jane Smith',
+                        time: '45 minutes ago',
+                        line: 22,
+                        content: 'Smart contract security looks good. Gas optimization could be improved.',
+                        file: 'SmartContract.sol'
                     }
                 ];
                 this.renderComments();
@@ -559,7 +593,7 @@ This project is licensed under the MIT License.`
                     commentsList.innerHTML = `
                         <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
                             <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                            <p style="font-size: 0.9rem;">No comments yet. Start reviewing code to add comments.</p>
+                            <p style="font-size: 0.9rem;">No comments yet. Start reviewing code to add professional feedback.</p>
                         </div>
                     `;
                     return;
@@ -568,6 +602,7 @@ This project is licensed under the MIT License.`
                 this.comments.forEach(comment => {
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'comment-item';
+                    commentDiv.onclick = () => this.focusCommentLine(comment);
                     commentDiv.innerHTML = `
                         <div class="comment-header">
                             <span class="comment-author">${comment.author}</span>
@@ -580,8 +615,50 @@ This project is licensed under the MIT License.`
                 });
             }
 
+            // ✅ REALISTIC ADD COMMENT
             addComment() {
-                const content = prompt('Enter your code review comment:');
+                const modal = document.createElement('div');
+                modal.className = 'modal active';
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center;
+                    z-index: 10000; backdrop-filter: blur(10px);
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: var(--bg-card); border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%;">
+                        <h3 style="margin-bottom: 1.5rem; color: var(--text-primary);">📝 Add Code Review Comment</h3>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">File & Line:</label>
+                            <input type="text" id="commentLocation" value="${this.currentFile ? this.currentFile.name : 'Select file'}" 
+                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; 
+                                background: var(--bg-glass); color: var(--text-primary);" readonly>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Review Comment:</label>
+                            <textarea id="commentContent" placeholder="Enter your detailed code review feedback..." 
+                                style="width: 100%; height: 120px; padding: 0.75rem; border: 1px solid var(--border); 
+                                border-radius: 8px; background: var(--bg-glass); color: var(--text-primary); resize: vertical;"></textarea>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                            <button onclick="this.closest('.modal').remove()" 
+                                style="padding: 0.75rem 1.5rem; border: 1px solid var(--border); border-radius: 8px; 
+                                background: var(--bg-glass); color: var(--text-primary); cursor: pointer;">Cancel</button>
+                            <button onclick="codeReview.submitComment()" 
+                                style="padding: 0.75rem 1.5rem; border: none; border-radius: 8px; 
+                                background: var(--gradient-code); color: white; cursor: pointer;">Add Comment</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                document.getElementById('commentContent').focus();
+            }
+
+            submitComment() {
+                const content = document.getElementById('commentContent').value;
+                const location = document.getElementById('commentLocation').value;
+                
                 if (content && content.trim()) {
                     const newComment = {
                         id: Date.now(),
@@ -589,68 +666,86 @@ This project is licensed under the MIT License.`
                         time: 'just now',
                         line: Math.floor(Math.random() * 50) + 1,
                         content: content.trim(),
-                        file: this.currentFile ? this.currentFile.name : 'Unknown'
+                        file: location
                     };
                     
                     this.comments.unshift(newComment);
                     this.renderComments();
-                    this.showToast('Comment added successfully!', 'success');
+                    this.showToast('📝 Professional review comment added successfully!', 'success');
+                    
+                    // Close modal
+                    document.querySelector('.modal').remove();
+                } else {
+                    this.showToast('⚠️ Please enter a comment before submitting', 'warning');
                 }
             }
 
+            // ✅ REALISTIC FOCUS COMMENT LINE
+            focusCommentLine(comment) {
+                this.showToast(`🎯 Focusing on ${comment.file} line ${comment.line}: "${comment.content.substring(0, 50)}..."`, 'info');
+            }
+
+            // ✅ REALISTIC SAVE REVIEW
             saveReview() {
-                // Save review data
-                const reviewData = {
-                    comments: this.comments,
-                    currentFile: this.currentFile,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem('codeReviewData', JSON.stringify(reviewData));
-                this.showToast('Review saved successfully!', 'success');
+                this.showLoader();
+                
+                setTimeout(() => {
+                    const reviewData = {
+                        project: 'DeFi Portfolio Tracker',
+                        reviewer: this.currentUser.name,
+                        comments: this.comments,
+                        currentFile: this.currentFile,
+                        timestamp: new Date().toISOString(),
+                        metrics: {
+                            totalFiles: this.files.length,
+                            commentsAdded: this.comments.length,
+                            overallRating: 'Excellent'
+                        }
+                    };
+                    
+                    localStorage.setItem('codeReviewData', JSON.stringify(reviewData));
+                    this.completeLoader();
+                    this.showToast('💾 Complete code review saved successfully!', 'success');
+                }, 1500);
             }
 
+            // ✅ NOTIFICATION VISIBILITY - NO OVERLAP
             showToast(message, type = 'success') {
-                const existingToast = document.querySelector('.toast');
-                if (existingToast) {
-                    existingToast.remove();
-                }
+                // Remove existing toasts
+                const existingToasts = document.querySelectorAll('.toast');
+                existingToasts.forEach(toast => toast.remove());
                 
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.style.cssText = `
-                    position: fixed;
-                    top: 2rem;
-                    right: 2rem;
-                    padding: 1rem 1.5rem;
-                    border-radius: 12px;
-                    color: white;
-                    font-weight: 500;
-                    z-index: 10001;
-                    animation: slideInToast 0.3s ease-out;
-                    max-width: 350px;
-                    box-shadow: var(--shadow-lg);
-                    background: var(--gradient-${type});
-                `;
-                
-                if (window.innerWidth <= 768) {
-                    toast.style.top = '1rem';
-                    toast.style.right = '1rem';
-                    toast.style.left = '1rem';
-                    toast.style.maxWidth = 'none';
-                }
-                
                 toast.innerHTML = `
-                    <i class="fas ${this.getToastIcon(type)}"></i>
-                    <span style="margin-left: 0.5rem;">${message}</span>
+                    <i class="fas ${this.getToastIcon(type)}" style="margin-right: 10px;"></i>
+                    ${message}
                 `;
                 
                 document.body.appendChild(toast);
                 
-                setTimeout(() => {
+                // Auto hide after 4 seconds
+                const autoHideTimer = setTimeout(() => {
                     if (toast.parentNode) {
-                        toast.remove();
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
                     }
                 }, 4000);
+                
+                // Click to dismiss
+                toast.addEventListener('click', () => {
+                    clearTimeout(autoHideTimer);
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.remove();
+                        }
+                    }, 300);
+                });
             }
 
             getToastIcon(type) {
@@ -675,39 +770,114 @@ This project is licensed under the MIT License.`
             codeReview.addComment();
         }
 
+        // ✅ REALISTIC CODE FUNCTIONS
         function copyCode() {
-            codeReview.showToast('Code copied to clipboard!', 'success');
+            const codeContent = document.getElementById('codeContent').innerText;
+            navigator.clipboard.writeText(codeContent).then(() => {
+                codeReview.showToast('📋 Code copied to clipboard successfully!', 'success');
+            }).catch(() => {
+                codeReview.showToast('❌ Failed to copy code to clipboard', 'error');
+            });
         }
 
         function formatCode() {
-            codeReview.showToast('Code formatted successfully!', 'success');
+            codeReview.showLoader();
+            
+            setTimeout(() => {
+                codeReview.completeLoader();
+                codeReview.showToast('✨ Code formatted with professional styling and proper indentation!', 'success');
+            }, 2000);
         }
 
         function analyzeSecurity() {
-            codeReview.showToast('Security analysis complete - No issues found!', 'success');
+            codeReview.showLoader();
+            
+            setTimeout(() => {
+                codeReview.completeLoader();
+                codeReview.showToast('🛡️ Security analysis complete - No vulnerabilities detected! Code follows best practices.', 'success');
+            }, 2500);
         }
 
         function runAIAnalysis() {
-            codeReview.showToast('AI analysis started...', 'info');
+            codeReview.showLoader();
+            
+            setTimeout(() => {
+                codeReview.completeLoader();
+                codeReview.showToast('🤖 AI analysis complete! Generated 3 optimization suggestions and 2 security recommendations.', 'success');
+            }, 3000);
         }
 
         function exportReview() {
-            codeReview.showToast('Review exported successfully!', 'success');
+            codeReview.showLoader();
+            
+            setTimeout(() => {
+                const reviewData = {
+                    project: 'DeFi Portfolio Tracker',
+                    reviewer: codeReview.currentUser.name,
+                    comments: codeReview.comments,
+                    timestamp: new Date().toISOString(),
+                    metrics: {
+                        totalFiles: codeReview.files.length,
+                        commentsAdded: codeReview.comments.length,
+                        overallRating: 'Excellent'
+                    }
+                };
+
+                const csvContent =
+                    'Project,Reviewer,Total Files,Comments,Overall Rating\n' +
+                    `"${reviewData.project}","${reviewData.reviewer}",${reviewData.metrics.totalFiles},${reviewData.metrics.commentsAdded},"${reviewData.metrics.overallRating}"\n\n` +
+                    'Comment Author,Time,File,Line,Content\n' +
+                    reviewData.comments.map(c =>
+                        `"${c.author}","${c.time}","${c.file}",${c.line},"${c.content.replace(/"/g, '""')}"`
+                    ).join('\n');
+
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `nexushack-code-review-${new Date().toISOString().split('T')[0]}.csv`;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                codeReview.completeLoader();
+                codeReview.showToast('📥 Code review exported successfully! Downloaded as CSV.', 'success');
+            }, 3000);
         }
 
         function backToDashboard() {
-            window.location.href = 'dashboard.html';
+            codeReview.showToast('🏠 Returning to main dashboard...', 'info');
+            codeReview.showLoader();
+
+            setTimeout(() => {
+                codeReview.completeLoader();
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        function applySuggestion(type) {
+            let msg = '';
+            if (type === 'performance') {
+                msg = '🚀 Applied memoization suggestion for portfolio performance.';
+            } else if (type === 'security') {
+                msg = '🔒 Applied input validation for increased security.';
+            } else {
+                msg = '✅ Suggestion applied!';
+            }
+            codeReview.showToast(msg, 'success');
         }
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             codeReview = new CodeReview();
-            
+
             // Auto-load first file after delay
             setTimeout(() => {
                 codeReview.loadFile(1);
             }, 1000);
-            
+
             // Add entrance animations
             setTimeout(() => {
                 document.querySelectorAll('.file-item').forEach((item, index) => {
@@ -725,7 +895,7 @@ This project is licensed under the MIT License.`
             // Performance optimization for mobile devices
             if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.body.classList.add('mobile-device');
-                
+
                 const style = document.createElement('style');
                 style.textContent = `
                     .mobile-device * {
@@ -747,62 +917,32 @@ This project is licensed under the MIT License.`
             });
         });
 
-        // Enhanced animations
+        // Additional animations for enhanced feedback
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideInToast {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
             }
-            
             @media (max-width: 768px) {
                 @keyframes slideInToast {
-                    from {
-                        transform: translateY(-100%);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
+                    from { transform: translateY(-100%); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
                 }
             }
-            
-            .file-item,
-            .code-line,
-            .comment-item,
-            .metric-item {
+            .file-item,.code-line,.comment-item,.metric-item {
                 transition: var(--transition) !important;
             }
-            
-            .file-item:active,
-            .code-btn:active,
-            .add-comment-btn:active {
+            .file-item:active,.code-btn:active,.add-comment-btn:active {
                 transform: scale(0.98) !important;
             }
-            
             @media (hover: hover) and (pointer: fine) {
-                .file-item:hover {
-                    transform: translateX(4px) !important;
-                }
-                
-                .comment-item:hover {
-                    transform: translateY(-2px) !important;
-                }
-                
-                .code-line:hover {
-                    background: var(--bg-code-line) !important;
-                }
+                .file-item:hover { transform: translateX(4px) !important; }
+                .comment-item:hover { transform: translateY(-2px) !important; }
+                .code-line:hover { background: var(--bg-code-line) !important; }
             }
-            
             *:focus-visible {
-                outline: 2px solid var(--primary) !important;
+                outline: 2px solid var(--code-purple) !important;
                 outline-offset: 2px !important;
             }
         `;

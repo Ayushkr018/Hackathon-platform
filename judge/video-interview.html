@@ -13,7 +13,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
     
-   <link rel="stylesheet" href="video-interview.css">
+    <link rel="stylesheet" href="video-interview.css">
 </head>
 
 <body data-theme="dark">
@@ -26,7 +26,9 @@
         <div class="sidebar" id="sidebar">
             <div class="sidebar-logo">
                 <div class="logo-icon"><i class="fas fa-video"></i></div>
-                <div class="logo-text">NexusHack</div>
+                <div class="logo-text">
+                    <a href="../index.html">NexusHack</a>
+                </div>
             </div>
 
             <nav class="sidebar-nav">
@@ -158,6 +160,7 @@
                             <div class="video-grid multi-view" id="videoGrid">
                                 <!-- Main Video Stream -->
                                 <div class="video-stream main">
+                                    <div class="connection-status excellent">HD</div>
                                     <div class="video-placeholder">
                                         <i class="fas fa-user-circle"></i>
                                         <span>Team Leader - Alex Johnson</span>
@@ -173,6 +176,7 @@
 
                                 <!-- Secondary Video Stream -->
                                 <div class="video-stream secondary">
+                                    <div class="connection-status good">HD</div>
                                     <div class="video-placeholder">
                                         <i class="fas fa-user-circle"></i>
                                         <span>You (Judge)</span>
@@ -188,10 +192,10 @@
 
                             <!-- Video Controls -->
                             <div class="video-controls">
-                                <button class="control-btn mute" onclick="toggleMute()" title="Mute/Unmute">
+                                <button class="control-btn mute" onclick="toggleMute()" title="Mute/Unmute (Ctrl+M)">
                                     <i class="fas fa-microphone" id="muteIcon"></i>
                                 </button>
-                                <button class="control-btn video" onclick="toggleVideo()" title="Video On/Off">
+                                <button class="control-btn video" onclick="toggleVideo()" title="Video On/Off (Ctrl+V)">
                                     <i class="fas fa-video" id="videoIcon"></i>
                                 </button>
                                 <button class="control-btn screen" onclick="toggleScreen()" title="Screen Share">
@@ -229,10 +233,10 @@
                                         <div class="participant-avatar">AJ</div>
                                         <div class="participant-info">
                                             <div class="participant-name">Alex Johnson</div>
-                                            <div class="participant-role">Team Leader</div>
+                                            <div class="participant-role">Team Leader • Online</div>
                                         </div>
                                         <div class="participant-controls">
-                                            <button class="mini-btn mute" title="Mute">
+                                            <button class="mini-btn mute" title="Mute Participant" onclick="muteParticipant('AJ')">
                                                 <i class="fas fa-microphone-slash"></i>
                                             </button>
                                         </div>
@@ -242,10 +246,10 @@
                                         <div class="participant-avatar">SM</div>
                                         <div class="participant-info">
                                             <div class="participant-name">Sarah Miller</div>
-                                            <div class="participant-role">Developer</div>
+                                            <div class="participant-role">Developer • Online</div>
                                         </div>
                                         <div class="participant-controls">
-                                            <button class="mini-btn mute" title="Mute">
+                                            <button class="mini-btn mute" title="Mute Participant" onclick="muteParticipant('SM')">
                                                 <i class="fas fa-microphone-slash"></i>
                                             </button>
                                         </div>
@@ -255,10 +259,10 @@
                                         <div class="participant-avatar">JS</div>
                                         <div class="participant-info">
                                             <div class="participant-name">Dr. Jane Smith</div>
-                                            <div class="participant-role">Senior Judge</div>
+                                            <div class="participant-role">Senior Judge • Host</div>
                                         </div>
                                         <div class="participant-controls">
-                                            <span style="font-size: 0.8rem; color: var(--success);">Host</span>
+                                            <span style="font-size: 0.8rem; color: var(--success); font-weight: 600;">HOST</span>
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +277,7 @@
                                         </div>
                                         <div class="question-meta">
                                             <span class="question-category">Technical</span>
-                                            <span>Not asked</span>
+                                            <span>Ready to ask</span>
                                         </div>
                                     </div>
 
@@ -293,7 +297,7 @@
                                         </div>
                                         <div class="question-meta">
                                             <span class="question-category">Innovation</span>
-                                            <span>Not asked</span>
+                                            <span>Ready to ask</span>
                                         </div>
                                     </div>
 
@@ -303,17 +307,27 @@
                                         </div>
                                         <div class="question-meta">
                                             <span class="question-category">Implementation</span>
-                                            <span>Not asked</span>
+                                            <span>Ready to ask</span>
                                         </div>
                                     </div>
 
                                     <div class="question-item" onclick="askQuestion(5)">
                                         <div class="question-text">
-                                            How do you plan to scale this solution?
+                                            How do you plan to scale this solution in the future?
                                         </div>
                                         <div class="question-meta">
                                             <span class="question-category">Business</span>
-                                            <span>Not asked</span>
+                                            <span>Ready to ask</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="question-item" onclick="askQuestion(6)">
+                                        <div class="question-text">
+                                            What technologies did you use and why?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Technical</span>
+                                            <span>Ready to ask</span>
                                         </div>
                                     </div>
                                 </div>
@@ -325,31 +339,37 @@
                                     <textarea class="notes-textarea" id="interviewNotes" 
                                             placeholder="Take notes during the interview...
 
-Key points to cover:
-• Technical implementation
-• Innovation and creativity
-• Team collaboration
-• Market potential
-• Future roadmap
+Key evaluation points:
+• Technical implementation quality
+• Innovation and creativity level  
+• Team collaboration effectiveness
+• Problem-solving approach
+• Presentation clarity
+• Market potential assessment
 
-Notes:
-- Strong technical foundation
-- Good understanding of problem domain
-- Team works well together
-- Clear vision for scaling">Take notes during the interview...
+Real-time notes:
+- Team shows strong technical foundation
+- Creative approach to blockchain integration
+- Good understanding of user needs
+- Clear communication between team members
+- Scalable architecture design
+- Realistic business model">Take notes during the interview...
 
-Key points to cover:
-• Technical implementation
-• Innovation and creativity
-• Team collaboration
-• Market potential
-• Future roadmap
+Key evaluation points:
+• Technical implementation quality
+• Innovation and creativity level  
+• Team collaboration effectiveness
+• Problem-solving approach
+• Presentation clarity
+• Market potential assessment
 
-Notes:
-- Strong technical foundation
-- Good understanding of problem domain
-- Team works well together
-- Clear vision for scaling</textarea>
+Real-time notes:
+- Team shows strong technical foundation
+- Creative approach to blockchain integration
+- Good understanding of user needs
+- Clear communication between team members
+- Scalable architecture design
+- Realistic business model</textarea>
                                     
                                     <div class="notes-actions">
                                         <button class="btn btn-secondary" onclick="saveNotes()">
@@ -369,5 +389,6 @@ Notes:
     </div>
 
     <script src="video-interview.js"></script>
+
 </body>
 </html>

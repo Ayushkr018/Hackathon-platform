@@ -1,5 +1,4 @@
-// ADVANCED PROJECT GALLERY SYSTEM
-        class ProjectGallery {
+class ProjectGallery {
             constructor() {
                 this.projects = [];
                 this.filteredProjects = [];
@@ -7,7 +6,12 @@
                 this.projectsPerPage = 12;
                 this.viewMode = 'grid';
                 this.isMobile = window.innerWidth <= 1024;
-                this.currentUser = { name: 'Dr. Jane Smith', initials: 'JS', role: 'Senior Judge', id: 'judge_001' };
+                this.currentUser = {
+                    name: 'Dr. Jane Smith',
+                    initials: 'JS',
+                    role: 'Senior Judge',
+                    id: 'judge_001'
+                };
                 this.init();
             }
 
@@ -16,15 +20,18 @@
                 this.setupEventListeners();
                 this.loadProjectsData();
                 this.renderProjects();
+                this.updateStats();
                 this.initializeUser();
                 this.handleResize();
             }
 
+            // ✅ THEME COLOR COMBINATION
             initializeTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'dark';
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 const themeToggle = document.getElementById('themeToggle');
-                themeToggle.querySelector('i').className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
             }
 
             initializeUser() {
@@ -39,21 +46,41 @@
             }
 
             setupEventListeners() {
+                // Sidebar and UI controls
                 document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
                 document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
                 document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
                 window.addEventListener('resize', () => this.handleResize());
+                window.addEventListener('orientationchange', () => setTimeout(() => this.handleResize(), 100));
                 
-                // Filters
+                // Filters and search
                 document.getElementById('statusFilter').addEventListener('change', () => this.filterProjects());
                 document.getElementById('categoryFilter').addEventListener('change', () => this.filterProjects());
                 
-                // Search
                 const searchInput = document.getElementById('searchInput');
                 let searchTimeout;
                 searchInput.addEventListener('input', (e) => {
                     clearTimeout(searchTimeout);
                     searchTimeout = setTimeout(() => this.searchProjects(e.target.value), 300);
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeMobileSidebar();
+                    }
+                    if (e.ctrlKey || e.metaKey) {
+                        switch(e.key) {
+                            case 'f':
+                                e.preventDefault();
+                                document.getElementById('searchInput').focus();
+                                break;
+                            case 'r':
+                                e.preventDefault();
+                                this.refreshGallery();
+                                break;
+                        }
+                    }
                 });
 
                 this.setupTouchGestures();
@@ -113,15 +140,56 @@
                 document.getElementById('mobileOverlay').classList.remove('active');
             }
 
+            // ✅ THEME TOGGLE WITH SMOOTH TRANSITION
             toggleTheme() {
                 const html = document.documentElement;
                 const currentTheme = html.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.style.transition = 'all 0.3s ease';
                 html.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
+                
                 const themeIcon = document.getElementById('themeToggle').querySelector('i');
                 themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+                
+                this.showToast(`Theme changed to ${newTheme} mode ✨`, 'success');
+                
+                setTimeout(() => {
+                    html.style.transition = '';
+                }, 300);
+            }
+
+            // ✅ UX LOADER AT TOP
+            showLoader() {
+                let loaderBar = document.getElementById('loaderBar');
+                if (!loaderBar) {
+                    loaderBar = document.createElement('div');
+                    loaderBar.id = 'loaderBar';
+                    document.body.appendChild(loaderBar);
+                }
+                
+                setTimeout(() => {
+                    loaderBar.style.width = '60%';
+                }, 50);
+            }
+
+            completeLoader() {
+                const loaderBar = document.getElementById('loaderBar');
+                if (loaderBar) {
+                    loaderBar.style.width = '100%';
+                    
+                    setTimeout(() => {
+                        loaderBar.style.width = '0%';
+                        loaderBar.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            if (loaderBar.parentNode) {
+                                loaderBar.remove();
+                            }
+                        }, 300);
+                    }, 500);
+                }
             }
 
             loadProjectsData() {
@@ -137,21 +205,29 @@
 
             getMockProjects() {
                 const now = Date.now();
-                return Array.from({ length: 47 }, (_, index) => ({
-                    id: index + 1,
-                    title: this.getProjectTitle(index),
-                    team: this.getTeamName(index),
-                    description: this.getProjectDescription(index),
-                    category: this.getCategory(index),
-                    status: this.getStatus(index),
-                    score: Math.floor(Math.random() * 10) + 1,
-                    submittedAt: now - (Math.random() * 7 * 24 * 60 * 60 * 1000),
-                    tags: this.getTags(index),
-                    teamSize: Math.floor(Math.random() * 5) + 2,
-                    githubUrl: `https://github.com/team${index + 1}/project`,
-                    demoUrl: `https://demo-project${index + 1}.vercel.app`,
-                    evaluated: Math.random() > 0.3
-                }));
+                const projects = [];
+                
+                for (let i = 0; i < 47; i++) {
+                    projects.push({
+                        id: i + 1,
+                        title: this.getProjectTitle(i),
+                        team: this.getTeamName(i),
+                        description: this.getProjectDescription(i),
+                        category: this.getCategory(i),
+                        status: this.getStatus(i),
+                        score: Math.floor(Math.random() * 10) + 1,
+                        submittedAt: now - (Math.random() * 7 * 24 * 60 * 60 * 1000),
+                        tags: this.getTags(i),
+                        teamSize: Math.floor(Math.random() * 5) + 2,
+                        githubUrl: `https://github.com/team${i + 1}/project`,
+                        demoUrl: `https://demo-project${i + 1}.vercel.app`,
+                        evaluated: Math.random() > 0.3,
+                        views: Math.floor(Math.random() * 100) + 10,
+                        likes: Math.floor(Math.random() * 50) + 5
+                    });
+                }
+                
+                return projects;
             }
 
             getProjectTitle(index) {
@@ -182,23 +258,23 @@
                     'Digital Creators', 'Future Builders', 'Tech for Good', 'Innovation Labs',
                     'Smart Solutions', 'Code Warriors', 'Data Scientists', 'UI/UX Masters',
                     'Full Stack Heroes', 'Machine Learning Experts', 'Cybersecurity Guardians',
-                    'Cloud Architects', 'DevOps Champions', 'Product Innovators'
+                    'Cloud Architects', 'DevOps Champions', 'Product Innovators', 'Design Thinking Hub'
                 ];
                 return teams[index % teams.length];
             }
 
             getProjectDescription(index) {
                 const descriptions = [
-                    'A comprehensive solution that leverages cutting-edge technology to solve real-world problems.',
-                    'An innovative platform designed to improve user experience and drive social impact.',
-                    'Advanced system utilizing AI and machine learning for better decision making.',
-                    'Mobile-first application focused on accessibility and user engagement.',
-                    'Blockchain-based solution ensuring transparency and security.',
-                    'IoT-enabled platform for smart monitoring and automation.',
-                    'Web3 application revolutionizing digital interactions.',
-                    'AR/VR experience creating immersive user journeys.',
-                    'Data analytics platform providing actionable insights.',
-                    'Community-driven application fostering collaboration.'
+                    'A comprehensive solution that leverages cutting-edge technology to solve real-world problems with innovative approaches and user-centered design.',
+                    'An innovative platform designed to improve user experience and drive social impact through advanced algorithms and intuitive interfaces.',
+                    'Advanced system utilizing AI and machine learning for better decision making, predictive analytics, and automated optimization.',
+                    'Mobile-first application focused on accessibility and user engagement with responsive design and cross-platform compatibility.',
+                    'Blockchain-based solution ensuring transparency and security through decentralized architecture and smart contracts.',
+                    'IoT-enabled platform for smart monitoring and automation with real-time data processing and remote control capabilities.',
+                    'Web3 application revolutionizing digital interactions through decentralized protocols and community governance.',
+                    'AR/VR experience creating immersive user journeys with spatial computing and interactive 3D environments.',
+                    'Data analytics platform providing actionable insights through advanced visualization and predictive modeling.',
+                    'Community-driven application fostering collaboration and knowledge sharing with social networking features.'
                 ];
                 return descriptions[index % descriptions.length];
             }
@@ -210,18 +286,47 @@
 
             getStatus(index) {
                 const statuses = ['submitted', 'evaluated', 'pending'];
-                return statuses[index % statuses.length];
+                const weights = [0.4, 0.35, 0.25]; // More submitted, fewer pending
+                let random = Math.random();
+                let cumulativeWeight = 0;
+                
+                for (let i = 0; i < statuses.length; i++) {
+                    cumulativeWeight += weights[i];
+                    if (random <= cumulativeWeight) {
+                        return statuses[i];
+                    }
+                }
+                return statuses[0];
             }
 
             getTags(index) {
-                const allTags = ['React', 'Node.js', 'Python', 'AI/ML', 'Blockchain', 'IoT', 'Mobile', 'Web3', 'DeFi', 'NFT', 'AR/VR', 'Cloud', 'Security', 'Analytics'];
+                const allTags = [
+                    'React', 'Node.js', 'Python', 'AI/ML', 'Blockchain', 'IoT', 'Mobile', 
+                    'Web3', 'DeFi', 'NFT', 'AR/VR', 'Cloud', 'Security', 'Analytics',
+                    'TypeScript', 'MongoDB', 'PostgreSQL', 'Docker', 'Kubernetes',
+                    'GraphQL', 'REST API', 'Microservices', 'Flutter', 'React Native'
+                ];
                 const numTags = Math.floor(Math.random() * 4) + 2;
-                return Array.from({ length: numTags }, () => allTags[Math.floor(Math.random() * allTags.length)])
-                    .filter((tag, index, arr) => arr.indexOf(tag) === index);
+                const shuffled = [...allTags].sort(() => 0.5 - Math.random());
+                return shuffled.slice(0, numTags);
             }
 
             saveProjects() {
                 localStorage.setItem('judgeProjects', JSON.stringify(this.projects));
+            }
+
+            updateStats() {
+                const totalProjects = this.projects.length;
+                const evaluatedProjects = this.projects.filter(p => p.evaluated).length;
+                const pendingProjects = this.projects.filter(p => p.status === 'pending').length;
+                const averageScore = this.projects
+                    .filter(p => p.evaluated)
+                    .reduce((sum, p) => sum + p.score, 0) / evaluatedProjects;
+
+                document.getElementById('totalProjects').textContent = totalProjects;
+                document.getElementById('evaluatedProjects').textContent = evaluatedProjects;
+                document.getElementById('pendingProjects').textContent = pendingProjects;
+                document.getElementById('averageScore').textContent = averageScore.toFixed(1);
             }
 
             filterProjects() {
@@ -244,12 +349,15 @@
                 this.currentPage = 1;
                 this.renderProjects();
                 this.renderPagination();
+                
+                this.showToast(`Found ${this.filteredProjects.length} projects`, 'info');
             }
 
             searchProjects(searchTerm) {
                 this.filterProjects();
             }
 
+            // ✅ REALISTIC VIEW SWITCH
             switchView(view) {
                 this.viewMode = view;
                 document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
@@ -259,7 +367,7 @@
                 grid.className = `projects-grid ${view}-view`;
                 
                 this.renderProjects();
-                this.showToast(`Switched to ${view} view`, 'info');
+                this.showToast(`📱 Switched to ${view} view`, 'info');
             }
 
             renderProjects() {
@@ -275,6 +383,7 @@
                             <h3 class="empty-title">No projects found</h3>
                             <p class="empty-description">
                                 Try adjusting your filters or search terms to find the projects you're looking for.
+                                Check status filters, categories, or try broader search keywords.
                             </p>
                             <button class="btn btn-primary" onclick="clearFilters()">
                                 <i class="fas fa-refresh"></i>Clear Filters
@@ -285,7 +394,7 @@
                 }
 
                 container.innerHTML = '';
-                projectsToShow.forEach(project => {
+                projectsToShow.forEach((project, index) => {
                     const projectCard = document.createElement('div');
                     projectCard.className = 'project-card';
                     projectCard.onclick = () => this.openProjectDetails(project.id);
@@ -320,7 +429,7 @@
                                 <span class="score-label">Evaluated</span>
                             </div>
                             <div class="score-item">
-                                <span class="score-value">${Math.floor(Math.random() * 50) + 10}</span>
+                                <span class="score-value">${project.views}</span>
                                 <span class="score-label">Views</span>
                             </div>
                         </div>
@@ -415,15 +524,20 @@
                 `;
 
                 // Page numbers
-                for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                const startPage = Math.max(1, this.currentPage - 2);
+                const endPage = Math.min(totalPages, startPage + 4);
+
+                for (let i = startPage; i <= endPage; i++) {
                     paginationHTML += `
                         <button class="pagination-btn ${i === this.currentPage ? 'active' : ''}"
                                 onclick="changePage(${i})">${i}</button>
                     `;
                 }
 
-                if (totalPages > 5) {
-                    paginationHTML += '<span class="pagination-btn disabled">...</span>';
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        paginationHTML += '<span class="pagination-btn disabled">...</span>';
+                    }
                     paginationHTML += `
                         <button class="pagination-btn ${totalPages === this.currentPage ? 'active' : ''}"
                                 onclick="changePage(${totalPages})">${totalPages}</button>
@@ -451,38 +565,62 @@
             }
 
             openProjectDetails(projectId) {
+                const project = this.projects.find(p => p.id === projectId);
                 localStorage.setItem('viewProjectId', projectId);
-                this.showToast(`Loading project details...`, 'info');
-                setTimeout(() => window.location.href = 'evaluation.html', 1000);
+                this.showToast(`🔍 Loading ${project.title}...`, 'info');
+                
+                this.showLoader();
+                setTimeout(() => {
+                    this.completeLoader();
+                    window.location.href = 'evaluation.html';
+                }, 1500);
             }
 
+            // ✅ NOTIFICATION VISIBILITY - NO OVERLAP
             showToast(message, type = 'success') {
-                const existingToast = document.querySelector('.toast');
-                if (existingToast) existingToast.remove();
+                // Remove existing toasts
+                const existingToasts = document.querySelectorAll('.toast');
+                existingToasts.forEach(toast => toast.remove());
                 
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.style.cssText = `
-                    position: fixed; top: 2rem; right: 2rem; padding: 1rem 1.5rem;
-                    border-radius: 12px; color: white; font-weight: 500; z-index: 10001;
-                    animation: slideInToast 0.3s ease-out; max-width: 350px;
-                    box-shadow: var(--shadow-lg); background: var(--gradient-${type});
+                toast.innerHTML = `
+                    <i class="fas ${this.getToastIcon(type)}" style="margin-right: 10px;"></i>
+                    ${message}
                 `;
                 
-                if (window.innerWidth <= 768) {
-                    toast.style.top = '1rem'; toast.style.right = '1rem';
-                    toast.style.left = '1rem'; toast.style.maxWidth = 'none';
-                }
-                
-                toast.innerHTML = `<i class="fas ${this.getToastIcon(type)}"></i><span style="margin-left: 0.5rem;">${message}</span>`;
                 document.body.appendChild(toast);
-                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 4000);
+                
+                // Auto hide after 4 seconds
+                const autoHideTimer = setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, 4000);
+                
+                // Click to dismiss
+                toast.addEventListener('click', () => {
+                    clearTimeout(autoHideTimer);
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.remove();
+                        }
+                    }, 300);
+                });
             }
 
             getToastIcon(type) {
                 const icons = {
-                    success: 'fa-check-circle', error: 'fa-exclamation-circle',
-                    info: 'fa-info-circle', warning: 'fa-exclamation-triangle'
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle',
+                    warning: 'fa-exclamation-triangle'
                 };
                 return icons[type] || 'fa-check-circle';
             }
@@ -493,38 +631,165 @@
 
         function switchView(view) { projectGallery.switchView(view); }
         function changePage(page) { projectGallery.changePage(page); }
-        function startEvaluation(projectId) { 
+
+        // ✅ REALISTIC BUTTON FUNCTIONS
+        function startEvaluation(projectId) {
+            const project = projectGallery.projects.find(p => p.id === projectId);
             localStorage.setItem('evaluateProjectId', projectId);
-            projectGallery.showToast('Starting evaluation...', 'info');
-            setTimeout(() => window.location.href = 'evaluation.html', 1000);
+            
+            projectGallery.showLoader();
+            projectGallery.showToast(`🚀 Starting evaluation for ${project.title}...`, 'info');
+            
+            setTimeout(() => {
+                projectGallery.completeLoader();
+                window.location.href = 'evaluation.html';
+            }, 2000);
         }
-        function viewEvaluation(projectId) { projectGallery.showToast(`Viewing evaluation for project ${projectId}...`, 'info'); }
-        function openProject(projectId) { projectGallery.showToast(`Opening project ${projectId}...`, 'info'); }
+
+        function viewEvaluation(projectId) {
+            const project = projectGallery.projects.find(p => p.id === projectId);
+            projectGallery.showLoader();
+            projectGallery.showToast(`📊 Loading evaluation report for ${project.title}...`, 'info');
+            
+            setTimeout(() => {
+                projectGallery.completeLoader();
+                // Create evaluation summary modal
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;
+                    z-index: 10000; backdrop-filter: blur(15px);
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: var(--bg-card); border-radius: 20px; padding: 2.5rem; max-width: 600px; width: 90%; text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">${project.title}</h3>
+                        <div style="background: var(--bg-glass); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                                <div><strong>Score:</strong> ${project.score.toFixed(1)}/10</div>
+                                <div><strong>Status:</strong> ${project.status}</div>
+                                <div><strong>Views:</strong> ${project.views}</div>
+                            </div>
+                        </div>
+                        <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                            Detailed evaluation completed with comprehensive scoring across all criteria.
+                        </p>
+                        <button onclick="this.closest('div').remove()" 
+                            style="padding: 0.75rem 1.5rem; border: none; border-radius: 8px; 
+                            background: var(--gradient-gallery); color: white; cursor: pointer;">Close</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.remove();
+                });
+            }, 1500);
+        }
+
+        function openProject(projectId) {
+            const project = projectGallery.projects.find(p => p.id === projectId);
+            projectGallery.showLoader();
+            projectGallery.showToast(`🌐 Opening ${project.title} project demo...`, 'info');
+            
+            setTimeout(() => {
+                projectGallery.completeLoader();
+                window.open(project.demoUrl, '_blank');
+            }, 1000);
+        }
+
         function clearFilters() {
             document.getElementById('statusFilter').value = 'all';
             document.getElementById('categoryFilter').value = 'all';
             document.getElementById('searchInput').value = '';
             projectGallery.filterProjects();
-            projectGallery.showToast('Filters cleared!', 'success');
+            projectGallery.showToast('🔄 Filters cleared! Showing all projects.', 'success');
         }
-        function exportProjects() { projectGallery.showToast('Exporting projects...', 'info'); }
-        function refreshGallery() { 
-            projectGallery.loadProjectsData(); 
-            projectGallery.renderProjects(); 
-            projectGallery.showToast('Gallery refreshed!', 'success'); 
-        }
-        function backToDashboard() { window.location.href = 'dashboard.html'; }
 
+        function exportProjects() {
+            projectGallery.showLoader();
+            
+            setTimeout(() => {
+                const exportData = {
+                    nexusHackProjects: {
+                        platform: 'NexusHack Professional',
+                        version: '2.0',
+                        exportedBy: projectGallery.currentUser.name,
+                        exportedAt: new Date().toISOString(),
+                        totalProjects: projectGallery.projects.length,
+                        filteredProjects: projectGallery.filteredProjects.length,
+                        projects: projectGallery.filteredProjects,
+                        statistics: {
+                            totalSubmissions: projectGallery.projects.length,
+                            evaluatedProjects: projectGallery.projects.filter(p => p.evaluated).length,
+                            pendingProjects: projectGallery.projects.filter(p => p.status === 'pending').length,
+                            averageScore: projectGallery.projects
+                                .filter(p => p.evaluated)
+                                .reduce((sum, p) => sum + p.score, 0) / 
+                                projectGallery.projects.filter(p => p.evaluated).length,
+                            categories: {
+                                web3: projectGallery.projects.filter(p => p.category === 'web3').length,
+                                ai: projectGallery.projects.filter(p => p.category === 'ai').length,
+                                mobile: projectGallery.projects.filter(p => p.category === 'mobile').length,
+                                iot: projectGallery.projects.filter(p => p.category === 'iot').length,
+                                fintech: projectGallery.projects.filter(p => p.category === 'fintech').length
+                            }
+                        }
+                    }
+                };
+
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `nexushack-projects-${new Date().toISOString().split('T')[0]}.json`;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                projectGallery.completeLoader();
+                projectGallery.showToast('📥 Project data exported with complete statistics and metadata!', 'success');
+            }, 2500);
+        }
+
+        function refreshGallery() {
+            projectGallery.showLoader();
+            projectGallery.showToast('🔄 Refreshing project gallery...', 'info');
+            
+            setTimeout(() => {
+                projectGallery.loadProjectsData();
+                projectGallery.renderProjects();
+                projectGallery.updateStats();
+                projectGallery.completeLoader();
+                projectGallery.showToast('✅ Gallery refreshed with latest project data!', 'success');
+            }, 2000);
+        }
+
+        function backToDashboard() {
+            projectGallery.showToast('🏠 Returning to main dashboard...', 'info');
+            projectGallery.showLoader();
+            
+            setTimeout(() => {
+                projectGallery.completeLoader();
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             projectGallery = new ProjectGallery();
             
-            // Animate cards on load
+            // Add entrance animations
             setTimeout(() => {
                 document.querySelectorAll('.project-card').forEach((card, index) => {
                     setTimeout(() => {
                         card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
+                        card.style.transform = 'translateY(30px)';
                         setTimeout(() => {
+                            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                             card.style.opacity = '1';
                             card.style.transform = 'translateY(0)';
                         }, 100);
@@ -532,33 +797,67 @@
                 });
             }, 500);
 
+            // Stat card animations
+            setTimeout(() => {
+                document.querySelectorAll('.stat-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 100);
+                    }, index * 150);
+                });
+            }, 200);
+
             // Performance optimization for mobile
             if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.body.classList.add('mobile-device');
-                const style = document.createElement('style');
-                style.textContent = `.mobile-device * { animation-duration: 0.1s !important; transition-duration: 0.1s !important; }`;
-                document.head.appendChild(style);
             }
+
+            // Welcome message
+            setTimeout(() => {
+                projectGallery.showToast('🖼️ Project Gallery loaded! Advanced filtering and evaluation tools ready for professional assessment.', 'success');
+            }, 2500);
         });
 
-        // Animations
+        // Enhanced animations
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes slideInToast {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @media (max-width: 768px) {
-                @keyframes slideInToast {
-                    from { transform: translateY(-100%); opacity: 0; }
-                    to { transform: translateY(0); opacity: 1; }
+            .project-card, .stat-card { transition: var(--transition) !important; }
+            
+            @media (hover: hover) and (pointer: fine) {
+                .project-card:hover { 
+                    transform: translateY(-8px) !important; 
+                    box-shadow: var(--shadow-lg) !important;
+                }
+                .stat-card:hover { 
+                    transform: translateY(-4px) !important; 
+                    box-shadow: var(--shadow-md) !important;
                 }
             }
-            .project-card, .stat-card { transition: var(--transition) !important; }
-            @media (hover: hover) and (pointer: fine) {
-                .project-card:hover { transform: translateY(-8px) !important; }
-                .stat-card:hover { transform: translateY(-4px) !important; }
+            
+            *:focus-visible { 
+                outline: 2px solid var(--gallery-purple) !important; 
+                outline-offset: 2px !important; 
             }
-            *:focus-visible { outline: 2px solid var(--primary) !important; outline-offset: 2px !important; }
+            
+            /* Enhanced mobile optimizations */
+            @media (max-width: 768px) {
+                .projects-grid.grid-view {
+                    grid-template-columns: 1fr !important;
+                }
+                
+                .gallery-filters {
+                    flex-direction: column !important;
+                }
+                
+                .filter-group {
+                    width: 100% !important;
+                    justify-content: space-between !important;
+                }
+            }
         `;
         document.head.appendChild(style);

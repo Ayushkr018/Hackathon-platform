@@ -1079,6 +1079,8 @@
                 localStorage.setItem('modernOrganizerSession', JSON.stringify(sessionData));
             }, 60000); // Save every minute
 
+           
+
             // Add enhanced keyboard shortcuts
             document.addEventListener('keydown', (e) => {
                 if (e.ctrlKey || e.metaKey) {
@@ -1133,6 +1135,16 @@
                 document.body.classList.remove('keyboard-navigation');
             });
         });
+
+         function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('modernOrganizerSession');
+                    modernAnalyticsManager.showToast('Logging out...', 'info');
+                    setTimeout(() => {
+                        window.location.href = '../auth/login.html';
+                    }, 1000);
+                }
+            }
 
         // Enhanced animations and performance styles
         const style = document.createElement('style');
