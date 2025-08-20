@@ -1,246 +1,263 @@
- const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        const themeIcon = themeToggle.querySelector('i');
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+// --- Global Configuration ---
+const API_BASE_URL = 'http://localhost:5000';
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', async () => {
+    initializeTheme();
+    setupEventListeners();
+    await handleOAuthCallback(); // Handle token from social login redirect
+    updateUIForAuthState(); // Check login status and update UI
+    runAnimations();
+});
+
+
+// --- Authentication Functions ---
+
+/**
+ * Checks for a JWT in the URL after an OAuth redirect, saves it,
+ * and fetches the user's profile.
+ */
+async function handleOAuthCallback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+        // 1. Save the token to local storage immediately.
+        localStorage.setItem('token', token);
+
+        // 2. Fetch the user's profile from the backend using the token.
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error('Could not fetch user profile after social login.');
+            }
+
+            // 3. Save the user data to local storage.
+            const user = data.data.user;
+            localStorage.setItem('user', JSON.stringify(user));
+
+            // 4. Clean the token from the URL for a better user experience.
+            window.history.replaceState({}, document.title, window.location.pathname);
+
+        } catch (error) {
+            console.error(error);
+            // If fetching the user fails, clear the bad token to prevent issues.
+            localStorage.removeItem('token');
+        }
+    }
+}
+
+
+/**
+ * Checks for user token and updates the navigation bar accordingly.
+ */
+function updateUIForAuthState() {
+    const token = localStorage.getItem('token');
+    const userJson = localStorage.getItem('user');
+    const navActions = document.querySelector('.header .nav-actions');
+    const mobileNavActions = document.querySelector('.mobile-menu');
+
+    if (token && userJson && navActions && mobileNavActions) {
+        try {
+            const user = JSON.parse(userJson);
+            const dashboardUrl = getDashboardUrl(user.role);
+
+            // --- Update Desktop Header ---
+            navActions.innerHTML = `
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="${dashboardUrl}" class="btn btn-outline" onclick="handlePageTransition(event, this.href)">Dashboard</a>
+                <button class="btn btn-primary" id="logoutBtn">Logout</button>
+            `;
+
+            // --- Update Mobile Menu ---
+            const mobileLoginLink = mobileNavActions.querySelector('a[href="auth/login.html"]');
+            if (mobileLoginLink) mobileLoginLink.remove();
             
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-        });
-        
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        html.setAttribute('data-theme', savedTheme);
+            const mobileRegisterLink = mobileNavActions.querySelector('a[href="auth/register.html"]');
+            if (mobileRegisterLink) mobileRegisterLink.remove();
+
+            // Add new buttons if they don't exist
+            if (!mobileNavActions.querySelector('#mobileLogoutBtn')) {
+                mobileNavActions.insertAdjacentHTML('beforeend', `
+                    <a href="${dashboardUrl}" class="btn btn-outline" onclick="handlePageTransition(event, this.href)">Dashboard</a>
+                    <button class="btn btn-primary" id="mobileLogoutBtn">Logout</button>
+                `);
+            }
+
+            // Re-add theme toggle event listener as it was replaced
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            // Add logout event listeners
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+            document.getElementById('mobileLogoutBtn').addEventListener('click', handleLogout);
+
+        } catch (error) {
+            console.error("Failed to parse user data:", error);
+            handleLogout(); // Clear corrupted data
+        }
+    } else {
+        // Ensure theme toggle is set up for logged-out users
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    }
+}
+
+/**
+ * Logs the user out by clearing storage and reloading the page.
+ */
+function handleLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    const transition = document.getElementById('pageTransition');
+    transition.classList.add('active');
+    setTimeout(() => {
+        window.location.reload();
+    }, 600);
+}
+
+/**
+ * Determines the correct dashboard URL based on user role.
+ * @param {string} role - The user's role.
+ * @returns {string} The relative URL to the dashboard.
+ */
+function getDashboardUrl(role) {
+    switch (role) {
+        case 'organizer': return 'organizer/dashboard.html';
+        case 'judge': return 'judge/dashboard.html';
+        case 'participant':
+        default: return 'participant/dashboard.html';
+    }
+}
+
+
+// --- Event Listeners Setup ---
+function setupEventListeners() {
+    window.addEventListener('scroll', handleScrollEffects);
+    document.getElementById('mobileMenuToggle').addEventListener('click', openMobileMenu);
+    document.getElementById('mobileMenuClose').addEventListener('click', closeMobileMenu);
+    document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+        link.addEventListener('click', handleSmoothScroll);
+    });
+    document.querySelector('.logo').addEventListener('click', scrollToTop);
+}
+
+
+// --- UI & Animation Functions ---
+
+function toggleTheme() {
+    const html = document.documentElement;
+    const themeIcon = this.querySelector('i');
+    const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+}
+
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const themeIcon = document.querySelector('#themeToggle i');
+    if (themeIcon) {
         themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-        
-        // Enhanced Header scroll effect with scroll progress
-        const header = document.getElementById('header');
-        const scrollProgress = document.getElementById('scrollProgress');
-        
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = (scrolled / maxScroll) * 100;
-            
-            scrollProgress.style.width = progress + '%';
-            
-            if (scrolled > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+    }
+}
+
+function handleScrollEffects() {
+    const header = document.getElementById('header');
+    const scrollProgress = document.getElementById('scrollProgress');
+    const scrolled = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrolled / maxScroll) * 100;
+
+    scrollProgress.style.width = `${progress}%`;
+    header.classList.toggle('scrolled', scrolled > 100);
+    updateActiveNavLink();
+}
+
+function openMobileMenu() {
+    document.getElementById('mobileMenu').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function handleSmoothScroll(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('data-section');
+    const targetSection = document.getElementById(targetId);
+    if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    closeMobileMenu();
+}
+
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop <= 100 && sectionTop + section.offsetHeight > 100) {
+            current = section.getAttribute('id');
+        }
+    });
+    document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('data-section') === current);
+    });
+}
+
+function animateCounter(element, target, suffix = '+', duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+    const update = () => {
+        start += increment;
+        if (start < target) {
+            element.textContent = `${Math.floor(start).toLocaleString()}${suffix}`;
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = `${target.toLocaleString()}${suffix}`;
+        }
+    };
+    update();
+}
+
+function runAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.target.id === 'statUsers') {
+                    animateCounter(document.getElementById('statUsers'), 5000);
+                    animateCounter(document.getElementById('statEvents'), 150);
+                    animateCounter(document.getElementById('statProjects'), 1200);
+                    animateCounter(document.getElementById('statSuccess'), 95, '%');
+                    observer.unobserve(entry.target); // Animate only once
+                }
             }
         });
-        
-        // Enhanced Mobile menu
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-        
-        mobileMenuToggle.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        
-        // Close mobile menu when clicking on a link
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.classList.contains('nav-link')) {
-                closeMobileMenu();
-            }
-        });
-        
-        // Enhanced navigation with active states
-        const navLinks = document.querySelectorAll('.nav-link[data-section]');
-        const sections = document.querySelectorAll('section[id]');
-        
-        function updateActiveNavLink() {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                const sectionHeight = section.offsetHeight;
-                if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === current) {
-                    link.classList.add('active');
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', updateActiveNavLink);
-        
-        // Smooth scrolling for navigation links
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('data-section');
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                closeMobileMenu();
-            });
-        });
-        
-        // Enhanced animated counters with more realistic animation
-        function animateCounter(element, target, suffix = '+', duration = 2000) {
-            let start = 0;
-            const increment = target / (duration / 16);
-            
-            function updateCounter() {
-                start += increment;
-                if (start < target) {
-                    let displayValue = Math.floor(start);
-                    if (suffix === '%') {
-                        element.textContent = displayValue + '%';
-                    } else {
-                        element.textContent = displayValue.toLocaleString() + suffix;
-                    }
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    if (suffix === '%') {
-                        element.textContent = target + '%';
-                    } else {
-                        element.textContent = target.toLocaleString() + suffix;
-                    }
-                }
-            }
-            
-            updateCounter();
-        }
-        
-        // Enhanced Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (entry.target.classList.contains('hero-stats')) {
-                        // Animate hero stats
-                        setTimeout(() => {
-                            animateCounter(document.getElementById('statUsers'), 5000);
-                            animateCounter(document.getElementById('statEvents'), 150);
-                            animateCounter(document.getElementById('statProjects'), 1200);
-                            animateCounter(document.getElementById('statSuccess'), 95, '%');
-                        }, 500);
-                    }
-                    
-                    // Add animation classes
-                    entry.target.classList.add('animate-fade-in-up');
-                    
-                    // Stagger animations for grid items
-                    if (entry.target.classList.contains('features-grid') || 
-                        entry.target.classList.contains('roles-grid') ||
-                        entry.target.classList.contains('works-grid')) {
-                        const cards = entry.target.children;
-                        Array.from(cards).forEach((card, index) => {
-                            setTimeout(() => {
-                                card.classList.add('animate-fade-in-up');
-                            }, index * 100);
-                        });
-                    }
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements for animation
-        document.querySelectorAll('.hero-content, .section-header, .feature-card, .role-card, .works-card, .hero-stats, .features-grid, .roles-grid, .works-grid, .about-content').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Page transition function
-        function handlePageTransition(event, url) {
-            event.preventDefault();
-            const transition = document.getElementById('pageTransition');
-            
-            transition.classList.add('active');
-            
-            setTimeout(() => {
-                window.location.href = url;
-            }, 600);
-        }
-        
-        // Scroll to top function
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-        
-        // Enhanced loading states for buttons
-        document.querySelectorAll('.btn-primary').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (this.href && this.href.includes('.html')) {
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<span class="loading"></span> Loading...';
-                    this.style.pointerEvents = 'none';
-                    
-                    // Reset after a delay (for demo purposes)
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                        this.style.pointerEvents = '';
-                    }, 2000);
-                }
-            });
-        });
-        
-        // Enhanced parallax effects
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroParallax = document.querySelector('.hero::after');
-            
-            // Parallax for hero background
-            if (heroParallax) {
-                const speed = scrolled * 0.3;
-                document.documentElement.style.setProperty('--parallax-offset', `${speed}px`);
-            }
-        });
-        
-        // Social media hover effects
-        document.querySelectorAll('.social-link').forEach(link => {
-            link.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px) scale(1.1)';
-            });
-            
-            link.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-        
-        // Keyboard navigation support
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeMobileMenu();
-            }
-        });
-        
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', () => {
-            updateActiveNavLink();
-            
-            // Add initial animation delay to hero content
-            setTimeout(() => {
-                document.querySelector('.hero-content').classList.add('animate-fade-in-up');
-            }, 300);
-        });
+    }, { threshold: 0.8 });
+
+    const statsContainer = document.querySelector('.hero-stats');
+    if (statsContainer) {
+        // Use a single element to trigger all stat animations
+        observer.observe(document.getElementById('statUsers'));
+    }
+}
+
+function handlePageTransition(event, url) {
+    event.preventDefault();
+    const transition = document.getElementById('pageTransition');
+    transition.classList.add('active');
+    setTimeout(() => { window.location.href = url; }, 600);
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
