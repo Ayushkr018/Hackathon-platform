@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Management - NexusHack Platform</title>
+    <meta name="description" content="Comprehensive feedback management system for judges. Create detailed feedback, track submissions, and manage evaluation responses.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="feedback.css">
+</head>
+
+<body data-theme="dark" class="noselect">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fas fa-comment-alt"></i></div>
+                <div class="logo-text">
+                    <a href="../index.html" style="color: inherit; text-decoration: none;">NexusHack</a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-star"></i></div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="nav-text">Feedback</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-code"></i></div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-video"></i></div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-images"></i></div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-list-check"></i></div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Feedback Management</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="Templates" onclick="openTemplates()">
+                            <i class="fas fa-file-alt"></i>
+                        </button>
+                        <button class="action-btn" title="Export Feedback" onclick="exportFeedback()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Feedback Header -->
+                <div class="feedback-header">
+                    <div class="feedback-header-content">
+                        <h1 class="feedback-title">
+                            <i class="fas fa-comment-alt"></i>
+                            Feedback Management
+                        </h1>
+                        <p class="feedback-subtitle">
+                            Create comprehensive feedback for hackathon participants. Use professional templates, 
+                            track submissions, provide valuable insights to help teams improve, and maintain NexusHack's high evaluation standards.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feedback Stats -->
+                <div class="feedback-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-comment"></i></div>
+                        <div class="stat-value">47</div>
+                        <div class="stat-title">Total Feedback</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-paper-plane"></i></div>
+                        <div class="stat-value">35</div>
+                        <div class="stat-title">Sent This Week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-title">Pending</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-value">4.8</div>
+                        <div class="stat-title">Avg Rating</div>
+                    </div>
+                </div>
+
+                <!-- Feedback Layout -->
+                <div class="feedback-layout">
+                    <!-- Feedback Main -->
+                    <div class="feedback-main">
+                        <!-- Feedback Composer -->
+                        <div class="feedback-composer">
+                            <div class="composer-header">
+                                <h2 class="composer-title">
+                                    <i class="fas fa-edit"></i>
+                                    Create Feedback
+                                </h2>
+                                <div class="composer-meta">
+                                    <span><i class="fas fa-calendar"></i> Today</span>
+                                    <span><i class="fas fa-user"></i> Dr. Jane Smith</span>
+                                </div>
+                            </div>
+
+                            <!-- Project Selector -->
+                            <div class="project-selector">
+                                <div class="selector-label">
+                                    <i class="fas fa-folder"></i>
+                                    Select Project
+                                </div>
+                                <div class="project-search">
+                                    <i class="fas fa-search search-icon"></i>
+                                    <input type="text" class="search-input" placeholder="Search projects..." id="projectSearch">
+                                </div>
+                                <div class="project-list" id="projectList">
+                                    <!-- Projects will be dynamically loaded here -->
+                                </div>
+                            </div>
+
+                            <!-- Feedback Form -->
+                            <form class="feedback-form" id="feedbackForm">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-tag"></i>
+                                        Feedback Category
+                                    </label>
+                                    <div class="feedback-categories" id="feedbackCategories">
+                                        <!-- Categories will be loaded here -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="feedbackSubject">
+                                        <i class="fas fa-heading"></i>
+                                        Subject
+                                    </label>
+                                    <input type="text" id="feedbackSubject" class="form-input" 
+                                           placeholder="Enter feedback subject...">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="feedbackContent">
+                                        <i class="fas fa-comment-dots"></i>
+                                        Feedback Content
+                                    </label>
+                                    <textarea id="feedbackContent" class="form-textarea" rows="8"
+                                            placeholder="Write your detailed feedback here...
+
+Consider including:
+• Strengths and positive aspects
+• Areas for improvement
+• Specific technical suggestions
+• Business/market insights
+• Next steps and recommendations
+
+Your feedback helps participants learn and grow!"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="feedbackPriority">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Priority Level
+                                    </label>
+                                    <select id="feedbackPriority" class="form-select">
+                                        <option value="low">Low - General feedback</option>
+                                        <option value="medium" selected>Medium - Important points</option>
+                                        <option value="high">High - Critical issues</option>
+                                        <option value="urgent">Urgent - Immediate attention</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="saveDraft()">
+                                        <i class="fas fa-save"></i>
+                                        Save Draft
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Send Feedback
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Sidebar -->
+                    <div class="feedback-sidebar">
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-history"></i>
+                            Recent Feedback
+                        </h3>
+
+                        <div class="recent-feedback" id="recentFeedback">
+                            <!-- Recent feedback will be loaded here -->
+                        </div>
+
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-file-alt"></i>
+                            Quick Templates
+                        </h3>
+
+                        <div class="feedback-templates" id="feedbackTemplates">
+                            <!-- Templates will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="feedback.js"></script>
+</body>
+</html>
+

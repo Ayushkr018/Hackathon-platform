@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Dashboard - NexusHack Platform</title>
+    <meta name="description" content="Comprehensive judge dashboard for evaluating hackathon projects, managing assessments, and providing feedback to participants.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body data-theme="dark" class="noselect">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="logo-text">
+                    <a href="../index.html" style="color: inherit; text-decoration: none;">NexusHack</a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link active">
+                        <div class="nav-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="nav-text">Feedback</div>
+                        <div class="nav-badge">NEW</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Judge Dashboard</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search projects, participants..." id="searchInput">
+                    </div>
+
+                    <div class="topbar-actions">
+                        <button class="action-btn has-badge" title="Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="action-btn" title="Messages" aria-label="Messages">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="logout()" title="Logout" aria-label="Logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-header-content">
+                        <h1 class="dashboard-title">
+                            <i class="fas fa-gavel"></i>
+                            Welcome Back, Judge!
+                        </h1>
+                        <p class="dashboard-subtitle">
+                            Your evaluation dashboard with all the tools you need to assess hackathon projects fairly and efficiently.
+                        </p>
+                        
+                        <div class="dashboard-stats">
+                            <div class="dashboard-stat">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">Pending Evaluations</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-number">47</span>
+                                <span class="stat-label">Projects Reviewed</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-number">3</span>
+                                <span class="stat-label">Active Events</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-number">4.8/5</span>
+                                <span class="stat-label">Judge Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="action-card" onclick="startEvaluation()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Start Evaluation</div>
+                                <div class="action-count">12 projects waiting</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            Begin evaluating pending project submissions with our advanced scoring system.
+                        </p>
+                        <a href="evaluation.html" class="action-btn-secondary">
+                            <i class="fas fa-play"></i>
+                            Begin Assessment
+                        </a>
+                    </div>
+
+                    <div class="action-card" onclick="viewAssignedEvents()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Assigned Events</div>
+                                <div class="action-count">3 active events</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            View all hackathon events you're assigned to judge and manage your schedule.
+                        </p>
+                        <a href="assigned-events.html" class="action-btn-secondary">
+                            <i class="fas fa-eye"></i>
+                            View Events
+                        </a>
+                    </div>
+
+                    <div class="action-card" onclick="conductInterview()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Video Interview</div>
+                                <div class="action-count">2 scheduled</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            Conduct live interviews with teams to get deeper insights into their projects.
+                        </p>
+                        <a href="video-interview.html" class="action-btn-secondary">
+                            <i class="fas fa-video"></i>
+                            Start Interview
+                        </a>
+                    </div>
+
+                    <div class="action-card" onclick="reviewCode()">
+                        <div class="action-header">
+                            <div class="action-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div>
+                                <div class="action-title">Code Review</div>
+                                <div class="action-count">8 repositories</div>
+                            </div>
+                        </div>
+                        <p class="action-description">
+                            Examine project source code with advanced tools for technical assessment.
+                        </p>
+                        <a href="code-review.html" class="action-btn-secondary">
+                            <i class="fas fa-search"></i>
+                            Review Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-value">18.5</div>
+                        <div class="metric-label">Avg. Review Time (mins)</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i>
+                            12% faster
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="metric-value">8.7</div>
+                        <div class="metric-label">Avg. Score Given</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            0.3 higher
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="metric-value">127</div>
+                        <div class="metric-label">Feedback Comments</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            23% more
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div class="metric-value">96%</div>
+                        <div class="metric-label">Participant Satisfaction</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            4% higher
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evaluation Queue -->
+                <div class="evaluation-queue">
+                    <div class="queue-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-list-ol"></i>
+                            Evaluation Queue
+                        </h2>
+                        <button class="btn btn-primary" onclick="startBatchEvaluation()">
+                            <i class="fas fa-play"></i>
+                            Start Batch Review
+                        </button>
+                    </div>
+
+                    <div class="project-queue" id="projectQueue">
+                        <!-- Projects will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h2 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recent Activity
+                    </h2>
+
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items will be dynamically inserted here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

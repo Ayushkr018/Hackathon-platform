@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Evaluation - NexusHack Platform</title>
+    <meta name="description" content="Comprehensive project evaluation system for judges. Advanced assessment tools, real-time collaboration, and integrated scoring system.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCdncmFkaWVudDApJy8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="evaluation.css">
+</head>
+
+<body data-theme="dark" class="noselect">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fas fa-clipboard-check"></i></div>
+                <div class="logo-text">
+                    <a href="../index.html" style="color: inherit; text-decoration: none;">NexusHack</a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge active">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-star"></i></div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="nav-text">Feedback</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-code"></i></div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-video"></i></div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-images"></i></div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-list-check"></i></div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Project Evaluation</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="Save Progress" onclick="saveProgress()">
+                            <i class="fas fa-save"></i>
+                        </button>
+                        <button class="action-btn" title="Export Evaluation" onclick="exportEvaluation()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Evaluation Header -->
+                <div class="evaluation-header">
+                    <div class="evaluation-header-content">
+                        <h1 class="evaluation-title">
+                            <i class="fas fa-clipboard-check"></i>
+                            Project Evaluation
+                        </h1>
+                        <p class="evaluation-subtitle">
+                            Comprehensive evaluation workspace with integrated assessment tools, real-time collaboration, and professional scoring systems designed for NexusHack standards.
+                        </p>
+                        <div class="evaluation-timer">
+                            <i class="fas fa-clock timer-icon"></i>
+                            <span class="timer-text" id="evaluationTimer">45:30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Overview -->
+                <div class="project-overview">
+                    <div class="overview-header">
+                        <h2 class="overview-title">
+                            <i class="fas fa-folder-open"></i>
+                            Project Overview
+                        </h2>
+                        <div class="project-status">Under Review</div>
+                    </div>
+
+                    <div class="project-main">
+                        <div class="project-avatar">DP</div>
+                        <div class="project-details">
+                            <h3 class="project-name">DeFi Portfolio Tracker</h3>
+                            <div class="project-team">Team: Blockchain Innovators</div>
+                            <p class="project-description">
+                                A comprehensive decentralized finance portfolio tracking application that allows users to 
+                                monitor their DeFi investments across multiple protocols and blockchains in real-time. 
+                                Features advanced analytics, yield farming optimization, risk assessment tools, and professional-grade reporting capabilities.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-users"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Team Size</div>
+                                <div class="meta-value">4 Members</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-calendar"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Submitted</div>
+                                <div class="meta-value">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-tag"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Category</div>
+                                <div class="meta-value">Web3 & Blockchain</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas fa-code"></i></div>
+                            <div class="meta-details">
+                                <div class="meta-label">Tech Stack</div>
+                                <div class="meta-value">React, Node.js, Solidity</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evaluation Tools -->
+                <div class="evaluation-tools">
+                    <a href="scoring.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon scoring">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="tool-title">Scoring System</div>
+                        </div>
+                        <div class="tool-description">
+                            Evaluate the project using weighted criteria with our comprehensive 10-point scoring system. 
+                            Track innovation, technical implementation, business impact, and presentation quality with professional precision.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">0/5 Criteria Scored</div>
+                            <div class="tool-status pending">Pending</div>
+                        </div>
+                    </a>
+
+                    <a href="feedback.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon feedback">
+                                <i class="fas fa-comment-alt"></i>
+                            </div>
+                            <div class="tool-title">Feedback System</div>
+                        </div>
+                        <div class="tool-description">
+                            Provide detailed feedback using pre-built templates or custom comments. 
+                            Help teams understand strengths and areas for improvement with constructive professional guidance.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">Draft Saved</div>
+                            <div class="tool-status in-progress">In Progress</div>
+                        </div>
+                    </a>
+
+                    <a href="code-review.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon code">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="tool-title">Code Review</div>
+                        </div>
+                        <div class="tool-description">
+                            Analyze source code with AI-powered tools. Review architecture, 
+                            identify issues, provide technical recommendations, and assess code quality with industry standards.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">8 Files Reviewed</div>
+                            <div class="tool-status completed">Completed</div>
+                        </div>
+                    </a>
+
+                    <a href="video-interview.html" class="tool-card">
+                        <div class="tool-header">
+                            <div class="tool-icon interview">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="tool-title">Video Interview</div>
+                        </div>
+                        <div class="tool-description">
+                            Conduct live video interviews with team members. Use integrated questions, 
+                            take notes, record sessions for detailed evaluation, and assess presentation skills professionally.
+                        </div>
+                        <div class="tool-stats">
+                            <div class="tool-progress">Scheduled: 3:00 PM</div>
+                            <div class="tool-status scheduled">Scheduled</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Evaluation Progress -->
+                <div class="evaluation-progress">
+                    <div class="progress-header">
+                        <h2 class="progress-title">
+                            <i class="fas fa-tasks"></i>
+                            Evaluation Progress
+                        </h2>
+                        <div class="progress-percentage" id="overallProgress">25%</div>
+                    </div>
+
+                    <div class="progress-list">
+                        <div class="progress-item">
+                            <div class="progress-icon completed">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Initial Review</div>
+                                <div class="progress-description">Project overview and basic requirements check completed</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon completed">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Code Analysis</div>
+                                <div class="progress-description">Technical implementation and architecture review completed</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon in-progress">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Detailed Scoring</div>
+                                <div class="progress-description">Comprehensive evaluation using weighted criteria in progress</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon pending">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Team Interview</div>
+                                <div class="progress-description">Live discussion with project team members scheduled</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-icon pending">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="progress-details">
+                                <div class="progress-name">Final Report</div>
+                                <div class="progress-description">Comprehensive evaluation summary and recommendations pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="saveProgress()">
+                        <i class="fas fa-save"></i>
+                        Save Progress
+                    </button>
+                    <button class="btn btn-primary" onclick="continueEvaluation()">
+                        <i class="fas fa-arrow-right"></i>
+                        Continue Evaluation
+                    </button>
+                    <button class="btn btn-success" onclick="finalizeEvaluation()" style="display: none;" id="finalizeBtn">
+                        <i class="fas fa-check-circle"></i>
+                        Finalize Evaluation
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="evaluation.js"></script>
+</body>
+</html>

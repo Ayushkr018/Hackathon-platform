@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Review - NexusHack Platform</title>
+    <meta name="description" content="Advanced code review interface for judges. Analyze project source code, provide technical feedback, and assess code quality with AI-powered tools.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="code-review.css">
+</head>
+
+<body data-theme="dark" class="noselect">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="logo-text">
+                    <a href="../index.html" style="color: inherit; text-decoration: none;">NexusHack</a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-star"></i></div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="nav-text">Feedback</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-code"></i></div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-video"></i></div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-images"></i></div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-list-check"></i></div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Code Review</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="AI Analysis" onclick="runAIAnalysis()">
+                            <i class="fas fa-robot"></i>
+                        </button>
+                        <button class="action-btn" title="Export Review" onclick="exportReview()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Code Review Header -->
+                <div class="code-review-header">
+                    <div class="code-review-header-content">
+                        <h1 class="code-review-title">
+                            <i class="fas fa-code"></i>
+                            Advanced Code Review
+                        </h1>
+                        <p class="code-review-subtitle">
+                            Analyze project source code with AI-powered tools. Review architecture, 
+                            identify issues, and provide comprehensive technical feedback with professional insights.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Code Review Layout -->
+                <div class="code-review-layout">
+                    <!-- File Explorer -->
+                    <div class="file-explorer">
+                        <h3 class="explorer-title">
+                            <i class="fas fa-folder-open"></i>
+                            Project Files
+                        </h3>
+                        
+                        <div class="project-info">
+                            <div class="project-name">DeFi Portfolio Tracker</div>
+                            <div class="project-language">React • Node.js • Solidity</div>
+                        </div>
+
+                        <ul class="file-tree" id="fileTree">
+                            <!-- Files will be dynamically loaded here -->
+                        </ul>
+                    </div>
+
+                    <!-- Code Viewer -->
+                    <div class="code-viewer">
+                        <div class="code-header">
+                            <div class="current-file" id="currentFile">Select a file to view</div>
+                            <div class="code-actions">
+                                <button class="code-btn" onclick="copyCode()">
+                                    <i class="fas fa-copy"></i>Copy
+                                </button>
+                                <button class="code-btn" onclick="formatCode()">
+                                    <i class="fas fa-magic"></i>Format
+                                </button>
+                                <button class="code-btn" onclick="analyzeSecurity()">
+                                    <i class="fas fa-shield-alt"></i>Security
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="codeContent">
+                            <div class="empty-code-state">
+                                <i class="fas fa-code"></i>
+                                <h3>Ready to Review Code</h3>
+                                <p>Select a file from the project explorer to start reviewing code and analyzing its quality with advanced tools.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Panel -->
+                    <div class="review-panel">
+                        <h3 class="review-title">
+                            <i class="fas fa-clipboard-list"></i>
+                            Code Analysis
+                        </h3>
+
+                        <!-- Code Quality Metrics -->
+                        <div class="code-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">Overall Quality</span>
+                                <span class="metric-value excellent">
+                                    <i class="fas fa-check-circle"></i>Excellent
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Code Complexity</span>
+                                <span class="metric-value good">
+                                    <i class="fas fa-exclamation-triangle"></i>Moderate
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Security Score</span>
+                                <span class="metric-value excellent">
+                                    <i class="fas fa-shield-alt"></i>A+
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Documentation</span>
+                                <span class="metric-value good">
+                                    <i class="fas fa-book"></i>Good
+                                </span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Test Coverage</span>
+                                <span class="metric-value excellent">
+                                    <i class="fas fa-vial"></i>85%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="comments-section">
+                            <div class="comments-header">
+                                <h4>Review Comments</h4>
+                                <button class="add-comment-btn" onclick="addComment()">
+                                    <i class="fas fa-plus"></i>Add Comment
+                                </button>
+                            </div>
+                            <div class="comments-list" id="commentsList">
+                                <!-- Comments will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- AI Suggestions -->
+                        <div class="ai-suggestions">
+                            <h4 class="ai-title">
+                                <i class="fas fa-robot"></i>AI Suggestions
+                            </h4>
+                            <div class="suggestion-item" onclick="applySuggestion('performance')">
+                                <div class="suggestion-title">Performance Optimization</div>
+                                <div class="suggestion-content">
+                                    Consider implementing memoization for expensive calculations in the portfolio tracker component.
+                                </div>
+                            </div>
+                            <div class="suggestion-item" onclick="applySuggestion('security')">
+                                <div class="suggestion-title">Security Enhancement</div>
+                                <div class="suggestion-content">
+                                    Add input validation for user wallet addresses to prevent injection attacks.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="code-review.js"></script>
+</body>
+</html>

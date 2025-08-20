@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Interview - NexusHack Platform</title>
+    <meta name="description" content="Conduct virtual video interviews with hackathon participants. Advanced video conferencing with recording, screen sharing, and evaluation tools.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="video-interview.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fas fa-video"></i></div>
+                <div class="logo-text">
+                    <a href="../index.html">NexusHack</a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-star"></i></div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="nav-text">Feedback</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-code"></i></div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-video"></i></div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-images"></i></div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-list-check"></i></div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Video Interview</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="Interview Settings" onclick="openSettings()">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="action-btn" title="Full Screen" onclick="toggleFullscreen()">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Interview Status -->
+            <div class="interview-status">
+                <div class="status-info">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Interview in Progress</span>
+                </div>
+                <div class="interview-timer" id="interviewTimer">00:15:32</div>
+                <div class="interview-meta">
+                    <span><i class="fas fa-users"></i> 3 Participants</span>
+                    <span><i class="fas fa-record-vinyl"></i> Recording</span>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <main class="content">
+                <div class="video-interview-layout">
+                    <!-- Video Main Area -->
+                    <div class="video-main">
+                        <div class="video-area">
+                            <!-- Video Grid -->
+                            <div class="video-grid multi-view" id="videoGrid">
+                                <!-- Main Video Stream -->
+                                <div class="video-stream main">
+                                    <div class="connection-status excellent">HD</div>
+                                    <div class="video-placeholder">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>Team Leader - Alex Johnson</span>
+                                        <small>Camera connecting...</small>
+                                    </div>
+                                    <div class="video-overlay">
+                                        <span class="participant-name">Alex Johnson</span>
+                                        <div class="participant-status">
+                                            <span class="status-indicator online"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Secondary Video Stream -->
+                                <div class="video-stream secondary">
+                                    <div class="connection-status good">HD</div>
+                                    <div class="video-placeholder">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>You (Judge)</span>
+                                    </div>
+                                    <div class="video-overlay">
+                                        <span class="participant-name">Dr. Jane Smith</span>
+                                        <div class="participant-status">
+                                            <span class="status-indicator online"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Video Controls -->
+                            <div class="video-controls">
+                                <button class="control-btn mute" onclick="toggleMute()" title="Mute/Unmute (Ctrl+M)">
+                                    <i class="fas fa-microphone" id="muteIcon"></i>
+                                </button>
+                                <button class="control-btn video" onclick="toggleVideo()" title="Video On/Off (Ctrl+V)">
+                                    <i class="fas fa-video" id="videoIcon"></i>
+                                </button>
+                                <button class="control-btn screen" onclick="toggleScreen()" title="Screen Share">
+                                    <i class="fas fa-desktop" id="screenIcon"></i>
+                                </button>
+                                <button class="control-btn record active" onclick="toggleRecording()" title="Recording">
+                                    <i class="fas fa-record-vinyl" id="recordIcon"></i>
+                                </button>
+                                <button class="control-btn end" onclick="endInterview()" title="End Interview">
+                                    <i class="fas fa-phone-slash" id="endIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interview Sidebar -->
+                    <div class="video-sidebar interview-sidebar">
+                        <div class="sidebar-tabs">
+                            <button class="tab-btn active" onclick="switchTab('participants')">
+                                <i class="fas fa-users"></i> Participants
+                            </button>
+                            <button class="tab-btn" onclick="switchTab('questions')">
+                                <i class="fas fa-question-circle"></i> Questions
+                            </button>
+                            <button class="tab-btn" onclick="switchTab('notes')">
+                                <i class="fas fa-sticky-note"></i> Notes
+                            </button>
+                        </div>
+
+                        <div class="sidebar-content">
+                            <!-- Participants Tab -->
+                            <div class="tab-content" id="participantsTab">
+                                <div class="participants-list">
+                                    <div class="participant-item">
+                                        <div class="participant-avatar">AJ</div>
+                                        <div class="participant-info">
+                                            <div class="participant-name">Alex Johnson</div>
+                                            <div class="participant-role">Team Leader • Online</div>
+                                        </div>
+                                        <div class="participant-controls">
+                                            <button class="mini-btn mute" title="Mute Participant" onclick="muteParticipant('AJ')">
+                                                <i class="fas fa-microphone-slash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="participant-item">
+                                        <div class="participant-avatar">SM</div>
+                                        <div class="participant-info">
+                                            <div class="participant-name">Sarah Miller</div>
+                                            <div class="participant-role">Developer • Online</div>
+                                        </div>
+                                        <div class="participant-controls">
+                                            <button class="mini-btn mute" title="Mute Participant" onclick="muteParticipant('SM')">
+                                                <i class="fas fa-microphone-slash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="participant-item">
+                                        <div class="participant-avatar">JS</div>
+                                        <div class="participant-info">
+                                            <div class="participant-name">Dr. Jane Smith</div>
+                                            <div class="participant-role">Senior Judge • Host</div>
+                                        </div>
+                                        <div class="participant-controls">
+                                            <span style="font-size: 0.8rem; color: var(--success); font-weight: 600;">HOST</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Questions Tab -->
+                            <div class="tab-content" id="questionsTab" style="display: none;">
+                                <div class="questions-panel">
+                                    <div class="question-item" onclick="askQuestion(1)">
+                                        <div class="question-text">
+                                            Can you walk us through the architecture of your solution?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Technical</span>
+                                            <span>Ready to ask</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="question-item asked" onclick="askQuestion(2)">
+                                        <div class="question-text">
+                                            What inspired your team to tackle this problem?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Background</span>
+                                            <span>Asked 5 min ago</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="question-item" onclick="askQuestion(3)">
+                                        <div class="question-text">
+                                            How does your solution compare to existing alternatives?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Innovation</span>
+                                            <span>Ready to ask</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="question-item" onclick="askQuestion(4)">
+                                        <div class="question-text">
+                                            What are the biggest technical challenges you faced?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Implementation</span>
+                                            <span>Ready to ask</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="question-item" onclick="askQuestion(5)">
+                                        <div class="question-text">
+                                            How do you plan to scale this solution in the future?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Business</span>
+                                            <span>Ready to ask</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="question-item" onclick="askQuestion(6)">
+                                        <div class="question-text">
+                                            What technologies did you use and why?
+                                        </div>
+                                        <div class="question-meta">
+                                            <span class="question-category">Technical</span>
+                                            <span>Ready to ask</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notes Tab -->
+                            <div class="tab-content" id="notesTab" style="display: none;">
+                                <div class="notes-panel">
+                                    <textarea class="notes-textarea" id="interviewNotes" 
+                                            placeholder="Take notes during the interview...
+
+Key evaluation points:
+• Technical implementation quality
+• Innovation and creativity level  
+• Team collaboration effectiveness
+• Problem-solving approach
+• Presentation clarity
+• Market potential assessment
+
+Real-time notes:
+- Team shows strong technical foundation
+- Creative approach to blockchain integration
+- Good understanding of user needs
+- Clear communication between team members
+- Scalable architecture design
+- Realistic business model">Take notes during the interview...
+
+Key evaluation points:
+• Technical implementation quality
+• Innovation and creativity level  
+• Team collaboration effectiveness
+• Problem-solving approach
+• Presentation clarity
+• Market potential assessment
+
+Real-time notes:
+- Team shows strong technical foundation
+- Creative approach to blockchain integration
+- Good understanding of user needs
+- Clear communication between team members
+- Scalable architecture design
+- Realistic business model</textarea>
+                                    
+                                    <div class="notes-actions">
+                                        <button class="btn btn-secondary" onclick="saveNotes()">
+                                            <i class="fas fa-save"></i> Save Notes
+                                        </button>
+                                        <button class="btn btn-primary" onclick="exportNotes()">
+                                            <i class="fas fa-download"></i> Export
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="video-interview.js"></script>
+
+</body>
+</html>

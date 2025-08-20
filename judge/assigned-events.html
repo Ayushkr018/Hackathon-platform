@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigned Events - NexusHack Platform</title>
+    <meta name="description" content="Manage your assigned hackathon events as a judge. View event details, schedules, participants, and evaluation deadlines.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="assigned-events.css">
+</head>
+
+<body data-theme="dark" class="noselect">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <a href="../index.html" style="color: inherit; text-decoration: none;">NexusHack</a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Judge Panel</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="assigned-events.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="nav-text">Assigned Events</div>
+                        <div class="nav-badge">3</div>
+                    </a>
+                    <a href="evaluation.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="nav-text">Evaluation</div>
+                        <div class="nav-badge">12</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assessment Tools</div>
+                    <a href="scoring.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-star"></i></div>
+                        <div class="nav-text">Scoring</div>
+                    </a>
+                    <a href="feedback.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="nav-text">Feedback</div>
+                    </a>
+                    <a href="code-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-code"></i></div>
+                        <div class="nav-text">Code Review</div>
+                    </a>
+                    <a href="video-interview.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-video"></i></div>
+                        <div class="nav-text">Video Interview</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="project-gallery.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-images"></i></div>
+                        <div class="nav-text">Project Gallery</div>
+                    </a>
+                    <a href="evaluation-criteria.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-list-check"></i></div>
+                        <div class="nav-text">Criteria Setup</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <a href="../shared/help.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="nav-text">Help & Support</div>
+                    </a>
+                    <a href="../shared/settings.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Settings</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Jane Smith</div>
+                    <div class="user-role">Senior Judge</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Assigned Events</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn" title="Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="action-btn" title="Messages" aria-label="Messages">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back to Dashboard">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Events Header -->
+                <div class="events-header">
+                    <div class="events-header-content">
+                        <h1 class="events-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Assigned Events
+                        </h1>
+                        <p class="events-subtitle">
+                            Manage all your assigned hackathon events. View schedules, participants, 
+                            track evaluation progress, and access event-specific tools and analytics.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Events Stats -->
+                <div class="events-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                        <div class="stat-value" id="totalEvents">3</div>
+                        <div class="stat-title">Total Events</div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>1 new this week
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-value" id="totalParticipants">847</div>
+                        <div class="stat-title">Total Participants</div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>23% increase
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="stat-value" id="projectsEvaluated">47</div>
+                        <div class="stat-title">Projects Evaluated</div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>12 this week
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-value">18.5</div>
+                        <div class="stat-title">Avg. Review Time (min)</div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-down"></i>2min faster
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters & Search -->
+                <div class="events-filters">
+                    <div class="filter-group">
+                        <label class="filter-label">Status:</label>
+                        <select class="filter-select" id="statusFilter" onchange="filterEvents()">
+                            <option value="all">All Events</option>
+                            <option value="live">Live Now</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Category:</label>
+                        <select class="filter-select" id="categoryFilter" onchange="filterEvents()">
+                            <option value="all">All Categories</option>
+                            <option value="web3">Web3 & Blockchain</option>
+                            <option value="ai">AI & ML</option>
+                            <option value="mobile">Mobile Apps</option>
+                            <option value="iot">IoT & Hardware</option>
+                            <option value="fintech">Fintech</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search events..." id="searchInput">
+                    </div>
+                </div>
+
+                <!-- Events Grid -->
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be dynamically loaded here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="assigned-events.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Evaluation - NexusHack Platform</title>
+    <meta name="description" content="Advanced batch evaluation interface for judges to efficiently review multiple hackathon submissions with AI assistance and smart workflows.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+
+    <link rel="stylesheet" href="batch-evaluation.css">
+</head>
+
+<body data-theme="dark" class="noselect">
+    <!-- AI Assistant Modal -->
+    <div class="ai-modal" id="aiModal">
+        <div class="ai-modal-content">
+            <div class="ai-modal-header">
+                <div class="ai-modal-title">
+                    <i class="fas fa-robot"></i>
+                    AI Assistant
+                </div>
+                <button class="ai-close" onclick="closeAiModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="ai-progress">
+                <div class="ai-progress-bar" id="aiProgressBar"></div>
+            </div>
+            <div class="ai-status" id="aiStatus">Initializing AI evaluation system...</div>
+        </div>
+    </div>
+
+    <!-- Batch Container -->
+    <div class="batch-container">
+        <!-- Batch Topbar -->
+        <header class="batch-topbar">
+            <div class="batch-topbar-left">
+                <a href="../index.html" class="batch-logo">
+                    <i class="fas fa-layer-group"></i>
+                    <span>NexusHack</span>
+                </a>
+                <h1 class="batch-title">Batch Evaluation</h1>
+            </div>
+
+            <div class="batch-topbar-right">
+                <div class="batch-actions">
+                    <button class="batch-action-btn" title="AI Assistant" onclick="openAiAssistant()">
+                        <i class="fas fa-robot"></i>
+                    </button>
+                    <button class="batch-action-btn" title="Export Results" onclick="exportResults()">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="batch-action-btn" onclick="backToDashboard()" title="Back to Dashboard">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Batch Content -->
+        <main class="batch-content">
+            <!-- Batch Header -->
+            <div class="batch-header">
+                <div class="batch-header-content">
+                    <h1 class="batch-header-title">
+                        <i class="fas fa-layer-group"></i>
+                        Batch Evaluation Center
+                    </h1>
+                    <p class="batch-header-subtitle">
+                        Efficiently evaluate multiple hackathon submissions with advanced batch processing, AI assistance, and intelligent scoring workflows.
+                    </p>
+                    <div class="batch-stats">
+                        <div class="batch-stat">
+                            <span class="batch-stat-number" id="totalProjects">24</span>
+                            <span class="batch-stat-label">Total Projects</span>
+                        </div>
+                        <div class="batch-stat">
+                            <span class="batch-stat-number" id="selectedProjects">0</span>
+                            <span class="batch-stat-label">Selected</span>
+                        </div>
+                        <div class="batch-stat">
+                            <span class="batch-stat-number" id="completedProjects">18</span>
+                            <span class="batch-stat-label">Completed</span>
+                        </div>
+                        <div class="batch-stat">
+                            <span class="batch-stat-number">4.2/5</span>
+                            <span class="batch-stat-label">Avg Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Batch Controls -->
+            <div class="batch-controls">
+                <div class="batch-filters">
+                    <div class="batch-filter-group">
+                        <span class="batch-filter-label">Status:</span>
+                        <select class="batch-filter-select" id="statusFilter" onchange="filterProjects()">
+                            <option value="all">All Projects</option>
+                            <option value="pending">Pending Review</option>
+                            <option value="reviewed">Already Reviewed</option>
+                            <option value="flagged">Flagged</option>
+                        </select>
+                    </div>
+                    <div class="batch-filter-group">
+                        <span class="batch-filter-label">Category:</span>
+                        <select class="batch-filter-select" id="categoryFilter" onchange="filterProjects()">
+                            <option value="all">All Categories</option>
+                            <option value="ai">Artificial Intelligence</option>
+                            <option value="blockchain">Blockchain & Web3</option>
+                            <option value="mobile">Mobile Development</option>
+                            <option value="web">Web Applications</option>
+                            <option value="iot">Internet of Things</option>
+                        </select>
+                    </div>
+                    <div class="batch-filter-group">
+                        <span class="batch-filter-label">Priority:</span>
+                        <select class="batch-filter-select" id="priorityFilter" onchange="filterProjects()">
+                            <option value="all">All Priority</option>
+                            <option value="high">High Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="low">Low Priority</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="batch-actions-group">
+                    <button class="btn btn-secondary" onclick="selectAll()">
+                        <i class="fas fa-check-double"></i>
+                        Select All
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearSelection()">
+                        <i class="fas fa-times"></i>
+                        Clear
+                    </button>
+                    <button class="btn btn-primary" onclick="startBatchEvaluation()" id="batchEvaluateBtn">
+                        <i class="fas fa-play"></i>
+                        Evaluate Selected
+                    </button>
+                </div>
+            </div>
+
+            <!-- Batch Projects Grid -->
+            <div class="batch-projects-grid" id="batchProjectsGrid">
+                <!-- Projects will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="batch-evaluation.js"></script>
+</body>
+</html>
