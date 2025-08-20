@@ -10,100 +10,29 @@ const {
   deleteEvent,
   registerForEvent,
   getEventParticipants,
-  // getEventTeams // This function does not exist in your controller, so we remove it for now
-} = require('../controllers/eventcontroller'); // Corrected filename case
+} = require('../controllers/eventcontroller');
 
 const router = express.Router();
 
-/**
- * @swagger
- * /api/events:
- * post:
- * tags:
- * - Events
- * summary: Create a new event
- * security:
- * - bearerAuth: []
- * requestBody:
- * required: true
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * name:
- * type: string
- * description:
- * type: string
- * startDate:
- * type: string
- * format: date-time
- * endDate:
- * type: string
- * format: date-time
- * registrationDeadline:
- * type: string
- * format: date-time
- * maxTeamSize:
- * type: integer
- * required:
- * - name
- * - description
- * - startDate
- * - endDate
- * - registrationDeadline
- * - maxTeamSize
- * responses:
- * '201':
- * description: Event created successfully
- */
+// Create event - Requires user to be an organizer or admin
 router.post('/', protect, restrictTo('organizer', 'admin'), validate(createEventSchema), createEvent);
 
-/**
- * @swagger
- * /api/events:
- * get:
- * tags:
- * - Events
- * summary: Get all events with optional filters
- * parameters:
- * - name: search
- * in: query
- * description: Search events by name, description, or themes
- * schema:
- * type: string
- * - name: status
- * in: query
- * description: Filter by event status
- * schema:
- * type: string
- * enum: [draft, published, ongoing, completed, cancelled]
- * - name: page
- * in: query
- * description: Page number for pagination
- * schema:
- * type: integer
- * minimum: 1
- * - name: limit
- * in: query
- * description: Number of events per page
- * schema:
- * type: integer
- * minimum: 1
- * maximum: 50
- * responses:
- * '200':
- * description: List of events
- */
+// Get all events - Public, no authentication needed
 router.get('/', getEvents);
 
+// Get single event - Public, no authentication needed
 router.get('/:id', getEvent);
+
+// Update event - Requires user to be an organizer or admin
 router.put('/:id', protect, restrictTo('organizer', 'admin'), validate(updateEventSchema), updateEvent);
+
+// Delete event - Requires user to be an organizer or admin
 router.delete('/:id', protect, restrictTo('organizer', 'admin'), deleteEvent);
 
+// Register for event - Requires user to be a participant
 router.post('/:id/register', protect, restrictTo('participant'), registerForEvent);
-router.get('/:id/participants', protect, restrictTo('organizer', 'judge', 'admin'), getEventParticipants);
 
-// router.get('/:id/teams', protect, getEventTeams); // This line is removed because the controller function is missing
+// Get event participants - Requires user to be an organizer, judge, or admin
+router.get('/:id/participants', protect, restrictTo('organizer', 'judge', 'admin'), getEventParticipants);
 
 module.exports = router;
