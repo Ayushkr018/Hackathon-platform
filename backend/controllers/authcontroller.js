@@ -32,12 +32,26 @@ const createSendToken = (user, statusCode, res) => {
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
+
+    // 1. Check if a user with this email already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      // 2. If the user exists, return a clear error message
+      return res.status(400).json({
+        status: 'fail',
+        message: 'An account with this email address already exists.'
+      });
+    }
+
+    // 3. If no user exists, create the new user
     const newUser = await User.create({
       name,
       email,
-      passwordHash: password,
+      passwordHash: password, // The model will hash this automatically
       role
     });
+
     createSendToken(newUser, 201, res);
   } catch (error) {
     next(error);
@@ -176,3 +190,4 @@ exports.getMe = (req, res, next) => {
 exports.logout = (req, res) => {
   res.status(200).json({ status: 'success', message: 'Logout successful' });
 };
+
