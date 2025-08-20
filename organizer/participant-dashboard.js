@@ -553,6 +553,17 @@ class ModernParticipantManager {
         }, 3000);
     }
 }
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('modernOrganizerSession');
+        // Create a temporary instance to show toast
+        const tempManager = new ModernParticipantManager();
+        tempManager.showToast('Logging out...', 'info');
+        setTimeout(() => {
+            window.location.href = '../auth/login.html';
+        }, 1000);
+    }
+}
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
