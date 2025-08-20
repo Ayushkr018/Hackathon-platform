@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NexusHack Platform</title>
+    <meta name="description" content="Sign in to your NexusHack account and access the next-generation hackathon ecosystem.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <div class="login-container">
+        <!-- Left Side - Hero -->
+        <div class="login-hero">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <div class="hero-logo-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="hero-logo-text">NexusHack</div>
+                </div>
+                
+                <h1 class="hero-title">Welcome Back to the Future of Hackathons</h1>
+                <p class="hero-subtitle">
+                    Join thousands of innovators who are building the next generation 
+                    of solutions with our AI-powered hackathon ecosystem.
+                </p>
+                
+                <ul class="hero-features">
+                    <li>AI-powered team matching</li>
+                    <li>Real-time collaboration tools</li>
+                    <li>Enterprise-grade security</li>
+                    <li>Global hackathon network</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="login-form-section">
+            <div class="login-form-container">
+                <a href="../index.html" class="back-link" onclick="handlePageTransition(event, this.href)">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+
+                <div class="form-header">
+                    <h2 class="form-title">Sign In</h2>
+                    <p class="form-subtitle">Access your NexusHack account and continue your innovation journey</p>
+                </div>
+
+                <!-- Error/Success Messages -->
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+
+                <!-- Social Login -->
+                <div class="social-login">
+                    <div class="social-buttons">
+                        <a href="#" class="social-btn google" onclick="handleSocialLogin('google')">
+                            <div class="social-icon">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            Continue with Google
+                        </a>
+                        <a href="#" class="social-btn github" onclick="handleSocialLogin('github')">
+                            <div class="social-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            Continue with GitHub
+                        </a>
+                        <a href="#" class="social-btn facebook" onclick="handleSocialLogin('facebook')">
+                            <div class="social-icon">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            Continue with Facebook
+                        </a>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>or continue with email</span>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="form-input" 
+                                placeholder="Enter your password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="remember" name="remember" class="checkbox">
+                            <label for="remember" class="checkbox-label">Remember me</label>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-link" onclick="handlePageTransition(event, this.href)">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="form-footer">
+                    <p>Don't have an account? 
+                        <a href="register.html" class="register-link" onclick="handlePageTransition(event, this.href)">
+                            Create Account
+                        </a>
+                    </p>
+                    
+                    <div class="role-selector">
+                        <a href="register.html?role=participant" class="role-btn" onclick="handlePageTransition(event, this.href)">
+                            Join as Participant
+                        </a>
+                        <a href="register.html?role=organizer" class="role-btn" onclick="handlePageTransition(event, this.href)">
+                            Become Organizer
+                        </a>
+                        <a href="register.html?role=judge" class="role-btn" onclick="handlePageTransition(event, this.href)">
+                            Join as Judge
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
