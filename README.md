@@ -751,7 +751,7 @@ If you find NexusHack Platform valuable, please ⭐ **star the repository** to s
 
 ### 💻 **Built with ❤️ by Developers, for Developers**
 
-<img src="https://images.unsplash.com/photo-1614849286447-7d59a2cdc072?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Innovation" width="200" style="border-radius: 8px;">
+<img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Innovation" width="200" style="border-radius: 8px;">
 
 **🌟 Empowering Innovation, One Hackathon at a Time 🌟**
 
