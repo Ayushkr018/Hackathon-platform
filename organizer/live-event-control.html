@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Event Control - NexusHack Platform</title>
+    <meta name="description" content="Advanced live event control center for hackathon organizers. Real-time monitoring, live streaming controls, emergency management, participant tracking, and comprehensive event orchestration.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCdncmFkaWVudDApJy8+CjxwYXRoIGQ9Ik04IDE2TDE2IDhMMjQgMTZMMTYgMjRMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUVBIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=">
+    
+    <style>
+        /* ENHANCED CSS VARIABLES - MODERN LIVE EVENT THEME */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #7c8aed;
+            --secondary: #764ba2;
+            --accent: #4facfe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --organizer-blue: #3b82f6;
+            --organizer-green: #10b981;
+            --organizer-purple: #8b5cf6;
+            --organizer-orange: #f97316;
+            --organizer-pink: #ec4899;
+            --organizer-cyan: #06b6d4;
+            --organizer-indigo: #6366f1;
+            --organizer-red: #ef4444;
+            
+            /* Perfect Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4facfe 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            --gradient-hover: linear-gradient(135deg, #7c8aed 0%, #8b5fbf 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-ai: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-judge: linear-gradient(135deg, #f59e0b 0%, #667eea 100%);
+            --gradient-organizer: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            --gradient-participant: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-analytics: linear-gradient(135deg, #667eea 0%, #8b5cf6 100%);
+            --gradient-leaderboard: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+            --gradient-plagiarism: linear-gradient(135deg, #ef4444 0%, #8b5cf6 100%);
+            --gradient-web3: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-payment: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-messaging: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --gradient-certificate: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            --gradient-live: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            --gradient-broadcast: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            --gradient-emergency: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            
+            /* Dark Theme Colors */
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111127;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --bg-select: rgba(22, 33, 62, 0.95);
+            --bg-option: #1a1a2e;
+            --bg-option-hover: #2a2a4e;
+            --bg-modal: rgba(10, 10, 26, 0.95);
+            --bg-organizer: rgba(59, 130, 246, 0.1);
+            --bg-participant: rgba(16, 185, 129, 0.1);
+            --bg-judge: rgba(245, 158, 11, 0.1);
+            --bg-analytics: rgba(102, 126, 234, 0.1);
+            --bg-leaderboard: rgba(249, 115, 22, 0.1);
+            --bg-plagiarism: rgba(239, 68, 68, 0.1);
+            --bg-web3: rgba(139, 92, 246, 0.1);
+            --bg-payment: rgba(16, 185, 129, 0.1);
+            --bg-messaging: rgba(6, 182, 212, 0.1);
+            --bg-certificate: rgba(245, 158, 11, 0.1);
+            --bg-live: rgba(239, 68, 68, 0.1);
+            --bg-ai: rgba(139, 92, 246, 0.1);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: var(--primary);
+            --text-option: #ffffff;
+            
+            /* Border Colors */
+            --border: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-organizer: rgba(59, 130, 246, 0.3);
+            --border-participant: rgba(16, 185, 129, 0.3);
+            --border-judge: rgba(245, 158, 11, 0.3);
+            --border-analytics: rgba(102, 126, 234, 0.3);
+            --border-leaderboard: rgba(249, 115, 22, 0.3);
+            --border-plagiarism: rgba(239, 68, 68, 0.3);
+            --border-web3: rgba(139, 92, 246, 0.3);
+            --border-payment: rgba(16, 185, 129, 0.3);
+            --border-messaging: rgba(6, 182, 212, 0.3);
+            --border-certificate: rgba(245, 158, 11, 0.3);
+            --border-live: rgba(239, 68, 68, 0.3);
+            
+            /* Layout Variables */
+            --sidebar-bg: var(--bg-secondary);
+            --topbar-bg: var(--bg-card);
+            --sidebar-width: 300px;
+            --sidebar-collapsed-width: 80px;
+            --topbar-height: 75px;
+            --mobile-topbar-height: 65px;
+            --content-padding: 2rem;
+            --mobile-content-padding: 1rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.35);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.45);
+            --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-glow-strong: 0 0 48px rgba(102, 126, 234, 0.45);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.25);
+            --shadow-organizer: 0 0 32px rgba(59, 130, 246, 0.25);
+            --shadow-participant: 0 0 32px rgba(16, 185, 129, 0.25);
+            --shadow-judge: 0 0 32px rgba(245, 158, 11, 0.25);
+            --shadow-analytics: 0 0 32px rgba(102, 126, 234, 0.25);
+            --shadow-leaderboard: 0 0 32px rgba(249, 115, 22, 0.25);
+            --shadow-plagiarism: 0 0 32px rgba(239, 68, 68, 0.25);
+            --shadow-web3: 0 0 32px rgba(139, 92, 246, 0.25);
+            --shadow-payment: 0 0 32px rgba(16, 185, 129, 0.25);
+            --shadow-messaging: 0 0 32px rgba(6, 182, 212, 0.25);
+            --shadow-certificate: 0 0 32px rgba(245, 158, 11, 0.25);
+            --shadow-live: 0 0 32px rgba(239, 68, 68, 0.35);
+            --shadow-emergency: 0 0 48px rgba(220, 38, 38, 0.5);
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --bg-select: rgba(255, 255, 255, 0.95);
+            --bg-option: #ffffff;
+            --bg-option-hover: #f1f5f9;
+            --bg-modal: rgba(255, 255, 255, 0.95);
+            --bg-organizer: rgba(59, 130, 246, 0.05);
+            --bg-participant: rgba(16, 185, 129, 0.05);
+            --bg-judge: rgba(245, 158, 11, 0.05);
+            --bg-analytics: rgba(102, 126, 234, 0.05);
+            --bg-leaderboard: rgba(249, 115, 22, 0.05);
+            --bg-plagiarism: rgba(239, 68, 68, 0.05);
+            --bg-web3: rgba(139, 92, 246, 0.05);
+            --bg-payment: rgba(16, 185, 129, 0.05);
+            --bg-messaging: rgba(6, 182, 212, 0.05);
+            --bg-certificate: rgba(245, 158, 11, 0.05);
+            --bg-live: rgba(239, 68, 68, 0.05);
+            --bg-ai: rgba(139, 92, 246, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-accent: var(--primary);
+            --text-option: #1e293b;
+            --border: rgba(71, 85, 105, 0.25);
+            --border-light: rgba(71, 85, 105, 0.15);
+            --border-accent: rgba(102, 126, 234, 0.4);
+            --border-focus: rgba(102, 126, 234, 0.6);
+            --border-organizer: rgba(59, 130, 246, 0.3);
+            --border-participant: rgba(16, 185, 129, 0.3);
+            --border-judge: rgba(245, 158, 11, 0.3);
+            --border-analytics: rgba(102, 126, 234, 0.3);
+            --border-leaderboard: rgba(249, 115, 22, 0.3);
+            --border-plagiarism: rgba(239, 68, 68, 0.3);
+            --border-web3: rgba(139, 92, 246, 0.3);
+            --border-payment: rgba(16, 185, 129, 0.3);
+            --border-messaging: rgba(6, 182, 212, 0.3);
+            --border-certificate: rgba(245, 158, 11, 0.3);
+            --border-live: rgba(239, 68, 68, 0.3);
+            --sidebar-bg: var(--bg-primary);
+            --topbar-bg: var(--bg-primary);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.20);
+            --shadow-focus: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        /* PERFECT RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *::before, *::after { box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+            overflow-x: hidden; transition: var(--transition-slow);
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; height: 100vh; display: flex; flex-direction: column;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-glass); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; transition: var(--transition); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* MOBILE OVERLAY */
+        .mobile-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);
+            z-index: 999; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(4px);
+        }
+        .mobile-overlay.active { opacity: 1; visibility: visible; }
+
+        /* DASHBOARD LAYOUT */
+        .dashboard-container { display: flex; height: 100vh; overflow: hidden; position: relative; }
+
+        /* MODERN SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--sidebar-bg); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; position: fixed; left: 0; top: 0; height: 100vh;
+            z-index: 1000; transition: var(--transition); backdrop-filter: blur(20px);
+            user-select: none; overflow-y: auto; overflow-x: hidden;
+        }
+        .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); box-shadow: var(--shadow-xl); }
+            .sidebar.open { transform: translateX(0); }
+        }
+
+        /* MODERN LOGO */
+        .sidebar-logo {
+            padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem;
+            border-bottom: 1px solid var(--border); min-height: var(--topbar-height); flex-shrink: 0;
+        }
+        .logo-icon {
+            width: 45px; height: 45px; background: var(--gradient-live); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1.3rem; box-shadow: var(--shadow-glow); transition: var(--transition); flex-shrink: 0;
+        }
+        .logo-text {
+            font-size: 1.6rem; font-weight: 900; background: var(--gradient-live);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            transition: var(--transition); white-space: nowrap; overflow: hidden;
+        }
+        .sidebar.collapsed .logo-text { opacity: 0; width: 0; }
+
+        /* MODERN NAVIGATION */
+        .sidebar-nav { flex: 1; padding: 1.5rem 0; overflow-y: auto; overflow-x: hidden; }
+        .nav-section { margin-bottom: 2.5rem; }
+        .nav-section-title {
+            font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.1em; padding: 0 2rem;
+            margin-bottom: 1rem; transition: var(--transition); white-space: nowrap; overflow: hidden;
+        }
+        .sidebar.collapsed .nav-section-title { opacity: 0; height: 0; margin: 0; padding: 0; }
+        .nav-link {
+            display: flex; align-items: center; gap: 1.25rem; padding: 1rem 2rem;
+            color: var(--text-secondary); text-decoration: none; transition: var(--transition);
+            position: relative; font-weight: 500; min-height: 52px; white-space: nowrap; overflow: hidden;
+            border-radius: 0 25px 25px 0; margin-right: 1rem;
+        }
+        .nav-link:hover { 
+            color: var(--text-primary); background: var(--bg-glass-hover); 
+            transform: translateX(4px);
+        }
+        .nav-link.active { 
+            color: var(--danger); background: var(--bg-live); 
+            box-shadow: var(--shadow-live);
+        }
+        .nav-icon { 
+            width: 22px; height: 22px; display: flex; align-items: center; 
+            justify-content: center; font-size: 1.1rem; flex-shrink: 0; 
+        }
+        .nav-text { flex: 1; transition: var(--transition); overflow: hidden; font-size: 0.95rem; }
+        .sidebar.collapsed .nav-text { opacity: 0; width: 0; }
+        .nav-badge {
+            background: var(--gradient-success); color: white; font-size: 0.7rem; font-weight: 700;
+            padding: 0.3rem 0.6rem; border-radius: 12px; min-width: 20px; text-align: center;
+            transition: var(--transition); flex-shrink: 0;
+        }
+        .nav-badge.active { background: var(--gradient-warning); animation: pulse 2s infinite; }
+        .nav-badge.urgent { background: var(--gradient-danger); animation: urgentPulse 1s infinite; }
+        .nav-badge.new { background: var(--gradient-ai); }
+        .nav-badge.live { background: var(--gradient-live); animation: livePulse 1.5s infinite; }
+        .sidebar.collapsed .nav-badge { opacity: 0; width: 0; }
+
+        /* MODERN USER PROFILE */
+        .sidebar-user {
+            padding: 2rem; border-top: 1px solid var(--border); display: flex;
+            align-items: center; gap: 1.25rem; transition: var(--transition); flex-shrink: 0; min-height: 95px;
+            background: var(--bg-glass);
+        }
+        .user-avatar {
+            width: 45px; height: 45px; background: var(--gradient-live); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-weight: 700; font-size: 1rem; flex-shrink: 0; box-shadow: var(--shadow-glow);
+        }
+        .user-info { flex: 1; transition: var(--transition); overflow: hidden; }
+        .user-name {
+            font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .user-role {
+            font-size: 0.85rem; color: var(--text-muted);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar.collapsed .user-info { opacity: 0; width: 0; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column;
+            transition: var(--transition); min-height: 100vh; overflow: hidden;
+        }
+        .sidebar.collapsed + .main-content { margin-left: var(--sidebar-collapsed-width); }
+        @media (max-width: 1024px) { .main-content { margin-left: 0; } }
+
+        /* MODERN TOPBAR */
+        .topbar {
+            background: var(--topbar-bg); border-bottom: 1px solid var(--border); padding: 1.25rem 2.5rem;
+            display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 999; min-height: var(--topbar-height); flex-shrink: 0;
+        }
+        @media (max-width: 768px) { .topbar { padding: 1rem; min-height: var(--mobile-topbar-height); } }
+        .topbar-left { display: flex; align-items: center; gap: 1.5rem; flex: 1; min-width: 0; }
+        .sidebar-toggle {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.6rem; border-radius: 12px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; flex-shrink: 0;
+        }
+        .sidebar-toggle:hover { 
+            background: var(--bg-glass-hover); color: var(--text-primary); 
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .page-title {
+            font-size: 1.6rem; font-weight: 800; color: var(--text-primary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        @media (max-width: 768px) { .page-title { font-size: 1.4rem; } }
+        @media (max-width: 480px) { .page-title { font-size: 1.2rem; } }
+        .live-status {
+            display: flex; align-items: center; gap: 0.5rem; background: var(--gradient-live);
+            color: white; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.85rem; font-weight: 700;
+            animation: livePulse 1.5s infinite;
+        }
+        .live-dot {
+            width: 10px; height: 10px; background: white; border-radius: 50%; 
+            animation: liveBroadcast 1s infinite;
+        }
+        .viewer-count {
+            background: var(--bg-glass); color: var(--text-primary); padding: 0.4rem 0.8rem;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-left: 0.5rem;
+            border: 1px solid var(--border);
+        }
+        .topbar-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .topbar-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        @media (max-width: 480px) { .topbar-actions { gap: 0.5rem; } }
+        .action-btn {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.7rem; border-radius: 12px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            position: relative; outline: none; display: flex; align-items: center; justify-content: center;
+            width: 45px; height: 45px;
+        }
+        @media (max-width: 480px) { .action-btn { width: 40px; height: 40px; padding: 0.6rem; font-size: 0.9rem; } }
+        .action-btn:hover { 
+            background: var(--bg-glass-hover); color: var(--text-primary); 
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .action-btn.live { background: var(--gradient-live); color: white; }
+        .action-btn.broadcast { background: var(--gradient-broadcast); color: white; }
+        .action-btn.emergency { background: var(--gradient-emergency); color: white; animation: emergencyPulse 1s infinite; }
+        .theme-toggle {
+            background: var(--bg-glass); border: 1px solid var(--border); padding: 0.7rem; border-radius: 12px;
+            color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            outline: none; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px;
+        }
+        @media (max-width: 480px) { .theme-toggle { width: 40px; height: 40px; padding: 0.6rem; font-size: 0.9rem; } }
+        .theme-toggle:hover { 
+            background: var(--bg-glass-hover); color: var(--text-primary); 
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+
+        /* CONTENT */
+        .content { flex: 1; padding: var(--content-padding); overflow-y: auto; overflow-x: hidden; }
+        @media (max-width: 768px) { .content { padding: var(--mobile-content-padding); } }
+
+        /* MODERN LIVE EVENT HEADER */
+        .live-header {
+            background: var(--gradient-live); border-radius: 25px; padding: 3.5rem 2.5rem; margin-bottom: 2.5rem;
+            color: white; position: relative; overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .live-header { padding: 2.5rem 1.5rem; margin-bottom: 2rem; border-radius: 20px; }
+        }
+        @media (max-width: 480px) {
+            .live-header { padding: 2rem 1.25rem; margin-bottom: 1.5rem; border-radius: 18px; }
+        }
+        .live-header::before {
+            content: ''; position: absolute; top: 0; right: 0; width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+            border-radius: 50%; transform: translate(50%, -50%);
+        }
+        @media (max-width: 768px) { .live-header::before { width: 250px; height: 250px; } }
+        .live-header-content { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; }
+        .header-main {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem;
+            flex-wrap: wrap; gap: 1.5rem;
+        }
+        .header-info { flex: 1; }
+        .live-title {
+            font-size: 2.8rem; font-weight: 900; margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) { .live-title { font-size: 2.3rem; } }
+        @media (max-width: 480px) { .live-title { font-size: 2rem; } }
+        .live-subtitle {
+            font-size: 1.2rem; opacity: 0.9; margin-bottom: 1.5rem; line-height: 1.5;
+        }
+        @media (max-width: 768px) { .live-subtitle { font-size: 1.1rem; } }
+        @media (max-width: 480px) { .live-subtitle { font-size: 1rem; } }
+        .header-stats {
+            display: flex; gap: 2.5rem; font-size: 1rem; flex-wrap: wrap;
+        }
+        @media (max-width: 480px) { .header-stats { gap: 1.5rem; font-size: 0.9rem; } }
+        .header-actions {
+            display: flex; gap: 1rem; flex-shrink: 0;
+        }
+        @media (max-width: 480px) { .header-actions { width: 100%; justify-content: center; } }
+
+        /* MODERN LIVE STATS */
+        .live-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;
+        }
+        @media (max-width: 768px) { .live-stats { gap: 1.5rem; margin-bottom: 2rem; } }
+        @media (max-width: 480px) { .live-stats { grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.5rem; } }
+        .live-stat-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; transition: var(--transition); position: relative; overflow: hidden; cursor: pointer;
+        }
+        @media (max-width: 480px) { .live-stat-card { padding: 1.5rem; border-radius: 16px; } }
+        .live-stat-card:hover { 
+            transform: translateY(-8px); box-shadow: var(--shadow-lg); 
+            border-color: var(--border-accent);
+        }
+        .live-stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; border-radius: 20px 20px 0 0;
+        }
+        .live-stat-card.viewers::before { background: var(--gradient-live); }
+        .live-stat-card.participants::before { background: var(--gradient-participant); }
+        .live-stat-card.submissions::before { background: var(--gradient-organizer); }
+        .live-stat-card.issues::before { background: var(--gradient-warning); }
+        .stat-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
+        }
+        .stat-icon {
+            width: 50px; height: 50px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1.2rem; box-shadow: var(--shadow-glow);
+        }
+        .stat-icon.viewers { background: var(--gradient-live); }
+        .stat-icon.participants { background: var(--gradient-participant); }
+        .stat-icon.submissions { background: var(--gradient-organizer); }
+        .stat-icon.issues { background: var(--gradient-warning); }
+        .stat-trend {
+            font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem;
+            padding: 0.4rem 0.8rem; border-radius: 20px; font-weight: 600;
+        }
+        .stat-trend.positive { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .stat-trend.negative { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .stat-trend.neutral { background: rgba(107, 114, 128, 0.15); color: var(--text-muted); }
+        .stat-value {
+            font-size: 2.5rem; font-weight: 900; color: var(--text-primary); margin-bottom: 0.5rem;
+            background: var(--gradient-live);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        @media (max-width: 768px) { .stat-value { font-size: 2.2rem; } }
+        @media (max-width: 480px) { .stat-value { font-size: 2rem; } }
+        .stat-title { color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .stat-description { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
+
+        /* MODERN LIVE GRID */
+        .live-grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem;
+        }
+        @media (max-width: 1200px) { .live-grid { grid-template-columns: 1fr; gap: 2rem; } }
+        @media (max-width: 768px) { .live-grid { gap: 1.5rem; margin-bottom: 2rem; } }
+
+        /* MODERN LIVE STREAM CONTROL */
+        .stream-control {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 25px;
+            padding: 2.5rem; transition: var(--transition); box-shadow: var(--shadow-md);
+        }
+        @media (max-width: 768px) { .stream-control { padding: 2rem; border-radius: 20px; } }
+        @media (max-width: 480px) { .stream-control { padding: 1.5rem; border-radius: 18px; } }
+        .control-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;
+        }
+        .control-title {
+            font-size: 1.4rem; font-weight: 800; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        @media (max-width: 480px) { .control-title { font-size: 1.2rem; } }
+        .stream-preview {
+            width: 100%; height: 300px; background: var(--bg-glass); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;
+            border: 2px dashed var(--border); position: relative; overflow: hidden;
+        }
+        .stream-preview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            animation: streamFlow 3s infinite;
+        }
+        .stream-placeholder {
+            text-align: center; color: var(--text-muted);
+        }
+        .stream-placeholder i {
+            font-size: 3rem; margin-bottom: 1rem; color: var(--danger);
+        }
+        .stream-controls {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .control-btn {
+            background: var(--bg-glass); border: 1px solid var(--border); border-radius: 12px;
+            padding: 1rem; text-align: center; cursor: pointer; transition: var(--transition);
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+        }
+        .control-btn:hover { 
+            background: var(--bg-glass-hover); border-color: var(--border-live);
+            transform: translateY(-2px);
+        }
+        .control-btn.active { 
+            background: var(--gradient-live); color: white; border-color: var(--danger);
+        }
+        .control-btn i { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .control-btn span { font-size: 0.85rem; font-weight: 600; }
+        .stream-settings {
+            background: var(--bg-glass); border-radius: 16px; padding: 1.5rem;
+            border: 1px solid var(--border-light);
+        }
+        .setting-row {
+            display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-label { font-weight: 600; font-size: 0.9rem; }
+        .setting-value { 
+            padding: 0.5rem 1rem; background: var(--bg-glass); border-radius: 8px;
+            border: 1px solid var(--border); font-size: 0.8rem; min-width: 100px;
+        }
+
+        /* MODERN MONITORING PANEL */
+        .monitoring-panel {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 25px;
+            padding: 2rem; height: fit-content; position: sticky; top: 2rem; box-shadow: var(--shadow-md);
+        }
+        @media (max-width: 1200px) { .monitoring-panel { position: static; } }
+        @media (max-width: 768px) { .monitoring-panel { padding: 1.5rem; border-radius: 20px; } }
+        @media (max-width: 480px) { .monitoring-panel { padding: 1.25rem; border-radius: 18px; } }
+        .panel-title {
+            font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        @media (max-width: 480px) { .panel-title { font-size: 1.1rem; margin-bottom: 1.25rem; } }
+
+        /* MODERN SYSTEM STATUS */
+        .system-status { margin-bottom: 2.5rem; }
+        .status-list {
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .status-item {
+            display: flex; align-items: center; gap: 1rem; padding: 1rem;
+            background: var(--bg-glass); border-radius: 14px; transition: var(--transition);
+        }
+        .status-item:hover { 
+            background: var(--bg-glass-hover); transform: translateY(-2px);
+        }
+        .status-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .status-icon.online { background: var(--gradient-success); }
+        .status-icon.warning { background: var(--gradient-warning); }
+        .status-icon.offline { background: var(--gradient-danger); }
+        .status-info { flex: 1; }
+        .status-name { font-weight: 700; margin-bottom: 0.25rem; font-size: 0.9rem; }
+        .status-details { font-size: 0.8rem; color: var(--text-muted); }
+        .status-badge {
+            font-size: 0.75rem; padding: 0.3rem 0.6rem; border-radius: 12px; font-weight: 600;
+        }
+        .status-badge.online { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .status-badge.warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .status-badge.offline { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+        /* MODERN LIVE FEED */
+        .live-feed { margin-bottom: 2.5rem; }
+        .feed-list {
+            display: flex; flex-direction: column; gap: 1rem; max-height: 400px; overflow-y: auto;
+        }
+        .feed-item {
+            display: flex; align-items: flex-start; gap: 1rem; padding: 1rem;
+            background: var(--bg-glass); border-radius: 14px; transition: var(--transition);
+        }
+        .feed-item:hover { 
+            background: var(--bg-glass-hover); transform: translateX(4px);
+        }
+        .feed-item.critical { border-left: 4px solid var(--danger); }
+        .feed-item.warning { border-left: 4px solid var(--warning); }
+        .feed-item.info { border-left: 4px solid var(--info); }
+        .feed-icon {
+            width: 35px; height: 35px; border-radius: 50%; background: var(--gradient-live);
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 0.9rem; flex-shrink: 0;
+        }
+        .feed-content { flex: 1; }
+        .feed-title { font-weight: 700; margin-bottom: 0.25rem; font-size: 0.9rem; }
+        .feed-details { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .feed-time { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* MODERN EMERGENCY PANEL */
+        .emergency-panel { margin-bottom: 2.5rem; }
+        .emergency-buttons {
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .emergency-btn {
+            background: var(--gradient-emergency); color: white; border: none; border-radius: 14px;
+            padding: 1.25rem; text-align: center; cursor: pointer; transition: var(--transition);
+            font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            box-shadow: var(--shadow-emergency);
+        }
+        .emergency-btn:hover { 
+            transform: translateY(-3px); box-shadow: var(--shadow-emergency), var(--shadow-glow-strong);
+        }
+        .emergency-btn i { font-size: 1.1rem; }
+
+        /* MODERN PARTICIPANT TRACKING */
+        .participant-tracking {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 25px;
+            padding: 2.5rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-md);
+        }
+        .tracking-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;
+        }
+        .tracking-title {
+            font-size: 1.4rem; font-weight: 800; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .tracking-chart {
+            background: var(--bg-glass); border-radius: 16px; padding: 1.5rem;
+            height: 300px; position: relative; border: 1px solid var(--border-light);
+        }
+
+        /* MODERN BUTTONS */
+        .btn {
+            padding: 1rem 2rem; border: none; border-radius: 14px; font-weight: 700;
+            font-size: 0.95rem; cursor: pointer; transition: var(--transition);
+            text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.75rem; position: relative; overflow: hidden; outline: none; white-space: nowrap;
+        }
+        @media (max-width: 480px) { .btn { padding: 0.875rem 1.75rem; font-size: 0.9rem; border-radius: 12px; } }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-fast);
+        }
+        .btn:hover::before { left: 100%; }
+        .btn-primary { background: var(--gradient-live); color: white; box-shadow: var(--shadow-live); }
+        .btn-primary:hover { 
+            background: var(--gradient-hover); transform: translateY(-3px); 
+            box-shadow: var(--shadow-glow-strong);
+        }
+        .btn-secondary { background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-primary); }
+        .btn-secondary:hover { 
+            background: var(--bg-glass-hover); border-color: var(--border-accent);
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .btn-success { background: var(--gradient-success); color: white; }
+        .btn-success:hover { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+        .btn-broadcast { background: var(--gradient-broadcast); color: white; }
+        .btn-broadcast:hover { transform: translateY(-3px) scale(1.02); }
+        .btn-emergency { background: var(--gradient-emergency); color: white; }
+        .btn-emergency:hover { transform: translateY(-3px) scale(1.02); animation: emergencyPulse 1s infinite; }
+        .btn-small { padding: 0.6rem 1.25rem; font-size: 0.85rem; }
+
+        /* ANIMATIONS */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        @keyframes urgentPulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.8); }
+        }
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.7); }
+        }
+        @keyframes liveBroadcast {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        @keyframes emergencyPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(220, 38, 38, 0.6); }
+            50% { box-shadow: 0 0 35px rgba(220, 38, 38, 0.9); }
+        }
+        @keyframes streamFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* RESPONSIVE MOBILE FIXES */
+        @media (max-width: 640px) { .topbar-actions .action-btn:nth-child(2) { display: none; } }
+        @media (max-width: 360px) {
+            .topbar { padding: 1rem; }
+            .page-title { font-size: 1.1rem; }
+            .live-title { font-size: 1.8rem; }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+            .live-header { padding: 2rem 1.5rem; }
+            .live-title { font-size: 2rem; }
+            .content { padding: 1rem; }
+        }
+
+        /* ACCESSIBILITY & PERFORMANCE */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+        .nav-link:focus, .action-btn:focus, .btn:focus, .theme-toggle:focus, .sidebar-toggle:focus,
+        .live-stat-card:focus, .control-btn:focus, .emergency-btn:focus {
+            outline: 2px solid var(--primary); outline-offset: 2px;
+        }
+        @media (pointer: coarse) {
+            .nav-link, .action-btn, .theme-toggle, .sidebar-toggle, .btn,
+            .live-stat-card, .control-btn, .emergency-btn { min-height: 44px; }
+        }
+        @media print {
+            .sidebar, .topbar, .mobile-overlay, .topbar-actions { display: none !important; }
+            .main-content { margin-left: 0 !important; }
+            .content { padding: 1rem !important; }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Modern Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fas fa-broadcast-tower"></i></div>
+                <div class="logo-text">NexusHack</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main Control</div>
+                    <a href="dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <div class="nav-text">Dashboard</div>
+                    </a>
+                    <a href="event-management.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-calendar-plus"></i></div>
+                        <div class="nav-text">Event Management</div>
+                    </a>
+                    <a href="analytics.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="nav-text">Analytics</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Participant Management</div>
+                    <a href="participant-dashboard.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-users"></i></div>
+                        <div class="nav-text">Participants</div>
+                        <div class="nav-badge">1,247</div>
+                    </a>
+                    <a href="judge-management.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="nav-text">Judge Management</div>
+                        <div class="nav-badge active">15</div>
+                    </a>
+                    <a href="submission-review.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="nav-text">Submissions</div>
+                        <div class="nav-badge urgent">127</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Advanced Features</div>
+                    <a href="leaderboard-control.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="nav-text">Live Leaderboard</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="plagiarism-control.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="nav-text">AI Plagiarism</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="payment-center.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+                        <div class="nav-text">Payment Center</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                    <a href="web3-management.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-coins"></i></div>
+                        <div class="nav-text">Web3 & NFTs</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Event Operations</div>
+                    <a href="event-setup.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                        <div class="nav-text">Event Setup</div>
+                    </a>
+                    <a href="messaging-center.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-bullhorn"></i></div>
+                        <div class="nav-text">Messaging</div>
+                        <div class="nav-badge urgent">5</div>
+                    </a>
+                    <a href="live-event-control.html" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-broadcast-tower"></i></div>
+                        <div class="nav-text">Live Control</div>
+                        <div class="nav-badge live">LIVE</div>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Content & Sponsors</div>
+                    <a href="sponsor-showcase.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="nav-text">Sponsor Showcase</div>
+                        <div class="nav-badge">8</div>
+                    </a>
+                    <a href="certificate-generator.html" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-certificate"></i></div>
+                        <div class="nav-text">Certificates</div>
+                        <div class="nav-badge new">NEW</div>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">AC</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Alex Chen</div>
+                    <div class="user-role">Lead Organizer</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Modern Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Live Event Control</h1>
+                    <div class="live-status" id="liveStatus">
+                        <div class="live-dot"></div>
+                        <span>LIVE</span>
+                        <span class="viewer-count" id="viewerCount">2,847</span>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-actions">
+                        <button class="action-btn live" title="Go Live" onclick="goLive()">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button class="action-btn broadcast" title="Broadcast Message" onclick="broadcastMessage()">
+                            <i class="fas fa-bullhorn"></i>
+                        </button>
+                        <button class="action-btn emergency" title="Emergency Protocol" onclick="emergencyProtocol()">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </button>
+                        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="action-btn" onclick="backToDashboard()" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Modern Live Event Header -->
+                <div class="live-header">
+                    <div class="live-header-content">
+                        <div class="header-main">
+                            <div class="header-info">
+                                <h1 class="live-title">Live Event Command Center</h1>
+                                <p class="live-subtitle">
+                                    Mission control for real-time event management. Monitor live streams, track participants, 
+                                    handle emergencies, and orchestrate the entire hackathon experience from one unified dashboard.
+                                </p>
+                                <div class="header-stats">
+                                    <span><i class="fas fa-eye"></i> 2,847 Live Viewers</span>
+                                    <span><i class="fas fa-users"></i> 1,247 Active Participants</span>
+                                    <span><i class="fas fa-video"></i> 4 Live Streams</span>
+                                    <span><i class="fas fa-shield-alt"></i> All Systems Green</span>
+                                </div>
+                            </div>
+                            <div class="header-actions">
+                                <button class="btn btn-secondary" onclick="viewAnalytics()">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Live Analytics
+                                </button>
+                                <button class="btn btn-success" onclick="startEvent()">
+                                    <i class="fas fa-play"></i>
+                                    Start Event
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Live Stats -->
+                <div class="live-stats">
+                    <div class="live-stat-card viewers" onclick="viewLiveViewers()">
+                        <div class="stat-header">
+                            <div class="stat-icon viewers">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+247</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="totalViewers">2,847</div>
+                        <div class="stat-title">Live Viewers</div>
+                        <div class="stat-description">Currently watching live streams</div>
+                    </div>
+
+                    <div class="live-stat-card participants" onclick="trackParticipants()">
+                        <div class="stat-header">
+                            <div class="stat-icon participants">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+34</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="activeParticipants">1,247</div>
+                        <div class="stat-title">Active Participants</div>
+                        <div class="stat-description">Currently online and participating</div>
+                    </div>
+
+                    <div class="live-stat-card submissions" onclick="monitorSubmissions()">
+                        <div class="stat-header">
+                            <div class="stat-icon submissions">
+                                <i class="fas fa-file-upload"></i>
+                            </div>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="liveSubmissions">89</div>
+                        <div class="stat-title">Live Submissions</div>
+                        <div class="stat-description">Real-time project submissions</div>
+                    </div>
+
+                    <div class="live-stat-card issues" onclick="handleIssues()">
+                        <div class="stat-header">
+                            <div class="stat-icon issues">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="stat-trend neutral">
+                                <i class="fas fa-minus"></i>
+                                <span>3</span>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="activeIssues">3</div>
+                        <div class="stat-title">Active Issues</div>
+                        <div class="stat-description">Reported technical issues</div>
+                    </div>
+                </div>
+
+                <!-- Modern Live Grid -->
+                <div class="live-grid">
+                    <!-- Stream Control -->
+                    <div class="stream-control">
+                        <div class="control-header">
+                            <h2 class="control-title">
+                                <i class="fas fa-video"></i>
+                                Live Stream Control
+                            </h2>
+                            <button class="btn btn-small btn-primary" onclick="openStreamSettings()">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </button>
+                        </div>
+
+                        <div class="stream-preview" id="streamPreview">
+                            <div class="stream-placeholder">
+                                <i class="fas fa-broadcast-tower"></i>
+                                <h3>Live Stream Active</h3>
+                                <p>Broadcasting to 2,847 viewers</p>
+                            </div>
+                        </div>
+
+                        <div class="stream-controls">
+                            <div class="control-btn" onclick="toggleMainStream()">
+                                <i class="fas fa-video"></i>
+                                <span>Main Stream</span>
+                            </div>
+                            <div class="control-btn" onclick="toggleAudio()">
+                                <i class="fas fa-microphone"></i>
+                                <span>Audio</span>
+                            </div>
+                            <div class="control-btn" onclick="shareScreen()">
+                                <i class="fas fa-desktop"></i>
+                                <span>Screen Share</span>
+                            </div>
+                            <div class="control-btn" onclick="recordStream()">
+                                <i class="fas fa-record-vinyl"></i>
+                                <span>Record</span>
+                            </div>
+                        </div>
+
+                        <div class="stream-settings">
+                            <div class="setting-row">
+                                <span class="setting-label">Stream Quality</span>
+                                <select class="setting-value" id="streamQuality">
+                                    <option value="1080p">1080p HD</option>
+                                    <option value="720p">720p</option>
+                                    <option value="480p">480p</option>
+                                </select>
+                            </div>
+                            <div class="setting-row">
+                                <span class="setting-label">Bitrate</span>
+                                <input class="setting-value" value="2500 kbps" readonly>
+                            </div>
+                            <div class="setting-row">
+                                <span class="setting-label">Viewers</span>
+                                <input class="setting-value" value="2,847" readonly>
+                            </div>
+                            <div class="setting-row">
+                                <span class="setting-label">Uptime</span>
+                                <input class="setting-value" value="02:34:15" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monitoring Panel -->
+                    <div class="monitoring-panel">
+                        <h3 class="panel-title">
+                            <i class="fas fa-monitor-heart-rate"></i>
+                            System Monitor
+                        </h3>
+
+                        <div class="system-status">
+                            <h4 class="panel-title">
+                                <i class="fas fa-server"></i>
+                                System Status
+                            </h4>
+                            <div class="status-list" id="statusList">
+                                <!-- Status items will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="live-feed">
+                            <h4 class="panel-title">
+                                <i class="fas fa-rss"></i>
+                                Live Feed
+                            </h4>
+                            <div class="feed-list" id="liveFeedList">
+                                <!-- Live feed items will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="emergency-panel">
+                            <h4 class="panel-title">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Emergency Controls
+                            </h4>
+                            <div class="emergency-buttons">
+                                <button class="emergency-btn" onclick="pauseEvent()">
+                                    <i class="fas fa-pause"></i>
+                                    Pause Event
+                                </button>
+                                <button class="emergency-btn" onclick="evacuationProtocol()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Evacuation Alert
+                                </button>
+                                <button class="emergency-btn" onclick="technicalSupport()">
+                                    <i class="fas fa-tools"></i>
+                                    Technical Support
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Participant Tracking -->
+                <div class="participant-tracking">
+                    <div class="tracking-header">
+                        <h2 class="tracking-title">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Real-Time Participant Activity
+                        </h2>
+                        <div class="tracking-actions">
+                            <button class="btn btn-small btn-secondary" onclick="exportActivity()">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                            <button class="btn btn-small btn-secondary" onclick="refreshTracking()">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tracking-chart">
+                        <canvas id="participantChart"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ADVANCED MODERN LIVE EVENT CONTROL SYSTEM
+        class ModernLiveEventManager {
+            constructor() {
+                this.systemStatus = [];
+                this.liveFeed = [];
+                this.chart = null;
+                this.totalViewers = 2847;
+                this.activeParticipants = 1247;
+                this.liveSubmissions = 89;
+                this.activeIssues = 3;
+                this.isLive = true;
+                this.streamActive = true;
+                this.isMobile = window.innerWidth <= 1024;
+                this.currentUser = { name: 'Alex Chen', initials: 'AC', role: 'Lead Organizer', id: 'org_001' };
+                this.init();
+            }
+
+            init() {
+                this.initializeTheme();
+                this.setupEventListeners();
+                this.loadSystemStatus();
+                this.loadLiveFeed();
+                this.renderSystemStatus();
+                this.renderLiveFeed();
+                this.initializeChart();
+                this.initializeUser();
+                this.handleResize();
+                this.startRealTimeUpdates();
+                this.initializeAnimations();
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                const themeToggle = document.getElementById('themeToggle');
+                themeToggle.querySelector('i').className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+
+            initializeUser() {
+                const userSession = localStorage.getItem('modernOrganizerSession');
+                if (userSession) {
+                    const session = JSON.parse(userSession);
+                    this.currentUser.name = session.name || this.currentUser.name;
+                    this.currentUser.initials = session.initials || this.currentUser.initials;
+                }
+                document.getElementById('userName').textContent = this.currentUser.name;
+                document.getElementById('userAvatar').textContent = this.currentUser.initials;
+            }
+
+            setupEventListeners() {
+                document.getElementById('sidebarToggle').addEventListener('click', () => this.toggleSidebar());
+                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
+                document.getElementById('mobileOverlay').addEventListener('click', () => this.closeMobileSidebar());
+                window.addEventListener('resize', () => this.handleResize());
+                this.setupTouchGestures();
+            }
+
+            setupTouchGestures() {
+                let startX;
+                document.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+                document.addEventListener('touchend', (e) => {
+                    if (!startX) return;
+                    const endX = e.changedTouches.clientX;
+                    const diffX = startX - endX;
+                    if (Math.abs(diffX) > 50) {
+                        if (diffX > 0) this.closeMobileSidebar();
+                        else if (this.isMobile) this.openMobileSidebar();
+                    }
+                    startX = null;
+                });
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 1024;
+                if (!this.isMobile) this.closeMobileSidebar();
+                
+                // Resize chart
+                if (this.chart) this.chart.resize();
+            }
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                if (this.isMobile) {
+                    sidebar.classList.toggle('open');
+                    this.toggleMobileOverlay();
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            }
+
+            openMobileSidebar() {
+                if (this.isMobile) {
+                    document.getElementById('sidebar').classList.add('open');
+                    this.showMobileOverlay();
+                }
+            }
+
+            closeMobileSidebar() {
+                document.getElementById('sidebar').classList.remove('open');
+                this.hideMobileOverlay();
+            }
+
+            toggleMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.toggle('active');
+            }
+
+            showMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.add('active');
+            }
+
+            hideMobileOverlay() {
+                document.getElementById('mobileOverlay').classList.remove('active');
+            }
+
+            toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                const themeIcon = document.getElementById('themeToggle').querySelector('i');
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                // Update chart colors
+                this.updateChartTheme(newTheme);
+                this.showToast(`Theme changed to ${newTheme} mode`, 'success');
+            }
+
+            loadSystemStatus() {
+                this.systemStatus = [
+                    {
+                        name: 'Live Stream Server',
+                        status: 'online',
+                        details: 'Broadcasting at 1080p, 2500 kbps',
+                        uptime: '99.9%'
+                    },
+                    {
+                        name: 'Database Cluster',
+                        status: 'online',
+                        details: 'All nodes operational',
+                        uptime: '100%'
+                    },
+                    {
+                        name: 'CDN Network',
+                        status: 'warning',
+                        details: 'High traffic load detected',
+                        uptime: '98.7%'
+                    },
+                    {
+                        name: 'Authentication Service',
+                        status: 'online',
+                        details: '1,247 active sessions',
+                        uptime: '99.8%'
+                    },
+                    {
+                        name: 'File Storage',
+                        status: 'online',
+                        details: '89% capacity, 127 new uploads',
+                        uptime: '99.5%'
+                    }
+                ];
+            }
+
+            loadLiveFeed() {
+                this.liveFeed = [
+                    {
+                        type: 'info',
+                        title: 'New Team Registration',
+                        details: 'AI Innovators team completed registration',
+                        time: '2 min ago'
+                    },
+                    {
+                        type: 'warning',
+                        title: 'High Server Load',
+                        details: 'Stream server at 85% capacity',
+                        time: '5 min ago'
+                    },
+                    {
+                        type: 'info',
+                        title: 'Submission Received',
+                        details: 'Blockchain Masters submitted project',
+                        time: '8 min ago'
+                    },
+                    {
+                        type: 'critical',
+                        title: 'Technical Issue Reported',
+                        details: 'Audio feedback in main auditorium',
+                        time: '12 min ago'
+                    },
+                    {
+                        type: 'info',
+                        title: 'Judge Panel Connected',
+                        details: 'All 15 judges are now online',
+                        time: '15 min ago'
+                    },
+                    {
+                        type: 'info',
+                        title: 'Sponsor Booth Setup',
+                        details: 'TechCorp completed virtual booth setup',
+                        time: '18 min ago'
+                    }
+                ];
+            }
+
+            renderSystemStatus() {
+                const container = document.getElementById('statusList');
+                container.innerHTML = '';
+
+                this.systemStatus.forEach((status, index) => {
+                    const statusDiv = document.createElement('div');
+                    statusDiv.className = 'status-item';
+                    statusDiv.style.opacity = '0';
+                    statusDiv.style.transform = 'translateY(20px)';
+                    statusDiv.innerHTML = `
+                        <div class="status-icon ${status.status}">
+                            <i class="fas ${this.getStatusIcon(status.status)}"></i>
+                        </div>
+                        <div class="status-info">
+                            <div class="status-name">${status.name}</div>
+                            <div class="status-details">${status.details}</div>
+                        </div>
+                        <div class="status-badge ${status.status}">${this.capitalizeFirst(status.status)}</div>
+                    `;
+                    container.appendChild(statusDiv);
+
+                    // Animate in
+                    setTimeout(() => {
+                        statusDiv.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        statusDiv.style.opacity = '1';
+                        statusDiv.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }
+
+            renderLiveFeed() {
+                const container = document.getElementById('liveFeedList');
+                container.innerHTML = '';
+
+                this.liveFeed.forEach((item, index) => {
+                    const feedDiv = document.createElement('div');
+                    feedDiv.className = `feed-item ${item.type}`;
+                    feedDiv.style.opacity = '0';
+                    feedDiv.style.transform = 'translateX(20px)';
+                    feedDiv.innerHTML = `
+                        <div class="feed-icon">
+                            <i class="fas ${this.getFeedIcon(item.type)}"></i>
+                        </div>
+                        <div class="feed-content">
+                            <div class="feed-title">${item.title}</div>
+                            <div class="feed-details">${item.details}</div>
+                            <div class="feed-time">${item.time}</div>
+                        </div>
+                    `;
+                    container.appendChild(feedDiv);
+
+                    // Animate in
+                    setTimeout(() => {
+                        feedDiv.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        feedDiv.style.opacity = '1';
+                        feedDiv.style.transform = 'translateX(0)';
+                    }, index * 100);
+                });
+            }
+
+            initializeChart() {
+                const ctx = document.getElementById('participantChart').getContext('2d');
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                
+                // Real-time participant activity data
+                const activityData = {
+                    labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+                    online: [890, 1020, 1150, 1247, 1180, 1220, 1247, 1200],
+                    coding: [650, 780, 890, 950, 920, 980, 1020, 950],
+                    submissions: [45, 67, 89, 102, 95, 115, 127, 120]
+                };
+                
+                this.chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: activityData.labels,
+                        datasets: [
+                            {
+                                label: 'Online Participants',
+                                data: activityData.online,
+                                borderColor: '#ef4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Active Coding',
+                                data: activityData.coding,
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                borderWidth: 3,
+                                fill: false,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Submissions',
+                                data: activityData.submissions,
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                borderWidth: 3,
+                                fill: false,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: isDark ? '#e2e8f0' : '#64748b',
+                                    usePointStyle: true,
+                                    padding: 15,
+                                    font: { size: 11 }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: isDark ? '#e2e8f0' : '#64748b'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: isDark ? '#e2e8f0' : '#64748b'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            getStatusIcon(status) {
+                const icons = {
+                    online: 'fa-check-circle',
+                    warning: 'fa-exclamation-triangle',
+                    offline: 'fa-times-circle'
+                };
+                return icons[status] || 'fa-circle';
+            }
+
+            getFeedIcon(type) {
+                const icons = {
+                    info: 'fa-info-circle',
+                    warning: 'fa-exclamation-triangle',
+                    critical: 'fa-exclamation-circle'
+                };
+                return icons[type] || 'fa-circle';
+            }
+
+            updateChartTheme(theme) {
+                if (!this.chart) return;
+                
+                const isDark = theme === 'dark';
+                const textColor = isDark ? '#e2e8f0' : '#64748b';
+                const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+                this.chart.options.scales.y.grid.color = gridColor;
+                this.chart.options.scales.x.grid.color = gridColor;
+                this.chart.options.scales.y.ticks.color = textColor;
+                this.chart.options.scales.x.ticks.color = textColor;
+                this.chart.options.plugins.legend.labels.color = textColor;
+                this.chart.update();
+            }
+
+            startRealTimeUpdates() {
+                setInterval(() => {
+                    this.updateLiveStats();
+                    this.addNewFeedItem();
+                }, 15000); // Every 15 seconds
+            }
+
+            updateLiveStats() {
+                // Simulate real-time viewer changes
+                const viewerChange = Math.floor(Math.random() * 100) - 50;
+                this.totalViewers = Math.max(2000, this.totalViewers + viewerChange);
+                document.getElementById('totalViewers').textContent = this.totalViewers.toLocaleString();
+                document.getElementById('viewerCount').textContent = this.totalViewers.toLocaleString();
+
+                // Update participants
+                const participantChange = Math.floor(Math.random() * 20) - 10;
+                this.activeParticipants = Math.max(1200, this.activeParticipants + participantChange);
+                document.getElementById('activeParticipants').textContent = this.activeParticipants.toLocaleString();
+
+                // Update submissions
+                if (Math.random() > 0.7) {
+                    this.liveSubmissions += Math.floor(Math.random() * 3) + 1;
+                    document.getElementById('liveSubmissions').textContent = this.liveSubmissions.toString();
+                }
+            }
+
+            addNewFeedItem() {
+                if (Math.random() > 0.6) {
+                    const feedTypes = ['info', 'warning'];
+                    const feedTitles = [
+                        'New Team Joined',
+                        'System Update',
+                        'Submission Received',
+                        'Judge Activity',
+                        'Network Status',
+                        'User Login Spike'
+                    ];
+                    const feedDetails = [
+                        'Another team has entered the competition',
+                        'Automatic system maintenance completed',
+                        'Project submission from active team',
+                        'Judge panel reviewing submissions',
+                        'Network performance optimized',
+                        'High volume of concurrent logins'
+                    ];
+
+                    const newItem = {
+                        type: feedTypes[Math.floor(Math.random() * feedTypes.length)],
+                        title: feedTitles[Math.floor(Math.random() * feedTitles.length)],
+                        details: feedDetails[Math.floor(Math.random() * feedDetails.length)],
+                        time: 'Just now'
+                    };
+
+                    this.liveFeed.unshift(newItem);
+                    this.liveFeed = this.liveFeed.slice(0, 8); // Keep only 8 latest
+                    this.renderLiveFeed();
+                }
+            }
+
+            initializeAnimations() {
+                // Enhanced entrance animations
+                setTimeout(() => {
+                    document.querySelectorAll('.live-stat-card').forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(30px) scale(0.95)';
+                            setTimeout(() => {
+                                card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0) scale(1)';
+                            }, 100);
+                        }, index * 150);
+                    });
+                }, 500);
+            }
+
+            capitalizeFirst(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            // Live Stats Functions
+            viewLiveViewers() {
+                this.showToast('Opening live viewer analytics...', 'info');
+            }
+
+            trackParticipants() {
+                this.showToast('Opening participant tracking dashboard...', 'info');
+            }
+
+            monitorSubmissions() {
+                this.showToast('Opening submission monitoring...', 'info');
+            }
+
+            handleIssues() {
+                this.showToast('Opening issue management center...', 'info');
+            }
+
+            // Header Actions
+            viewAnalytics() {
+                this.showToast('Loading comprehensive live analytics...', 'info');
+            }
+
+            startEvent() {
+                this.showToast('🚀 Event officially started! All systems are live!', 'success');
+            }
+
+            // Topbar Actions
+            goLive() {
+                if (this.isLive) {
+                    this.showToast('⚡ Already broadcasting live to 2,847 viewers!', 'info');
+                } else {
+                    this.isLive = true;
+                    document.getElementById('liveStatus').innerHTML = `
+                        <div class="live-dot"></div>
+                        <span>LIVE</span>
+                        <span class="viewer-count">${this.totalViewers.toLocaleString()}</span>
+                    `;
+                    this.showToast('📡 Live stream started successfully!', 'success');
+                }
+            }
+
+            broadcastMessage() {
+                this.showToast('📢 Broadcasting urgent message to all participants...', 'info');
+                
+                setTimeout(() => {
+                    this.showToast('✅ Emergency broadcast sent to 1,247 participants!', 'success');
+                }, 2500);
+            }
+
+            emergencyProtocol() {
+                this.showToast('🚨 Emergency protocol activated! Alerting all personnel...', 'warning');
+                
+                setTimeout(() => {
+                    this.showToast('⚠️ All emergency contacts notified. Response teams dispatched.', 'warning');
+                }, 3000);
+            }
+
+            // Stream Control Functions
+            openStreamSettings() {
+                this.showToast('Opening advanced stream configuration...', 'info');
+            }
+
+            toggleMainStream() {
+                this.streamActive = !this.streamActive;
+                const status = this.streamActive ? 'activated' : 'deactivated';
+                this.showToast(`Main stream ${status}`, this.streamActive ? 'success' : 'warning');
+            }
+
+            toggleAudio() {
+                this.showToast('Audio settings toggled', 'info');
+            }
+
+            shareScreen() {
+                this.showToast('Screen sharing initiated...', 'info');
+            }
+
+            recordStream() {
+                this.showToast('🔴 Stream recording started', 'success');
+            }
+
+            // Emergency Functions
+            pauseEvent() {
+                this.showToast('⏸️ Event paused! All activities suspended.', 'warning');
+            }
+
+            evacuationProtocol() {
+                this.showToast('🚨 EVACUATION ALERT SENT! Emergency services notified.', 'danger');
+            }
+
+            technicalSupport() {
+                this.showToast('🔧 Technical support team alerted and responding...', 'info');
+            }
+
+            // Tracking Functions
+            exportActivity() {
+                this.showToast('Exporting real-time activity data...', 'info');
+                
+                setTimeout(() => {
+                    this.showToast('📊 Activity report exported successfully!', 'success');
+                }, 2000);
+            }
+
+            refreshTracking() {
+                this.showToast('Refreshing participant tracking data...', 'info');
+                
+                setTimeout(() => {
+                    this.updateLiveStats();
+                    this.showToast('🔄 Tracking data refreshed with latest information!', 'success');
+                }, 1500);
+            }
+
+            backToDashboard() {
+                window.location.href = 'dashboard.html';
+            }
+
+            showToast(message, type = 'success') {
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) existingToast.remove();
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.style.cssText = `
+                    position: fixed; top: 2rem; right: 2rem; padding: 1rem 1.5rem;
+                    border-radius: 12px; color: white; font-weight: 500; z-index: 10001;
+                    animation: slideInToast 0.3s ease-out; max-width: 450px;
+                    box-shadow: var(--shadow-lg); background: var(--gradient-${type});
+                `;
+                
+                if (window.innerWidth <= 768) {
+                    toast.style.top = '1rem'; toast.style.right = '1rem';
+                    toast.style.left = '1rem'; toast.style.maxWidth = 'none';
+                }
+                
+                toast.innerHTML = `<i class="fas ${this.getToastIcon(type)}"></i><span style="margin-left: 0.5rem;">${message}</span>`;
+                document.body.appendChild(toast);
+                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 6000);
+            }
+
+            getToastIcon(type) {
+                const icons = {
+                    success: 'fa-check-circle', error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle', warning: 'fa-exclamation-triangle',
+                    danger: 'fa-exclamation-triangle'
+                };
+                return icons[type] || 'fa-check-circle';
+            }
+        }
+
+        // Global functions and initialization
+        let modernLiveEventManager;
+
+        function viewLiveViewers() { modernLiveEventManager.viewLiveViewers(); }
+        function trackParticipants() { modernLiveEventManager.trackParticipants(); }
+        function monitorSubmissions() { modernLiveEventManager.monitorSubmissions(); }
+        function handleIssues() { modernLiveEventManager.handleIssues(); }
+        function viewAnalytics() { modernLiveEventManager.viewAnalytics(); }
+        function startEvent() { modernLiveEventManager.startEvent(); }
+        function goLive() { modernLiveEventManager.goLive(); }
+        function broadcastMessage() { modernLiveEventManager.broadcastMessage(); }
+        function emergencyProtocol() { modernLiveEventManager.emergencyProtocol(); }
+        function openStreamSettings() { modernLiveEventManager.openStreamSettings(); }
+        function toggleMainStream() { modernLiveEventManager.toggleMainStream(); }
+        function toggleAudio() { modernLiveEventManager.toggleAudio(); }
+        function shareScreen() { modernLiveEventManager.shareScreen(); }
+        function recordStream() { modernLiveEventManager.recordStream(); }
+        function pauseEvent() { modernLiveEventManager.pauseEvent(); }
+        function evacuationProtocol() { modernLiveEventManager.evacuationProtocol(); }
+        function technicalSupport() { modernLiveEventManager.technicalSupport(); }
+        function exportActivity() { modernLiveEventManager.exportActivity(); }
+        function refreshTracking() { modernLiveEventManager.refreshTracking(); }
+        function backToDashboard() { modernLiveEventManager.backToDashboard(); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            modernLiveEventManager = new ModernLiveEventManager();
+            
+            // Performance optimization for mobile
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+                const style = document.createElement('style');
+                style.textContent = `.mobile-device * { animation-duration: 0.2s !important; transition-duration: 0.2s !important; }`;
+                document.head.appendChild(style);
+            }
+
+            // Auto-save user session
+            setInterval(() => {
+                const sessionData = {
+                    name: modernLiveEventManager.currentUser.name,
+                    initials: modernLiveEventManager.currentUser.initials,
+                    role: modernLiveEventManager.currentUser.role,
+                    lastActive: Date.now()
+                };
+                localStorage.setItem('modernOrganizerSession', JSON.stringify(sessionData));
+            }, 60000);
+
+            // Keyboard shortcuts for live event control
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'l':
+                            e.preventDefault();
+                            goLive();
+                            break;
+                        case 'b':
+                            e.preventDefault();
+                            broadcastMessage();
+                            break;
+                        case 'e':
+                            e.preventDefault();
+                            emergencyProtocol();
+                            break;
+                        case 'r':
+                            e.preventDefault();
+                            refreshTracking();
+                            break;
+                        case 'p':
+                            e.preventDefault();
+                            pauseEvent();
+                            break;
+                    }
+                }
+            });
+
+            // Emergency hotkey
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'F12' && e.shiftKey) {
+                    e.preventDefault();
+                    emergencyProtocol();
+                }
+            });
+        });
+
+        // Enhanced animations and performance styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @media (max-width: 768px) {
+                @keyframes slideInToast {
+                    from { transform: translateY(-100%); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            }
+            
+            /* Enhanced live event animations */
+            .live-stat-card, .status-item, .feed-item, .control-btn { transition: var(--transition) !important; }
+            @media (hover: hover) and (pointer: fine) {
+                .live-stat-card:hover { 
+                    transform: translateY(-8px) scale(1.02) !important;
+                    box-shadow: var(--shadow-lg) !important;
+                }
+                .status-item:hover { transform: translateY(-3px) !important; }
+                .feed-item:hover { transform: translateX(6px) !important; }
+                .control-btn:hover { transform: translateY(-4px) !important; }
+            }
+            
+            /* Enhanced live status */
+            .live-status {
+                position: relative;
+                overflow: hidden;
+            }
+            .live-status::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                animation: liveStatusSweep 3s infinite;
+            }
+            
+            @keyframes liveStatusSweep {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+            
+            /* Enhanced emergency buttons */
+            .emergency-btn {
+                position: relative;
+                overflow: hidden;
+            }
+            .emergency-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                transition: var(--transition-fast);
+            }
+            .emergency-btn:hover::before {
+                left: 100%;
+            }
+            
+            /* Enhanced stream preview */
+            .stream-preview {
+                position: relative;
+                overflow: hidden;
+            }
+            .stream-preview::after {
+                content: '';
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 12px;
+                height: 12px;
+                background: #ef4444;
+                border-radius: 50%;
+                animation: liveBroadcast 1s infinite;
+            }
+            
+            /* Enhanced system status indicators */
+            .status-item.online::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 3px;
+                background: #10b981;
+                animation: statusPulse 2s infinite;
+            }
+            
+            @keyframes statusPulse {
+                0%, 100% { opacity: 0.5; }
+                50% { opacity: 1; }
+            }
+            
+            /* Enhanced live feed animations */
+            .feed-item.critical {
+                animation: criticalAlert 2s infinite;
+            }
+            
+            @keyframes criticalAlert {
+                0%, 100% { border-left-color: #ef4444; }
+                50% { border-left-color: #dc2626; }
+            }
+            
+                        /* Performance optimizations */
+            .stream-control, .monitoring-panel, .participant-tracking {
+                contain: layout style paint;
+            }
+            
+            /* Enhanced mobile live event grid */
+            @media (max-width: 768px) {
+                .live-grid {
+                    grid-template-columns: 1fr !important;
+                }
+                .stream-control {
+                    order: 1;
+                }
+                .monitoring-panel {
+                    order: 2;
+                }
+            }
+            
+            /* Enhanced control buttons */
+            .control-btn.active {
+                position: relative;
+                overflow: hidden;
+            }
+            .control-btn.active::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+                transform: rotate(45deg) translateX(-100%);
+                transition: var(--transition);
+                animation: controlActive 2s infinite;
+            }
+            
+            @keyframes controlActive {
+                0% { transform: rotate(45deg) translateX(-100%); }
+                100% { transform: rotate(45deg) translateX(100%); }
+            }
+            
+            /* Enhanced viewer count animation */
+            .viewer-count {
+                position: relative;
+                overflow: hidden;
+            }
+            .viewer-count::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.2), transparent);
+                animation: viewerUpdate 3s infinite;
+            }
+            
+            @keyframes viewerUpdate {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+            
+            /* Enhanced participant chart */
+            #participantChart {
+                transition: var(--transition);
+            }
+            #participantChart:hover {
+                transform: scale(1.02);
+            }
+            
+            /* Enhanced feed item types */
+            .feed-item.warning::before {
+                content: '';
+                position: absolute;
+                left: -4px;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background: linear-gradient(to bottom, #f59e0b, transparent);
+                animation: warningFlow 2s infinite;
+            }
+            
+            @keyframes warningFlow {
+                0% { opacity: 0.5; }
+                50% { opacity: 1; }
+                100% { opacity: 0.5; }
+            }
+            
+            /* Real-time data indicators */
+            .stat-value {
+                position: relative;
+            }
+            .stat-value::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: -20px;
+                width: 8px;
+                height: 8px;
+                background: #10b981;
+                border-radius: 50%;
+                animation: dataUpdate 2s infinite;
+            }
+            
+            @keyframes dataUpdate {
+                0%, 100% { opacity: 0; transform: scale(0.8); }
+                50% { opacity: 1; transform: scale(1.2); }
+            }
+            
+            /* Enhanced emergency protocol styling */
+            .action-btn.emergency {
+                position: relative;
+            }
+            .action-btn.emergency::after {
+                content: '';
+                position: absolute;
+                inset: -2px;
+                background: conic-gradient(from 0deg, transparent, #dc2626, transparent);
+                border-radius: inherit;
+                z-index: -1;
+                animation: emergencyRotate 2s linear infinite;
+            }
+            
+            @keyframes emergencyRotate {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            
+            /* Enhanced stream quality indicator */
+            .stream-settings .setting-value[readonly] {
+                background: linear-gradient(145deg, var(--bg-glass), rgba(239, 68, 68, 0.05));
+                color: var(--text-primary);
+            }
+            
+            /* System monitoring enhancements */
+            .status-item.warning {
+                animation: warningPulse 3s infinite;
+            }
+            
+            @keyframes warningPulse {
+                0%, 100% { background: var(--bg-glass); }
+                50% { background: rgba(245, 158, 11, 0.1); }
+            }
+            
+            /* Live event command center styling */
+            .live-header::after {
+                content: 'COMMAND CENTER';
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.3);
+                letter-spacing: 2px;
+                transform: rotate(-90deg);
+                transform-origin: center;
+            }
+            
+            /* Mobile emergency controls */
+            @media (max-width: 768px) {
+                .emergency-buttons {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 0.5rem;
+                }
+                .emergency-btn {
+                    padding: 1rem 0.5rem;
+                    font-size: 0.8rem;
+                }
+            }
+            
+            /* Enhanced loading states */
+            .loading {
+                position: relative;
+                overflow: hidden;
+            }
+            .loading::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.2), transparent);
+                animation: loadingShimmer 1.5s infinite;
+            }
+            
+            @keyframes loadingShimmer {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+            
+            /* Touch feedback for mobile */
+            @media (hover: none) {
+                .control-btn:active {
+                    transform: scale(0.95);
+                    background: var(--bg-glass-hover);
+                }
+                .emergency-btn:active {
+                    transform: scale(0.98);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
