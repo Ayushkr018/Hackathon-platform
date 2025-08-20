@@ -90,9 +90,7 @@ subgraph "Frontend Layer"
 A[Organizer Dashboard]
 B[Mobile Interface]
 C[Real-time UI]
-end
 
-text
 subgraph "AI Processing Layer"
     D[Evaluation Engine]
     E[Plagiarism Detector]
@@ -122,7 +120,7 @@ G --> H
 G --> I
 H --> L
 I --> L
-text
+
 
 ### 🔧 **Technical Architecture**
 
@@ -150,7 +148,7 @@ routing: "Client-side routing system"
 }
 };
 
-text
+
 
 #### **🤖 AI Processing Engine**
 AI Architecture Overview
@@ -161,7 +159,7 @@ self.plagiarism_detector = PlagiarismAI()
 self.matching_algorithm = TeamMatchingAI()
 self.insight_generator = AnalyticsAI()
 
-text
+
 def process_submission(self, submission):
     # Multi-layer AI processing
     technical_score = self.evaluation_model.analyze_code(submission.code)
@@ -174,7 +172,6 @@ def process_submission(self, submission):
         'plagiarism_risk': plagiarism_score,
         'overall_rating': self.calculate_weighted_score()
     }
-text
 
 #### **⛓️ Blockchain Infrastructure**
 // Smart Contract Architecture
@@ -191,7 +188,7 @@ uint256 endTime;
 bool isActive;
 }
 
-text
+
 struct Certificate {
     uint256 hackathonId;
     address participant;
@@ -210,7 +207,6 @@ event CertificateMinted(uint256 indexed certificateId, address participant);
 event PrizeDistributed(uint256 indexed hackathonId, address winner, uint256 amount);
 }
 
-text
 
 ---
 
@@ -263,7 +259,6 @@ feasibility: { weight: 0.10, analyzer: new FeasibilityChecker() }
 };
 }
 
-text
 async evaluateSubmission(submission) {
     const scores = {};
     let totalScore = 0;
@@ -283,7 +278,7 @@ async evaluateSubmission(submission) {
 }
 }
 
-text
+
 
 #### **🔍 Advanced Plagiarism Detection**
 - **Multi-layer Analysis** - Code, text, and concept similarity
@@ -321,7 +316,6 @@ contract NexusHackCertificate is ERC721URIStorage, AccessControl, ReentrancyGuar
 bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 bytes32 public constant ORGANIZER_ROLE = keccak256("ORGANIZER_ROLE");
 
-text
 struct Achievement {
     uint256 hackathonId;
     string hackathonName;
@@ -393,7 +387,7 @@ function verifyCertificate(uint256 tokenId) external view returns (Achievement m
 event CertificateMinted(uint256 indexed tokenId, address indexed recipient, uint256 indexed hackathonId, string achievementType);
 }
 
-text
+
 
 #### **💰 Cryptocurrency Payment System**
 - **Multi-wallet Support** (MetaMask, WalletConnect, Coinbase)
@@ -425,7 +419,7 @@ Python v3.8+ (for AI processing)
 
 Docker v20.0+ (for containerized deployment)
 
-text
+
 
 ### 🚀 **Quick Start Guide**
 
@@ -453,7 +447,7 @@ npm run dev
 7. Access the platform
 open http://localhost:3000
 
-text
+
 
 ### 🔧 **Environment Configuration**
 // .env configuration example
@@ -473,7 +467,6 @@ text
 "SENDGRID_API_KEY": "your-sendgrid-api-key"
 }
 
-text
 
 ### 🐳 **Docker Deployment**
 Dockerfile for production deployment
@@ -498,7 +491,6 @@ USER node
 
 CMD ["npm", "start"]
 
-text
 
 ---
 
@@ -573,7 +565,7 @@ soc2: "SOC 2 Type II compliance ready"
 }
 };
 
-text
+
 
 ---
 
@@ -607,7 +599,7 @@ Contributing Workflow
 
 🔄 Open Pull Request
 
-text
+
 
 #### **🎯 Contribution Areas**
 - 🐛 **Bug Fixes** - Help improve platform stability
@@ -706,7 +698,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-text
+
 
 ---
 
